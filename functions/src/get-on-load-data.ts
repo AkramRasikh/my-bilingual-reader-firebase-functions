@@ -19,7 +19,7 @@ const getContentTypeSnapshot = async ({ language, ref, db }) => {
   }
 };
 
-const getFirebaseContentType = async ({ language, ref }) => {
+export const getFirebaseContentType = async ({ language, ref }) => {
   try {
     const thisContentTypeSnapShot = await getContentTypeSnapshot({
       language,
@@ -46,18 +46,3 @@ const getFirebaseContentType = async ({ language, ref }) => {
     );
   }
 };
-
-export async function getOnLoadData({ language, refs }): Promise<any> {
-  return await Promise.all(
-    refs.map(async (ref) => {
-      try {
-        const refData = await getFirebaseContentType({ language, ref });
-        return {
-          [ref]: refData,
-        };
-      } catch (error) {
-        throw new Error(`Error fetching ${ref} for language ${language}`);
-      }
-    }),
-  );
-}

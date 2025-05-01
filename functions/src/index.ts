@@ -5,7 +5,7 @@ import { pinyin } from 'pinyin-pro';
 
 import * as dotenv from 'dotenv';
 import { synthesizeSpeech } from './text-to-speech';
-import { getOnLoadData } from './get-on-load-data';
+import { onLoadData } from './on-load-data';
 
 dotenv.config();
 
@@ -89,7 +89,7 @@ exports.getOnLoadData = functions.https.onRequest(
         return;
       }
 
-      const data = await getOnLoadData({ refs, language });
+      const data = await onLoadData({ refs, language });
       res.status(200).json(data);
     } catch (error) {
       res

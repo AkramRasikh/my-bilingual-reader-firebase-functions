@@ -1,3 +1,9 @@
+export const chinese = 'chinese';
+export const japanese = 'japanese';
+export const arabic = 'arabic';
+
+export type LanguageTypes = 'japanese' | 'chinese' | 'arabic';
+
 export const googleLanguagesKey = {
   ['japanese']: 'ja',
   ['chinese']: 'zh-CN',
