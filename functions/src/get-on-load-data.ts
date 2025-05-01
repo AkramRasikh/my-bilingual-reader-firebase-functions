@@ -3,7 +3,7 @@ import { LanguageTypes } from './language-keys';
 import { contentRef, RefTypes } from './refs';
 import { db } from './text-to-speech';
 
-interface LangaugeAndContentTypes {
+export interface LangaugeAndContentTypes {
   language: LanguageTypes;
   ref: RefTypes;
 }

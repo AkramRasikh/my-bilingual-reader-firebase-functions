@@ -2,10 +2,9 @@ import * as functions from 'firebase-functions';
 import { TranslationServiceClient } from '@google-cloud/translate';
 import { Request, Response } from 'express';
 import { pinyin } from 'pinyin-pro';
-
 import * as dotenv from 'dotenv';
 import { synthesizeSpeech } from './text-to-speech';
-import { onLoadData } from './on-load-data';
+import { onLoadDataRoute } from './on-load-data';
 
 dotenv.config();
 
@@ -79,22 +78,4 @@ exports.textToSpeech = functions.https.onRequest(
   },
 );
 
-exports.getOnLoadData = functions.https.onRequest(
-  async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { refs, language } = req.body;
-
-      if (!refs?.length || !language) {
-        res.status(400).json({ error: 'Missing refs or language' });
-        return;
-      }
-
-      const data = await onLoadData({ refs, language });
-      res.status(200).json(data);
-    } catch (error) {
-      res
-        .status(400)
-        .json({ error: error?.message || 'Error loading initial data' });
-    }
-  },
-);
+exports.getOnLoadData = functions.https.onRequest(onLoadDataRoute);

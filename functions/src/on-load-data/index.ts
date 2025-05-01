@@ -1,3 +1,4 @@
+import { Request, Response } from 'express';
 import { getFirebaseContentType } from '../get-on-load-data';
 import { LanguageTypes } from '../language-keys';
 import { RefTypes } from '../refs';
@@ -7,7 +8,7 @@ interface OnLoadDataProps {
   refs: RefTypes[];
 }
 
-export async function onLoadData({
+export async function onLoadDataFunc({
   language,
   refs,
 }: OnLoadDataProps): Promise<any> {
@@ -24,3 +25,23 @@ export async function onLoadData({
     }),
   );
 }
+
+export const onLoadDataRoute = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { refs, language } = req.body;
+    if (!refs?.length || !language) {
+      res.status(400).json({ error: 'Missing refs or language' });
+      return;
+    }
+
+    const data = await onLoadDataFunc({ refs, language });
+    res.status(200).json(data);
+  } catch (error) {
+    res
+      .status(400)
+      .json({ error: error?.message || 'Error loading initial data' });
+  }
+};
