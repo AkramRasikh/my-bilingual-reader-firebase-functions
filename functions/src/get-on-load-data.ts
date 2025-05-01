@@ -1,13 +1,28 @@
+import { Database } from 'firebase-admin/database';
+import { LanguageTypes } from './language-keys';
+import { contentRef, RefTypes } from './refs';
 import { db } from './text-to-speech';
+
+interface LangaugeAndContentTypes {
+  language: LanguageTypes;
+  ref: RefTypes;
+}
+
+interface GetContentTypeSnapshotProps extends LangaugeAndContentTypes {
+  db: Database;
+}
 
 const filterOutNestedNulls = (arr: any[]) =>
   arr?.filter((item) => item !== null || item !== undefined);
 
-const content = 'content';
+const getRefPath = ({ language, ref }: LangaugeAndContentTypes) =>
+  `${language}/${ref}`;
 
-const getRefPath = ({ language, ref }) => `${language}/${ref}`;
-
-const getContentTypeSnapshot = async ({ language, ref, db }) => {
+const getContentTypeSnapshot = async ({
+  language,
+  ref,
+  db,
+}: GetContentTypeSnapshotProps) => {
   try {
     const refPath = getRefPath({ language, ref });
     const refObj = db.ref(refPath);
@@ -19,7 +34,10 @@ const getContentTypeSnapshot = async ({ language, ref, db }) => {
   }
 };
 
-export const getFirebaseContentType = async ({ language, ref }) => {
+export const getFirebaseContentType = async ({
+  language,
+  ref,
+}: LangaugeAndContentTypes) => {
   try {
     const thisContentTypeSnapShot = await getContentTypeSnapshot({
       language,
@@ -27,7 +45,7 @@ export const getFirebaseContentType = async ({ language, ref }) => {
       db,
     });
     const realValues = filterOutNestedNulls(thisContentTypeSnapShot);
-    if (ref === content) {
+    if (ref === contentRef) {
       const filteredOutUndefinedNull = realValues.map(
         (thisLangaugeContentItem) => {
           return {
