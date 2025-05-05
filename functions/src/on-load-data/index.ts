@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { getFirebaseContentType } from '../get-on-load-data';
 import { LanguageTypes } from '../language-keys';
 import { RefTypes } from '../refs';
+import { onLoadDataValidation } from './validation';
+import { routeValidator } from '../shared-validation/route-validator';
 
 interface OnLoadDataProps {
   language: LanguageTypes;
@@ -31,12 +33,8 @@ export const onLoadDataRoute = async (
   res: Response,
 ): Promise<void> => {
   try {
+    await routeValidator(req, res, onLoadDataValidation);
     const { refs, language } = req.body;
-    if (!refs?.length || !language) {
-      res.status(400).json({ error: 'Missing refs or language' });
-      return;
-    }
-
     const data = await onLoadDataFunc({ refs, language });
     res.status(200).json(data);
   } catch (error) {
