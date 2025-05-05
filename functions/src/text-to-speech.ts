@@ -4,18 +4,6 @@ import fs from 'fs';
 import util from 'util';
 import { googleLanguagesVoicesKey, languageVoices } from './language-keys';
 import { getAudioFolderViaLang } from './utils';
-import * as dotenv from 'dotenv';
-
-dotenv.config();
-
-admin.initializeApp({
-  credential: admin.credential.cert(
-    JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT),
-  ),
-  databaseURL: process.env.DB_URL,
-});
-
-export const db = admin.database();
 
 const client = new textToSpeech.TextToSpeechClient({
   credentials: JSON.parse(process.env.GOOGLE_TRANSLATE_ACCOUNT), // Securely store in Firebase config

@@ -1,7 +1,7 @@
 import { Database } from 'firebase-admin/database';
 import { LanguageTypes } from './language-keys';
 import { contentRef, RefTypes } from './refs';
-import { db } from './text-to-speech';
+import { db } from './db';
 
 export interface LangaugeAndContentTypes {
   language: LanguageTypes;

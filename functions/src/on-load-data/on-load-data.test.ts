@@ -9,7 +9,7 @@ describe('onLoadDataRoute', () => {
     test.cleanup();
   });
 
-  it.only('should return 200 when valid data is sent', async () => {
+  it('should return 200 when valid data is sent', async () => {
     const req = {
       body: {
         refs: ['snippets'],
