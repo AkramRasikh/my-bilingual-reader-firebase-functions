@@ -22,7 +22,7 @@ export async function onLoadDataFunc({
           [ref]: refData,
         };
       } catch (error) {
-        throw new Error(`Error fetching ${ref} for language ${language}`);
+        throw new Error(`Error fetching ${ref} for ${language}`);
       }
     }),
   );

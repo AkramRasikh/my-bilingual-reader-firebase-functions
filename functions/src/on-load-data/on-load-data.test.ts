@@ -1,3 +1,4 @@
+import * as getFirebaseContentTypeService from '../get-on-load-data';
 import { onLoadDataRoute } from './index';
 import functions from 'firebase-functions-test';
 
@@ -101,6 +102,31 @@ describe('onLoadDataRoute', () => {
       expect(res.json).toHaveBeenCalledWith(
         expect.objectContaining({ errors: expect.any(Array) }),
       );
+    });
+  });
+
+  // can go deeper but this level is fine for now
+  it('should return 400 when getFirebaseContentType throws', async () => {
+    const errMsg = 'Error fetching snippets for chinese';
+
+    const req = {
+      body: {
+        refs: ['snippets'],
+        language: 'chinese',
+      },
+    };
+
+    const res = mockResponse();
+
+    jest
+      .spyOn(getFirebaseContentTypeService, 'getFirebaseContentType')
+      .mockRejectedValueOnce(new Error());
+
+    await onLoadDataRoute(req as any, res as any);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      error: errMsg,
     });
   });
 });
