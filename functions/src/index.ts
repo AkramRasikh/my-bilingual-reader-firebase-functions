@@ -5,12 +5,7 @@ import { pinyin } from 'pinyin-pro';
 import { synthesizeSpeech } from './text-to-speech';
 import { onLoadDataRoute } from './on-load-data';
 import config from './config';
-
-const googleLanguagesKey = {
-  ['japanese']: 'ja',
-  ['chinese']: 'zh-CN',
-  ['arabic']: 'ar',
-};
+import { googleLanguagesKey } from './language-keys';
 
 // Initialize Google Translate API client
 const translationClient = new TranslationServiceClient({
