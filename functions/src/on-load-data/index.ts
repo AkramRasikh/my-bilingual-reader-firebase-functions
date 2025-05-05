@@ -33,7 +33,10 @@ export const onLoadDataRoute = async (
   res: Response,
 ): Promise<void> => {
   try {
-    await routeValidator(req, res, onLoadDataValidation);
+    const isValid = await routeValidator(req, res, onLoadDataValidation);
+    if (!isValid) {
+      return;
+    }
     const { refs, language } = req.body;
     const data = await onLoadDataFunc({ refs, language });
     res.status(200).json(data);
