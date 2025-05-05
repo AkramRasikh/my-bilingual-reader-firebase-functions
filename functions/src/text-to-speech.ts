@@ -4,9 +4,10 @@ import fs from 'fs';
 import util from 'util';
 import { googleLanguagesVoicesKey, languageVoices } from './language-keys';
 import { getAudioFolderViaLang } from './utils';
+import config from './config';
 
 const client = new textToSpeech.TextToSpeechClient({
-  credentials: JSON.parse(process.env.GOOGLE_TRANSLATE_ACCOUNT), // Securely store in Firebase config
+  credentials: JSON.parse(config.googleTranslateAccount), // Securely store in Firebase config
 });
 
 export async function synthesizeSpeech({ language, text, id }): Promise<any> {

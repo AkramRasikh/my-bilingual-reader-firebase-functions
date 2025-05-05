@@ -2,11 +2,9 @@ import * as functions from 'firebase-functions';
 import { TranslationServiceClient } from '@google-cloud/translate';
 import { Request, Response } from 'express';
 import { pinyin } from 'pinyin-pro';
-import * as dotenv from 'dotenv';
 import { synthesizeSpeech } from './text-to-speech';
 import { onLoadDataRoute } from './on-load-data';
-
-dotenv.config();
+import config from './config';
 
 const googleLanguagesKey = {
   ['japanese']: 'ja',
@@ -16,7 +14,7 @@ const googleLanguagesKey = {
 
 // Initialize Google Translate API client
 const translationClient = new TranslationServiceClient({
-  credentials: JSON.parse(process.env.GOOGLE_TRANSLATE_ACCOUNT), // Securely store in Firebase config
+  credentials: JSON.parse(config.googleTranslateAccount),
 });
 
 exports.translateText = functions.https.onRequest(
