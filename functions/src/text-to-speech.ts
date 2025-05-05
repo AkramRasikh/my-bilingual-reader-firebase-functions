@@ -3,7 +3,7 @@ import textToSpeech from '@google-cloud/text-to-speech';
 import fs from 'fs';
 import util from 'util';
 import { googleLanguagesVoicesKey, languageVoices } from './language-keys';
-import { getAudioFolderViaLang } from './utils';
+import { getAudioFolderViaLang } from './utils/get-media-folders';
 import config from './config';
 
 const client = new textToSpeech.TextToSpeechClient({

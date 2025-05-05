@@ -27,6 +27,7 @@ export async function onLoadDataFunc({
     }),
   );
 }
+// test from a higher level (ideally with DB emulator and then unit test)
 
 export const onLoadDataRoute = async (
   req: Request,
