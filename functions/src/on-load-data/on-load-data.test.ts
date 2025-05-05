@@ -1,8 +1,15 @@
 import { onLoadDataRoute } from './index';
 import functions from 'firebase-functions-test';
 
-// Initialize Firebase functions test
 const test = functions();
+
+// error messaging???
+const mockResponse = () => {
+  const res: any = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
 
 describe('onLoadDataRoute', () => {
   afterEach(() => {
@@ -28,15 +35,8 @@ describe('onLoadDataRoute', () => {
     expect(res.json).toHaveBeenCalledWith(expect.any(Object));
   });
 
-  describe('onLoadDataRoute validation', () => {
-    const mockResponse = () => {
-      const res: any = {};
-      res.status = jest.fn().mockReturnValue(res);
-      res.json = jest.fn().mockReturnValue(res);
-      return res;
-    };
-
-    it('should return 400 when refs is empty', async () => {
+  describe('onLoadDataRoute validation error (400)', () => {
+    it('refs is empty', async () => {
       const req = {
         body: {
           refs: [],
@@ -53,7 +53,7 @@ describe('onLoadDataRoute', () => {
       );
     });
 
-    it('should return 400 when refs has invalid value', async () => {
+    it('refs has invalid value', async () => {
       const req = {
         body: {
           refs: ['invalid-ref'],
@@ -70,7 +70,7 @@ describe('onLoadDataRoute', () => {
       );
     });
 
-    it('should return 400 when language is invalid', async () => {
+    it('language is invalid', async () => {
       const req = {
         body: {
           refs: ['snippets'],
@@ -87,7 +87,7 @@ describe('onLoadDataRoute', () => {
       );
     });
 
-    it('should return 400 when language is missing', async () => {
+    it('language is missing', async () => {
       const req = {
         body: {
           refs: ['snippets'],
@@ -101,21 +101,6 @@ describe('onLoadDataRoute', () => {
       expect(res.json).toHaveBeenCalledWith(
         expect.objectContaining({ errors: expect.any(Array) }),
       );
-    });
-
-    it('should return 200 when refs and language are valid', async () => {
-      const req = {
-        body: {
-          refs: ['snippets', 'words'],
-          language: 'chinese',
-        },
-      };
-
-      const res = mockResponse();
-      await onLoadDataRoute(req as any, res);
-
-      expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalled();
     });
   });
 });
