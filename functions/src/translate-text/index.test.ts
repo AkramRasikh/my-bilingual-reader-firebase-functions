@@ -33,6 +33,7 @@ describe('translateTextRoute', () => {
     await translateTextRoute(req as Request, res as Response);
 
     expect(pinyin).toHaveBeenCalledWith('你好');
+    expect(translationClient.romanizeText).not.toHaveBeenCalled();
     expect(res.json).toHaveBeenCalledWith({
       translation: 'Hello',
       transliteration: 'ni hao',
