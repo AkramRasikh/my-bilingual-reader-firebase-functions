@@ -43,7 +43,6 @@ export const translateTextRoute = async (
       transliteration,
     });
   } catch (error) {
-    console.error('Translation Error:', error);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error?.message || 'Error translating text' });
   }
 };
