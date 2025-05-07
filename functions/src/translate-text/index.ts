@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { chinese, googleLanguagesKey } from '../language-keys';
-import { translationClient } from './translation-service-client';
+import { translationClient } from '../service-clients/translation-service-client';
 import { pinyin } from 'pinyin-pro';
 import config from '../config';
 import { routeValidator } from '../shared-validation/route-validator';

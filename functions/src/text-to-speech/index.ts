@@ -4,7 +4,7 @@ import util from 'util';
 import { Request, Response } from 'express';
 import { googleLanguagesVoicesKey, languageVoices } from '../language-keys';
 import { getAudioFolderViaLang } from '../utils/get-media-folders';
-import { textToSpeechClient } from './text-to-speech-client';
+import { textToSpeechClient } from '../service-clients/text-to-speech-client';
 import { routeValidator } from '../shared-validation/route-validator';
 import { textToSpeechValidation } from './validation';
 

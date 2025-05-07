@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
-import { translationClient } from './translation-service-client';
+import { translationClient } from '../service-clients/translation-service-client';
 import { pinyin } from 'pinyin-pro';
 
 import { translateTextRoute } from '.';
 import { chinese, japanese } from '../language-keys';
 
-jest.mock('./translation-service-client');
+jest.mock('../service-clients/translation-service-client');
 jest.mock('pinyin-pro');
 
 const mockRequest = (body: any): Partial<Request> => ({ body });
