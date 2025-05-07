@@ -1,14 +1,12 @@
 import admin from 'firebase-admin';
-import textToSpeech from '@google-cloud/text-to-speech';
 import fs from 'fs';
 import util from 'util';
-import { googleLanguagesVoicesKey, languageVoices } from './language-keys';
-import { getAudioFolderViaLang } from './utils/get-media-folders';
-import config from './config';
-
-const client = new textToSpeech.TextToSpeechClient({
-  credentials: JSON.parse(config.googleTranslateAccount), // Securely store in Firebase config
-});
+import { Request, Response } from 'express';
+import { googleLanguagesVoicesKey, languageVoices } from '../language-keys';
+import { getAudioFolderViaLang } from '../utils/get-media-folders';
+import { textToSpeechClient } from './text-to-speech-client';
+import { routeValidator } from '../shared-validation/route-validator';
+import { textToSpeechValidation } from './validation';
 
 export async function synthesizeSpeech({ language, text, id }): Promise<any> {
   const random = Math.floor(Math.random() * languageVoices[language].length);
@@ -26,7 +24,9 @@ export async function synthesizeSpeech({ language, text, id }): Promise<any> {
   const tempFilePath = `/tmp/${id}.mp3`;
 
   try {
-    const [response] = (await client.synthesizeSpeech(request)) as any;
+    const [response] = (await textToSpeechClient.synthesizeSpeech(
+      request,
+    )) as any;
     const writeFile = util.promisify(fs.writeFile);
     const filePath = getAudioFolderViaLang(language) + '/' + id + '.mp3';
     await writeFile(tempFilePath, response.audioContent, 'binary');
@@ -64,3 +64,22 @@ export async function synthesizeSpeech({ language, text, id }): Promise<any> {
     }
   }
 }
+
+export const textToSpeechRoute = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const isValid = await routeValidator(req, res, textToSpeechValidation);
+    if (!isValid) {
+      return;
+    }
+    const { text, language, id } = req.body;
+    const url = await synthesizeSpeech({ text, language, id });
+    res.json({
+      url,
+    });
+  } catch (error) {
+    res.send(404);
+  }
+};
