@@ -7,11 +7,6 @@ import { onLoadDataRoute } from './on-load-data';
 import config from './config';
 import { googleLanguagesKey } from './language-keys';
 
-// Initialize Google Translate API client
-const translationClient = new TranslationServiceClient({
-  credentials: JSON.parse(config.googleTranslateAccount),
-});
-
 exports.translateText = functions.https.onRequest(
   async (req: Request, res: Response): Promise<void> => {
     try {

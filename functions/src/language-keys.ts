@@ -5,14 +5,14 @@ export const arabic = 'arabic';
 export type LanguageTypes = 'japanese' | 'chinese' | 'arabic';
 
 export const googleLanguagesKey = {
-  ['japanese']: 'ja',
-  ['chinese']: 'zh-CN',
-  ['arabic']: 'ar',
+  [japanese]: 'ja',
+  [chinese]: 'zh-CN',
+  [arabic]: 'ar',
 };
 export const googleLanguagesVoicesKey = {
-  ['japanese']: 'ja-jp',
-  ['chinese']: 'cmn-Hans-CN',
-  ['arabic']: 'ar-EG',
+  [japanese]: 'ja-jp',
+  [chinese]: 'cmn-Hans-CN',
+  [arabic]: 'ar-EG',
 };
 
 // ja-JP
