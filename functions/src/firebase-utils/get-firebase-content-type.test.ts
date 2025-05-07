@@ -1,12 +1,12 @@
-import { getFirebaseContentType } from '.';
 import { getDataSnapshot } from '../firebase-utils/get-data-snapshot';
-import { contentRef } from '../refs';
 import {
-  contentSnapShotWithNullsUndefindedMock,
   contentSnapShotValidDataMock,
-} from './mock-data';
+  contentSnapShotWithNullsUndefindedMock,
+} from '../on-load-data/mock-data';
+import { contentRef } from '../refs';
+import { getFirebaseContentType } from './get-firebase-content-type';
 
-jest.mock('../firebase-utils/get-data-snapshot');
+jest.mock('./get-data-snapshot');
 
 describe('getFirebaseContentType', () => {
   beforeEach(() => {
@@ -14,7 +14,6 @@ describe('getFirebaseContentType', () => {
   });
 
   it('should remove top-level nulls and nested content nulls when ref === contentRef', async () => {
-    // Arrange
     (getDataSnapshot as jest.Mock).mockResolvedValue(
       contentSnapShotWithNullsUndefindedMock,
     );
@@ -34,7 +33,6 @@ describe('getFirebaseContentType', () => {
   });
 
   it('should return the same data if no lingering nulls/undefined found', async () => {
-    // Arrange
     (getDataSnapshot as jest.Mock).mockResolvedValue(
       contentSnapShotValidDataMock,
     );
