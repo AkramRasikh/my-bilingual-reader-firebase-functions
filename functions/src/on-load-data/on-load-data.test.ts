@@ -4,7 +4,7 @@ import functions from 'firebase-functions-test';
 
 const test = functions();
 
-// error messaging???
+// test the keys returned [content, songs, etc]
 const mockResponse = () => {
   const res: any = {};
   res.status = jest.fn().mockReturnValue(res);
