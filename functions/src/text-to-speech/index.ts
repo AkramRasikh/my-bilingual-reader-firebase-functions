@@ -40,7 +40,7 @@ const uploadAudioFileToFirebase = async ({ language, buffer, id }) => {
 
 const cleanUpSynthesizeSpeech = (tempFilePath) => {
   try {
-    fs.unlinkSync(tempFilePath); // Clean up the temporary file
+    fs.unlinkSync(tempFilePath);
     console.log('## Temporary file deleted.');
   } catch (unlinkError) {
     console.error('Error deleting temporary file:', unlinkError);
@@ -88,9 +88,11 @@ export async function synthesizeSpeech({
     console.log('Audio content written to file: output.mp3');
     return url;
   } catch (error) {
-    console.log('## error', error);
+    throw new Error(
+      `Error uploading audio file for ${language}: ${error?.message}`,
+    );
   } finally {
-    console.log('## finally');
+    console.log('## output.mp3 cleaned up');
     cleanUpSynthesizeSpeech(tempFilePath);
   }
 }
