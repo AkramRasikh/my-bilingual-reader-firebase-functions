@@ -1,42 +1,19 @@
-import admin from 'firebase-admin';
 import fs from 'fs';
 import util from 'util';
 import { Request, Response } from 'express';
 import { googleLanguagesVoicesKey, LanguageTypes } from '../language-keys';
 import { getRandomViableVoice } from '../utils/get-random-language';
-import { getAudioFolderViaLang } from '../utils/get-media-folders';
 import { textToSpeechClient } from '../service-clients/text-to-speech-client';
 import { routeValidator } from '../shared-validation/route-validator';
 import { textToSpeechValidation } from './validation';
 import { google } from '@google-cloud/text-to-speech/build/protos/protos';
-import config from '../config';
+import { uploadAudioFileToFirebase } from '../firebase-utils/upload-audio-file-to-firebase';
 
 interface SynthesizeSpeechProps {
   language: LanguageTypes;
   text: string;
   id: string;
 }
-
-const uploadAudioFileToFirebase = async ({ language, buffer, id }) => {
-  const storage = admin.storage();
-  const bucketName = config.bucketName;
-  const filePath = getAudioFolderViaLang(language) + '/' + id + '.mp3';
-  await storage
-    .bucket(bucketName)
-    .file(filePath)
-    .save(buffer, {
-      metadata: {
-        contentType: 'audio/mpeg',
-      },
-    });
-  const bucket = storage.bucket(bucketName);
-  const file = bucket.file(filePath);
-  const [url] = await file.getSignedUrl({
-    action: 'read',
-    expires: '03-01-2500',
-  });
-  return url;
-};
 
 const cleanUpSynthesizeSpeech = (tempFilePath) => {
   try {
@@ -52,7 +29,6 @@ export async function synthesizeSpeech({
   id,
 }: SynthesizeSpeechProps): Promise<any> {
   const voice = getRandomViableVoice(language);
-
   if (!voice) {
     throw new Error(`Error getting random voice for ${language}`);
   }
@@ -76,23 +52,23 @@ export async function synthesizeSpeech({
     const [response] = await textToSpeechClient.synthesizeSpeech(
       synthesizeSpeechRequest,
     );
+
     const writeFile = util.promisify(fs.writeFile);
     await writeFile(tempFilePath, response.audioContent, 'binary');
     const buffer = fs.readFileSync(tempFilePath);
+    console.log('## Audio content written to file: output.mp3');
     const url = await uploadAudioFileToFirebase({
       buffer,
       language,
       id,
     });
-    console.log('Audio content written to file: output.mp3');
+    console.log('## output.mp3 cleaned up');
+    cleanUpSynthesizeSpeech(tempFilePath);
     return url;
   } catch (error) {
     throw new Error(
-      `Error uploading audio file for ${language}: ${error?.message}`,
+      error?.message || `Error uploading audio file for ${language}`,
     );
-  } finally {
-    console.log('## output.mp3 cleaned up');
-    cleanUpSynthesizeSpeech(tempFilePath);
   }
 }
 
