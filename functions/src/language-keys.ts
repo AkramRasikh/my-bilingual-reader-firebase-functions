@@ -15,6 +15,20 @@ export const googleLanguagesVoicesKey = {
   [arabic]: 'ar-EG',
 };
 
+type JapaneseVoice = 'ja-JP-Neural2-B' | 'ja-JP-Neural2-C' | 'ja-JP-Neural2-D';
+type ChineseVoice =
+  | 'cmn-CN-Wavenet-A'
+  | 'cmn-CN-Wavenet-B'
+  | 'cmn-CN-Wavenet-C'
+  | 'cmn-CN-Wavenet-D';
+type ArabicVoice =
+  | 'ar-XA-Wavenet-A'
+  | 'ar-XA-Wavenet-B'
+  | 'ar-XA-Wavenet-C'
+  | 'ar-XA-Wavenet-D';
+
+export type VoiceType = JapaneseVoice | ChineseVoice | ArabicVoice;
+
 // ja-JP
 const japaneseVoices = [
   'ja-JP-Neural2-B',
