@@ -19,7 +19,7 @@ export const translateTextRoute = async (
     const { text, language } = req.body;
     const sourceLanguage = googleLanguagesKey[language];
 
-    const request = {
+    const baseTranslationRequest = {
       parent: `projects/${config.projectId}`,
       contents: [text],
       mimeType: 'text/plain',
@@ -29,10 +29,14 @@ export const translateTextRoute = async (
 
     let transliteration;
 
-    const [response] = await translationClient.translateText(request);
+    const [response] = await translationClient.translateText(
+      baseTranslationRequest,
+    );
 
     if (language !== chinese) {
-      const [romanized] = await translationClient.romanizeText(request);
+      const [romanized] = await translationClient.romanizeText(
+        baseTranslationRequest,
+      );
       transliteration = romanized.romanizations[0].romanizedText;
     } else {
       transliteration = pinyin(text);
