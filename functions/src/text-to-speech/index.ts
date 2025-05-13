@@ -2,12 +2,8 @@ import admin from 'firebase-admin';
 import fs from 'fs';
 import util from 'util';
 import { Request, Response } from 'express';
-import {
-  googleLanguagesVoicesKey,
-  LanguageTypes,
-  languageVoices,
-  VoiceType,
-} from '../language-keys';
+import { googleLanguagesVoicesKey, LanguageTypes } from '../language-keys';
+import { getRandomViableVoice } from '../utils/get-random-language';
 import { getAudioFolderViaLang } from '../utils/get-media-folders';
 import { textToSpeechClient } from '../service-clients/text-to-speech-client';
 import { routeValidator } from '../shared-validation/route-validator';
@@ -49,15 +45,6 @@ const cleanUpSynthesizeSpeech = (tempFilePath) => {
   } catch (unlinkError) {
     console.error('Error deleting temporary file:', unlinkError);
   }
-};
-
-const getRandomViableVoice = (language) => {
-  const randomViableVoice = Math.floor(
-    Math.random() * languageVoices[language].length,
-  );
-
-  const voice = languageVoices[language][randomViableVoice] as VoiceType;
-  return voice;
 };
 
 export async function synthesizeSpeech({
