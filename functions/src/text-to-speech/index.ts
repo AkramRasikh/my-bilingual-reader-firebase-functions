@@ -65,17 +65,13 @@ export async function synthesizeSpeech({
   text,
   id,
 }: SynthesizeSpeechProps): Promise<any> {
-  console.log('## synthesizeSpeech 1');
-
   const voice = getRandomViableVoice(language);
-  console.log('## synthesizeSpeech 2', voice);
 
   if (!voice) {
     throw new Error(`Error getting random voice for ${language}`);
   }
 
   const tempFilePath = `/tmp/${id}.mp3`;
-  console.log('## synthesizeSpeech 2', voice);
 
   const synthesizeSpeechRequest = {
     input: {
@@ -116,11 +112,8 @@ export const textToSpeechRoute = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  console.log('## textToSpeechRoute 1');
-
   try {
     const isValid = await routeValidator(req, res, textToSpeechValidation);
-    console.log('## textToSpeechRoute 2', isValid);
     if (!isValid) {
       return;
     }
