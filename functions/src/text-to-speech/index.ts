@@ -117,7 +117,6 @@ export const textToSpeechRoute = async (
     if (!isValid) {
       return;
     }
-    console.log('## textToSpeechRoute 3', req.body);
     const { text, language, id } = req.body;
     const url = await synthesizeSpeech({ text, language, id });
     res.json({
