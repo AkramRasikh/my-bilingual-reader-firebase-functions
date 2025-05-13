@@ -41,7 +41,6 @@ const uploadAudioFileToFirebase = async ({ language, buffer, id }) => {
 const cleanUpSynthesizeSpeech = (tempFilePath) => {
   try {
     fs.unlinkSync(tempFilePath);
-    console.log('## Temporary file deleted.');
   } catch (unlinkError) {
     console.error('Error deleting temporary file:', unlinkError);
   }
