@@ -10,6 +10,7 @@ const config = {
   dbUrl: process.env.DB_URL,
   projectId: process.env.PROJECT_ID,
   bucketName: process.env.BUCKETNAME,
+  deepSeekKey: process.env.DEEPSEEK_KEY,
 };
 
 export default config;
