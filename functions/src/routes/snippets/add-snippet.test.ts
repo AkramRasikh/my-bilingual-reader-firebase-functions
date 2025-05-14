@@ -3,7 +3,7 @@ import { db } from '../../db';
 import { addSnippetRoute } from './add-snippet';
 import { arabic } from '../../language-keys';
 
-jest.mock('../../db'); // Mock the entire db module
+jest.mock('../../db');
 
 describe('addSnippetRoute', () => {
   let mockReq: Partial<Request>;
@@ -81,15 +81,12 @@ describe('addSnippetRoute', () => {
     expect(db.ref).not.toHaveBeenCalled();
     expect(statusMock).toHaveBeenCalledWith(500);
     expect(jsonMock).toHaveBeenCalledWith({
-      error: 'Error adding snippets for arabic',
+      error: 'Error snippet already exists arabic',
     });
   });
 
   it('should handle unexpected errors and respond with 500', async () => {
-    // Mock db.ref().set() to throw an error
-    const setMock = jest
-      .fn()
-      .mockRejectedValue(new Error('Unexpected DB Error'));
+    const setMock = jest.fn().mockRejectedValue(new Error());
     (db.ref as jest.Mock).mockReturnValue({ set: setMock });
 
     await addSnippetRoute(mockReq as Request, mockRes as Response);
@@ -97,7 +94,7 @@ describe('addSnippetRoute', () => {
     expect(db.ref).toHaveBeenCalledWith('arabic/snippets');
     expect(statusMock).toHaveBeenCalledWith(500);
     expect(jsonMock).toHaveBeenCalledWith({
-      error: 'Error adding snippets for arabic',
+      error: 'Error getting snapshot of snippets for arabic',
     });
   });
 });

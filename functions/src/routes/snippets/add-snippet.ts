@@ -50,7 +50,7 @@ const addSnippetLogic = async ({ language, snippet }: AddSnippetLogicTypes) => {
       throw new Error(`Error snippet already exists ${language}`);
     }
   } catch (error) {
-    throw new Error(`Error adding snippets for ${language}`);
+    throw new Error(error?.message || `Error adding snippets for ${language}`);
   }
 };
 
