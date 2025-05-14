@@ -4,6 +4,7 @@ import { translateTextRoute } from './translate-text';
 import { textToSpeechRoute } from './text-to-speech';
 import { addSnippetRoute } from './routes/snippets/add-snippet';
 import { deleteSnippetRoute } from './routes/snippets/delete-snippet';
+import { addWordRoute } from './routes/words/add-word';
 
 exports.translateText = functions.https.onRequest(translateTextRoute);
 
@@ -14,3 +15,5 @@ exports.getOnLoadData = functions.https.onRequest(onLoadDataRoute);
 exports.addSnippet = functions.https.onRequest(addSnippetRoute);
 
 exports.deleteSnippet = functions.https.onRequest(deleteSnippetRoute);
+
+exports.addWord = functions.https.onRequest(addWordRoute);
