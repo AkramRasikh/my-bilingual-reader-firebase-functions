@@ -2,7 +2,7 @@ import { getDataSnapshot } from '../firebase-utils/get-data-snapshot';
 import {
   contentSnapShotValidDataMock,
   contentSnapShotWithNullsUndefindedMock,
-} from '../on-load-data/mock-data';
+} from '../routes/on-load-data/mock-data';
 import { contentRef } from '../refs';
 import { getFirebaseContentType } from './get-firebase-content-type';
 

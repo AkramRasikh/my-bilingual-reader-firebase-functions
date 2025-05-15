@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { LanguageTypes } from '../language-keys';
-import { RefTypes } from '../refs';
+import { LanguageTypes } from '../../language-keys';
+import { RefTypes } from '../../refs';
 import { onLoadDataValidation } from './validation';
-import { routeValidator } from '../shared-validation/route-validator';
-import { getFirebaseContentType } from '../firebase-utils/get-firebase-content-type';
+import { routeValidator } from '../../shared-validation/route-validator';
+import { getFirebaseContentType } from '../../firebase-utils/get-firebase-content-type';
 
 interface OnLoadDataProps {
   language: LanguageTypes;

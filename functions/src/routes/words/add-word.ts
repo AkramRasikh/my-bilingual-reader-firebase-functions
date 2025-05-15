@@ -4,7 +4,7 @@ import { db } from '../../db';
 import { wordsRef } from '../../refs';
 import { getRefPath } from '../../firebase-utils/get-ref-path';
 import { getDataSnapshot } from '../../firebase-utils/get-data-snapshot';
-import { LangaugeAndContentTypes } from '../../on-load-data';
+import { LangaugeAndContentTypes } from '../on-load-data';
 import { routeValidator } from '../../shared-validation/route-validator';
 import { addWordValidation } from './add-word-validation';
 import { getTranslationData } from './get-translation';

@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import { onLoadDataRoute } from './on-load-data';
+import { onLoadDataRoute } from './routes/on-load-data';
 import { translateTextRoute } from './routes/translate-text';
 import { textToSpeechRoute } from './routes/text-to-speech';
 import { addSnippetRoute } from './routes/snippets/add-snippet';

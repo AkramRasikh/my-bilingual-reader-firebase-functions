@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { getDataSnapshot } from '../../firebase-utils/get-data-snapshot';
 import { snippetsRef } from '../../refs';
 import { db } from '../../db';
-import { LangaugeAndContentTypes } from '../../on-load-data';
+import { LangaugeAndContentTypes } from '../on-load-data';
 import { getRefPath } from '../../firebase-utils/get-ref-path';
 import { routeValidator } from '../../shared-validation/route-validator';
 import { addSnippetValidation } from './add-snippet-validation';

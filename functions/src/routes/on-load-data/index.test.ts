@@ -1,4 +1,4 @@
-import * as getFirebaseContentTypeService from '../firebase-utils/get-firebase-content-type';
+import * as getFirebaseContentTypeService from '../../firebase-utils/get-firebase-content-type';
 import { onLoadDataRoute } from './index';
 import functions from 'firebase-functions-test';
 

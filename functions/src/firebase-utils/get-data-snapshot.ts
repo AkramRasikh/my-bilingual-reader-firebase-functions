@@ -1,7 +1,7 @@
 import { Database } from 'firebase-admin/database';
 
 import { getRefPath } from './get-ref-path';
-import { LangaugeAndContentTypes } from '../on-load-data';
+import { LangaugeAndContentTypes } from '../routes/on-load-data';
 
 interface getDataSnapshotProps extends LangaugeAndContentTypes {
   db: Database;
