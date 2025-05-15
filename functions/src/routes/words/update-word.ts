@@ -10,11 +10,12 @@ import { routeValidator } from '../../shared-validation/route-validator';
 import { updateWordValidation } from './update-word-validation';
 import { LanguageTypes } from '../../language-keys';
 import { updateDatabaseViaIndex } from '../../firebase-utils/update-database-via-index';
+import { UpdateWordFieldType } from './add-word';
 
 export interface UpdateWordLogicProps {
   id: string;
   language: LanguageTypes;
-  fieldToUpdate: any;
+  fieldToUpdate: UpdateWordFieldType;
 }
 
 const updateWord = async ({

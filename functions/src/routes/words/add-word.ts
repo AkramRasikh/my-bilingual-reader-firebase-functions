@@ -21,6 +21,7 @@ export interface WordType {
   phonetic: string;
   notes?: string;
 }
+
 export interface AddWordType {
   word: string;
   language: LangaugeAndContentTypes['language'];
@@ -29,6 +30,17 @@ export interface AddWordType {
   isGoogle?: boolean;
   reviewData?: any;
   meaning?: string;
+}
+
+export interface UpdateWordFieldType {
+  baseForm?: string;
+  definition?: string;
+  contexts?: string[];
+  reviewData?: ReviewDataType;
+  surfaceForm?: string;
+  transliteration?: string;
+  phonetic?: string;
+  notes?: string;
 }
 
 const addWord = async ({
