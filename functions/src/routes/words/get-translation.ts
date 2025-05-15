@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { chatGPTTranslator } from '../../ai-utils';
+import { deepSeekTranslator } from '../../ai-utils';
 import { getGoogleTranslate } from '../translate-text/google-translate-route';
 import { ReviewDataType } from '../../types/shared-types';
 
@@ -25,7 +25,7 @@ export const getTranslationData = async ({
   try {
     const translationDataRes = isGoogle
       ? await getGoogleTranslate({ word, language })
-      : await chatGPTTranslator({
+      : await deepSeekTranslator({
           word,
           context: contextSentence,
           language,

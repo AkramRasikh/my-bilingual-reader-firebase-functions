@@ -4,7 +4,7 @@ import { japaneseformatTranslationPrompt } from './japanese-word-prompt';
 import { chineseformatTranslationPrompt } from './chinese-word-prompt';
 import config from '../config';
 
-interface chatGPTTranslatorParams {
+interface deepSeekTranslatorParams {
   word: string;
   language: LanguageTypes;
   context?: string;
@@ -29,11 +29,11 @@ const getThisLanguagePrompt = ({
   throw new Error('Error matching language keys for prompt');
 };
 
-export const chatGPTTranslator = async ({
+export const deepSeekTranslator = async ({
   word,
   context,
   language,
-}: chatGPTTranslatorParams) => {
+}: deepSeekTranslatorParams) => {
   const deepseekKey = config.deepSeekKey;
   const openai = new OpenAI({
     apiKey: deepseekKey,
@@ -66,12 +66,12 @@ export const chatGPTTranslator = async ({
     const parsed = JSON.parse(cleanedContent);
     return parsed;
   } catch (error) {
-    const message = error?.message;
-    const tooManyRequestsOrVerifyIssues =
-      message?.includes('quota') || message?.includes('Quota');
-    if (tooManyRequestsOrVerifyIssues) {
-      throw new Error('Open AI quota error');
+    console.error('Deepseek Status Code:', error.response.status);
+    console.error('Deepseek Error:', error.message);
+    if (error.message) {
+      throw new Error(error.message);
+    } else {
+      throw new Error('Error calling DeepSeek API');
     }
-    throw new Error('Error using OpenAI translation');
   }
 };
