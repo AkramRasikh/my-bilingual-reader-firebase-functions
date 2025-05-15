@@ -8,20 +8,7 @@ import { LangaugeAndContentTypes } from '../../on-load-data';
 import { routeValidator } from '../../shared-validation/route-validator';
 import { addWordValidation } from './add-word-validation';
 import { getTranslationData } from './get-translation';
-
-interface ReviewDataType {
-  difficulty: number;
-  due: Date;
-  ease: number;
-  elapsed_days: number;
-  interval: number;
-  lapses: number;
-  last_review: Date;
-  reps: number;
-  scheduled_days: number;
-  stability: number;
-  state: number;
-}
+import { ReviewDataType } from '../../types/shared-types';
 
 export interface WordType {
   id: string;

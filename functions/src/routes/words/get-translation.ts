@@ -1,20 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { chatGPTTranslator } from '../../ai-utils';
 import { getGoogleTranslate } from '../../translate-text/google-translate-route';
-
-interface ReviewDataType {
-  difficulty: number;
-  due: Date;
-  ease: number;
-  elapsed_days: number;
-  interval: number;
-  lapses: number;
-  last_review: Date;
-  reps: number;
-  scheduled_days: number;
-  stability: number;
-  state: number;
-}
+import { ReviewDataType } from '../../types/shared-types';
 
 export interface WordType {
   id: string;
