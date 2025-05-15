@@ -5,20 +5,6 @@ interface SnapshotItemsPickerProps {
 
 type WithId = { id: string; [key: string]: any };
 
-export const getThisItemsIndex = ({
-  arr,
-  id,
-}: SnapshotItemsPickerProps): number => {
-  const length = arr.length;
-  for (let i = 0; i < length; i++) {
-    const thisItem = arr[i].id === id;
-    if (thisItem) {
-      return i;
-    }
-  }
-  return -1;
-};
-
 export const getThisItemsViaValues = ({
   arr,
   id,

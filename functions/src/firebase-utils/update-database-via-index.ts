@@ -16,9 +16,14 @@ export const updateDatabaseViaIndex = async ({
   fieldToUpdate,
   ref,
 }: updateDatabaseViaIndexProps) => {
-  const refPath = getRefPath({ language, ref });
-  const refObj = db.ref(refPath);
-  const snapshotObj = refObj.child(indexKey);
-  await snapshotObj.update(fieldToUpdate);
-  return fieldToUpdate;
+  try {
+    const refPath = getRefPath({ language, ref });
+    const refObj = db.ref(refPath);
+    const snapshotObj = refObj.child(indexKey);
+    await snapshotObj.update(fieldToUpdate);
+    const updatedSnapshot = await snapshotObj.get();
+    return updatedSnapshot;
+  } catch (error) {
+    throw new Error('Error updating and returning field');
+  }
 };

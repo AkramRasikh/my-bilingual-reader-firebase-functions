@@ -2,10 +2,7 @@ import { Request, Response } from 'express';
 import { getDataSnapshot } from '../../firebase-utils/get-data-snapshot';
 import { wordsRef } from '../../refs';
 import { db } from '../../db';
-import {
-  getThisItemsIndex,
-  getThisItemsViaValues,
-} from '../../firebase-utils/get-snapshot-items-index';
+import { getThisItemsViaValues } from '../../firebase-utils/get-snapshot-items-index';
 import { routeValidator } from '../../shared-validation/route-validator';
 import { updateWordValidation } from './update-word-validation';
 import { LanguageTypes } from '../../language-keys';
@@ -30,34 +27,22 @@ const updateWord = async ({
       db,
     });
 
-    const indexKey = getThisItemsIndex({ arr: snapshotArr, id });
-
-    if (indexKey >= 0 && isFinite(indexKey)) {
-      await updateDatabaseViaIndex({
-        language,
-        indexKey: indexKey.toString(),
-        fieldToUpdate,
-        ref: wordsRef,
-      });
-      return fieldToUpdate;
-    }
-
     const { keys, index } = getThisItemsViaValues({ arr: snapshotArr, id });
 
     if (index !== -1) {
       const indexViaValues = keys[index];
-      await updateDatabaseViaIndex({
+      const wordWithUpdatedFields = await updateDatabaseViaIndex({
         language,
         indexKey: indexViaValues,
         fieldToUpdate,
         ref: wordsRef,
       });
-      return fieldToUpdate;
+      return wordWithUpdatedFields;
     } else {
       throw new Error('Word not found in DB');
     }
   } catch (error) {
-    throw new Error('Error querying firebase DB (words)');
+    throw new Error(error?.message || 'Error querying firebase DB (words)');
   }
 };
 
@@ -69,19 +54,16 @@ export const updateWordRoute = async (
   if (!isValid) {
     return;
   }
-  const { wordId, language, fieldToUpdate } = req.body;
+  const { id, language, fieldToUpdate } = req.body;
 
   try {
-    const fieldToUpdateRes = await updateWord({
+    const updatedWordData = await updateWord({
       language,
-      id: wordId,
+      id,
       fieldToUpdate,
     });
-    if (fieldToUpdateRes) {
-      res.status(200).json(fieldToUpdateRes);
-    } else {
-      res.status(400).json({ message: 'Word not found' });
-    }
+
+    res.status(200).json(updatedWordData);
   } catch (error) {
     res.status(400).json({ error: error?.message || 'Error updating word' });
   }
