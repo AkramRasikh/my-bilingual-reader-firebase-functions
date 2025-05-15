@@ -11,6 +11,6 @@ export const getThisItemsViaValues = ({
 }: SnapshotItemsPickerProps) => {
   const thisItemsValues = Object.values(arr) as WithId[];
   const keys = Object.keys(arr);
-  const index = thisItemsValues.findIndex((item) => item.id === id);
+  const index = thisItemsValues.findIndex((item) => item?.id === id);
   return { keys, index };
 };

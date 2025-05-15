@@ -21,13 +21,13 @@ const updateWord = async ({
   fieldToUpdate,
 }: UpdateWordLogicProps) => {
   try {
-    const snapshotArr = await getDataSnapshot({
+    const wordSnapshotArr = await getDataSnapshot({
       language,
       ref: wordsRef,
       db,
     });
 
-    const { keys, index } = getThisItemsViaValues({ arr: snapshotArr, id });
+    const { keys, index } = getThisItemsViaValues({ arr: wordSnapshotArr, id });
 
     if (index !== -1) {
       const indexViaValues = keys[index];
