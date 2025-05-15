@@ -31,7 +31,7 @@ const updateWord = async ({
 
     const indexKey = getThisItemsIndex({ arr: snapshotArr, id });
 
-    if (isFinite(indexKey)) {
+    if (indexKey >= 0 && isFinite(indexKey)) {
       await updateDatabaseViaIndex({
         language,
         indexKey: indexKey.toString(),
