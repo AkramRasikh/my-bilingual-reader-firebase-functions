@@ -41,8 +41,6 @@ export const getTranslationData = async ({
         translationDataRes?.phonetic || translationDataRes?.transliteration,
     };
   } catch (error) {
-    console.log('## getTranslationData error?.message', error?.message);
-
     throw new Error(
       error?.message ||
         `Error trying to translate via ${isGoogle ? 'google' : 'AI'}`,
