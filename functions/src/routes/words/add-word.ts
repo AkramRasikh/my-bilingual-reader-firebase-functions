@@ -21,7 +21,7 @@ export interface WordType {
   phonetic: string;
   notes?: string;
 }
-interface AddWordType {
+export interface AddWordType {
   word: string;
   language: LangaugeAndContentTypes['language'];
   context: string;

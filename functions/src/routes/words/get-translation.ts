@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { deepSeekTranslator } from '../../ai-utils';
 import { getGoogleTranslate } from '../translate-text/google-translate-route';
 import { ReviewDataType } from '../../types/shared-types';
+import { AddWordType } from './add-word';
 
 export interface WordType {
   id: string;
@@ -15,13 +16,21 @@ export interface WordType {
   notes?: string;
 }
 
+interface getTranslationDataProps {
+  isGoogle: AddWordType['isGoogle'];
+  context: AddWordType['context'];
+  contextSentence: AddWordType['contextSentence'];
+  word: AddWordType['word'];
+  language: AddWordType['language'];
+}
+
 export const getTranslationData = async ({
   isGoogle,
   context,
   contextSentence,
   word,
   language,
-}) => {
+}: getTranslationDataProps) => {
   try {
     const translationDataRes = isGoogle
       ? await getGoogleTranslate({ word, language })

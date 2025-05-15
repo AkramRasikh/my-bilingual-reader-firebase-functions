@@ -15,7 +15,7 @@ interface SynthesizeSpeechProps {
   id: string;
 }
 
-const cleanUpSynthesizeSpeech = (tempFilePath) => {
+const cleanUpSynthesizeSpeech = (tempFilePath: string) => {
   try {
     fs.unlinkSync(tempFilePath);
   } catch (unlinkError) {
@@ -52,9 +52,13 @@ export async function synthesizeSpeech({
     const [response] = await textToSpeechClient.synthesizeSpeech(
       synthesizeSpeechRequest,
     );
+    const audioContent = response?.audioContent;
+    if (!audioContent) {
+      throw new Error('Error getting audio content from Google');
+    }
 
     const writeFile = util.promisify(fs.writeFile);
-    await writeFile(tempFilePath, response.audioContent, 'binary');
+    await writeFile(tempFilePath, audioContent, 'binary');
     const buffer = fs.readFileSync(tempFilePath);
     console.log('## Audio content written to file: output.mp3');
     const url = await uploadAudioFileToFirebase({
