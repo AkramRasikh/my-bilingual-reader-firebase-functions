@@ -5,6 +5,7 @@ import {
 } from '../routes/on-load-data/mock-data';
 import { contentRef } from '../refs';
 import { getFirebaseContentType } from './get-firebase-content-type';
+import { chinese } from '../language-keys';
 
 jest.mock('./get-data-snapshot');
 
@@ -19,7 +20,7 @@ describe('getFirebaseContentType', () => {
     );
 
     const result = await getFirebaseContentType({
-      language: 'chinese',
+      language: chinese,
       ref: contentRef, // triggers nested content cleanup
     });
 
@@ -38,7 +39,7 @@ describe('getFirebaseContentType', () => {
     );
 
     const result = await getFirebaseContentType({
-      language: 'chinese',
+      language: chinese,
       ref: contentRef,
     });
 
