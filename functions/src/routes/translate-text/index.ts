@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { chinese, googleLanguagesKey } from '../language-keys';
-import { translationClient } from '../service-clients/translation-service-client';
+import { chinese, googleLanguagesKey } from '../../language-keys';
+import { translationClient } from '../../service-clients/translation-service-client';
 import { pinyin } from 'pinyin-pro';
-import config from '../config';
-import { routeValidator } from '../shared-validation/route-validator';
+import config from '../../config';
+import { routeValidator } from '../../shared-validation/route-validator';
 import { translateTextValidation } from './validation';
 
 export const translateTextRoute = async (

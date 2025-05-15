@@ -1,8 +1,8 @@
 import { pinyin } from 'pinyin-pro';
-import { chinese, googleLanguagesKey, japanese } from '../language-keys';
-import config from '../config';
-import kanjiToHiragana from '../japanese-utils/kanji-to-hiragana';
-import { translationClient } from '../service-clients/translation-service-client';
+import { chinese, googleLanguagesKey, japanese } from '../../language-keys';
+import config from '../../config';
+import kanjiToHiragana from '../../japanese-utils/kanji-to-hiragana';
+import { translationClient } from '../../service-clients/translation-service-client';
 
 export const getGoogleTranslate = async ({ word, language }) => {
   const fromLanguage = googleLanguagesKey[language];
