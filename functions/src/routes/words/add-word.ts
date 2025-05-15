@@ -1,15 +1,13 @@
 import { Request, Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
 import { filterOutNestedNulls } from '../../utils/filter-out-nested-nulls';
 import { db } from '../../db';
 import { wordsRef } from '../../refs';
 import { getRefPath } from '../../firebase-utils/get-ref-path';
 import { getDataSnapshot } from '../../firebase-utils/get-data-snapshot';
-import { chatGPTTranslator } from '../../ai-utils';
 import { LangaugeAndContentTypes } from '../../on-load-data';
-import { getGoogleTranslate } from '../../translate-text/google-translate-route';
 import { routeValidator } from '../../shared-validation/route-validator';
 import { addWordValidation } from './add-word-validation';
+import { getTranslationData } from './get-translation';
 
 interface ReviewDataType {
   difficulty: number;
@@ -36,7 +34,7 @@ export interface WordType {
   phonetic: string;
   notes?: string;
 }
-interface AddWordLogicType {
+interface AddWordType {
   word: string;
   language: LangaugeAndContentTypes['language'];
   context: string;
@@ -46,33 +44,7 @@ interface AddWordLogicType {
   meaning?: string;
 }
 
-const getTranslationData = async ({
-  isGoogle,
-  context,
-  contextSentence,
-  word,
-  language,
-}) => {
-  const translationDataRes = isGoogle
-    ? await getGoogleTranslate({ word, language })
-    : await chatGPTTranslator({
-        word,
-        context: contextSentence,
-        language,
-      });
-
-  return {
-    id: uuidv4(),
-    contexts: [context],
-    surfaceForm: word,
-    ...translationDataRes,
-    baseForm: translationDataRes?.baseForm || word,
-    phonetic:
-      translationDataRes?.phonetic || translationDataRes?.transliteration,
-  };
-};
-
-const addWordLogic = async ({
+const addWord = async ({
   word,
   language,
   context,
@@ -80,7 +52,7 @@ const addWordLogic = async ({
   isGoogle,
   reviewData,
   meaning,
-}: AddWordLogicType) => {
+}: AddWordType) => {
   try {
     const refPath = getRefPath({
       language,
@@ -121,10 +93,10 @@ const addWordLogic = async ({
       ]);
       return wordDataWithBreakdownDefinition;
     } else {
-      throw new Error(`${word} already exists in ${language} word back`);
+      return false;
     }
   } catch (error) {
-    throw new Error(error || 'Error trying to add word into DB');
+    throw new Error(error?.message || 'Error trying to add word into DB');
   }
 };
 
@@ -147,7 +119,7 @@ export const addWordRoute = async (
   } = req.body;
 
   try {
-    const addedWordData = await addWordLogic({
+    const wordData = await addWord({
       word,
       language,
       context,
@@ -156,9 +128,13 @@ export const addWordRoute = async (
       reviewData,
       meaning,
     });
+    if (!wordData) {
+      res.status(409);
+      return;
+    }
+
     res.status(200).json({
-      message: `Successfully added word ${addedWordData.baseForm} added`,
-      word: addedWordData,
+      word: wordData,
     });
   } catch (error: any) {
     res
