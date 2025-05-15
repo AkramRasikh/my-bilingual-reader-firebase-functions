@@ -16,6 +16,8 @@ interface GetThisLanguagePromptTypes {
   context: string;
 }
 
+const baseURL = 'https://api.deepseek.com/v1';
+
 const getThisLanguagePrompt = ({
   word,
   language,
@@ -37,7 +39,7 @@ export const deepSeekTranslator = async ({
   const deepseekKey = config.deepSeekKey;
   const openai = new OpenAI({
     apiKey: deepseekKey,
-    baseURL: 'https://api.deepseek.com/v1',
+    baseURL,
   });
 
   const formattedTranslationPrompt = getThisLanguagePrompt({
