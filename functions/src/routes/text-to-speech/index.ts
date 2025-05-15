@@ -1,13 +1,13 @@
 import fs from 'fs';
 import util from 'util';
 import { Request, Response } from 'express';
-import { googleLanguagesVoicesKey, LanguageTypes } from '../language-keys';
-import { getRandomViableVoice } from '../utils/get-random-language';
-import { textToSpeechClient } from '../service-clients/text-to-speech-client';
-import { routeValidator } from '../shared-validation/route-validator';
+import { googleLanguagesVoicesKey, LanguageTypes } from '../../language-keys';
+import { getRandomViableVoice } from '../../utils/get-random-language';
+import { textToSpeechClient } from '../../service-clients/text-to-speech-client';
+import { routeValidator } from '../../shared-validation/route-validator';
 import { textToSpeechValidation } from './validation';
 import { google } from '@google-cloud/text-to-speech/build/protos/protos';
-import { uploadAudioFileToFirebase } from '../firebase-utils/upload-audio-file-to-firebase';
+import { uploadAudioFileToFirebase } from '../../firebase-utils/upload-audio-file-to-firebase';
 
 interface SynthesizeSpeechProps {
   language: LanguageTypes;

@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
-import { textToSpeechRoute } from './';
-import { japanese } from '../language-keys';
-import { textToSpeechClient } from '../service-clients/text-to-speech-client';
-import { uploadAudioFileToFirebase } from '../firebase-utils/upload-audio-file-to-firebase';
+import { textToSpeechRoute } from '.';
+import { japanese } from '../../language-keys';
+import { textToSpeechClient } from '../../service-clients/text-to-speech-client';
+import { uploadAudioFileToFirebase } from '../../firebase-utils/upload-audio-file-to-firebase';
 
-jest.mock('../service-clients/text-to-speech-client');
-jest.mock('../firebase-utils/upload-audio-file-to-firebase');
+jest.mock('../../service-clients/text-to-speech-client');
+jest.mock('../../firebase-utils/upload-audio-file-to-firebase');
 
 const mockAudioContent = Buffer.from([
   0xff, 0xf3, 0x84, 0xc4, 0x00, 0x00, 0x00,
