@@ -1,13 +1,13 @@
 import { body } from 'express-validator';
 import { languageValidation } from '../../shared-validation';
 
-export const updateWordObj = {
-  wordId: 'wordId',
+const updateWordObj = {
+  id: 'id',
   language: 'language',
   fieldToUpdate: 'fieldToUpdate',
 };
 
-export const wordKeysRouteValidationObj = {
+const wordKeysRouteValidationObj = {
   id: 'id',
   baseForm: 'baseForm',
   definition: 'definition',
@@ -18,9 +18,7 @@ export const wordKeysRouteValidationObj = {
   phonetic: 'phonetic',
 };
 
-export const wordKeysRouteValidationArr = Object.keys(
-  wordKeysRouteValidationObj,
-);
+const wordKeysRouteValidationArr = Object.keys(wordKeysRouteValidationObj);
 
 const updateFieldForWordValidation = (value: object) => {
   if (!value || typeof value !== 'object') {
@@ -46,9 +44,6 @@ const updateFieldForWordValidation = (value: object) => {
 
 export const updateWordValidation = [
   ...languageValidation,
-  body(updateWordObj.wordId)
-    .notEmpty()
-    .isString()
-    .withMessage('wordId is required for an update'),
+  body(updateWordObj.id).notEmpty().isString(),
   body(updateWordObj.fieldToUpdate).custom(updateFieldForWordValidation),
 ];
