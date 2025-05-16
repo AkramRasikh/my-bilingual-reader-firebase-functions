@@ -4,22 +4,7 @@ import { deleteWordValidation } from './delete-word-validation';
 import { wordsRef } from '../../refs';
 import { removeItemFromSnapshot } from '../../firebase-utils/remove-item-from-snapshot';
 
-const deleteWordLogic = async ({ language, id }) => {
-  try {
-    const deletedWord = await removeItemFromSnapshot({
-      id,
-      ref: wordsRef,
-      language,
-    });
-
-    const deletedWordBaseForm = deletedWord.baseForm;
-    return deletedWordBaseForm;
-  } catch (error) {
-    throw new Error(`Error deleting word for ${language}`);
-  }
-};
-
-export const deleteWord = async (
+export const deleteWordRoute = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
@@ -27,12 +12,16 @@ export const deleteWord = async (
   if (!isValid) {
     return;
   }
-  const id = req.body.id;
-  const language = req.body.language;
+  const { id, language } = req.body;
 
   try {
-    const deletedWord = await deleteWordLogic({ language, id });
-    res.status(200).json({ message: `${deletedWord} word deleted` });
+    const deletedWordId = await removeItemFromSnapshot({
+      id,
+      ref: wordsRef,
+      language,
+    });
+
+    res.status(200).json({ id: deletedWordId });
   } catch (error) {
     res
       .status(500)
