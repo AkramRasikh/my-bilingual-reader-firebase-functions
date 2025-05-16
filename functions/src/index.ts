@@ -7,6 +7,7 @@ import { deleteSnippetRoute } from './routes/snippets/delete-snippet';
 import { addWordRoute } from './routes/words/add-word';
 import { updateWordRoute } from './routes/words/update-word';
 import { deleteWordRoute } from './routes/words/delete-word';
+import { updateContentMetaDataRoute } from './routes/content/update-content';
 
 exports.translateText = functions.https.onRequest(translateTextRoute);
 
@@ -23,3 +24,7 @@ exports.addWord = functions.https.onRequest(addWordRoute);
 exports.updateWord = functions.https.onRequest(updateWordRoute);
 
 exports.deleteWord = functions.https.onRequest(deleteWordRoute);
+
+exports.updateContentMetaData = functions.https.onRequest(
+  updateContentMetaDataRoute,
+);

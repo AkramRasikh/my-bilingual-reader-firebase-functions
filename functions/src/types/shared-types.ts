@@ -11,3 +11,8 @@ export interface ReviewDataType {
   stability: number;
   state: number;
 }
+
+export interface LegacyReviewTypes {
+  nextReview?: string;
+  reviewHistory?: string[];
+}
