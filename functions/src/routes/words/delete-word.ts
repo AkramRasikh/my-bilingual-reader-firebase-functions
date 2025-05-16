@@ -21,7 +21,12 @@ export const deleteWordRoute = async (
       language,
     });
 
-    res.status(200).json({ id: deletedWordId });
+    if (deletedWordId) {
+      res.status(200).json({ id: deletedWordId });
+      return;
+    }
+
+    res.status(404).json({ error: 'Word not found' });
   } catch (error) {
     res
       .status(500)

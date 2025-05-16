@@ -38,4 +38,15 @@ describe('deleteWordRoute', () => {
     expect(statusMock).toHaveBeenCalledWith(500);
     expect(jsonMock).toHaveBeenCalledWith({ error: 'Deletion failed' });
   });
+
+  it('should return 404 if word to delete is not found', async () => {
+    (removeItemFromSnapshot as jest.Mock).mockResolvedValue(null); // not found
+
+    await deleteWordRoute(req as Request, res as Response);
+
+    expect(statusMock).toHaveBeenCalledWith(404);
+    expect(jsonMock).toHaveBeenCalledWith({
+      error: 'Word not found',
+    });
+  });
 });
