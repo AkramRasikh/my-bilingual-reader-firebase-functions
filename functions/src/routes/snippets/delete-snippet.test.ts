@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { db } from '../../db';
 import { getDataSnapshot } from '../../firebase-utils/get-data-snapshot';
 import { deleteSnippetRoute } from './delete-snippet';
+import { japanese } from '../../language-keys';
 
 jest.mock('../../db'); // Mock the entire db module
 
@@ -22,7 +23,7 @@ describe('deleteSnippetRoute', () => {
 
     mockReq = {
       body: {
-        language: 'japanese', // Use any of "arabic", "japanese", "chinese"
+        language: japanese,
         id: '12345',
       },
     };
