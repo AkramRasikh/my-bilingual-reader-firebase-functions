@@ -1,17 +1,24 @@
 import Kuroshiro from 'kuroshiro';
 import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji';
 
+const kuroshiro = new Kuroshiro();
+let isKuroshiroInitialized = false;
+
+const initializeKuroshiro = async () => {
+  if (!isKuroshiroInitialized) {
+    await kuroshiro.init(new KuromojiAnalyzer());
+    isKuroshiroInitialized = true;
+  }
+};
+
 interface kanjiToHiraganaParams {
   sentence: string;
 }
 
 const kanjiToHiragana = async ({ sentence }: kanjiToHiraganaParams) => {
   try {
-    const kuroshiro = new Kuroshiro();
+    await initializeKuroshiro();
 
-    await kuroshiro.init(new KuromojiAnalyzer());
-
-    // Convert what you want
     const hasKanji = Kuroshiro.Util.hasKanji;
 
     if (hasKanji(sentence)) {
@@ -23,6 +30,7 @@ const kanjiToHiragana = async ({ sentence }: kanjiToHiraganaParams) => {
 
     return sentence;
   } catch (error) {
+    console.error('## kanjiToHiragana Error:', error);
     throw error;
   }
 };
