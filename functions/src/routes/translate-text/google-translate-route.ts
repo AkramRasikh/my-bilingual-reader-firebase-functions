@@ -1,8 +1,9 @@
 import { pinyin } from 'pinyin-pro';
 import { chinese, googleLanguagesKey, japanese } from '../../language-keys';
 import config from '../../config';
-import kanjiToHiragana from '../../japanese-utils/kanji-to-hiragana';
+import japJs from 'jap-js';
 import { translationClient } from '../../service-clients/translation-service-client';
+import { deepSeekKanjiToPhonetic } from '../../japanese-utils/kanji-to-phonetic-ai';
 
 export const getGoogleTranslate = async ({ word, language }) => {
   const fromLanguage = googleLanguagesKey[language];
@@ -29,8 +30,15 @@ export const getGoogleTranslate = async ({ word, language }) => {
     }
 
     if (language === japanese) {
-      phonetic = await kanjiToHiragana({ sentence: word });
+      const hasKanji = japJs.hasKanji(word);
+
+      if (hasKanji) {
+        phonetic = await deepSeekKanjiToPhonetic({ word });
+      } else {
+        phonetic = word;
+      }
     }
+
     return { definition, transliteration, phonetic };
   } catch (error) {
     throw new Error(error || 'Error getting google translation');
