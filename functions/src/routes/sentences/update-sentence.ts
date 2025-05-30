@@ -98,5 +98,3 @@ export const updateSentenceRoute = async (
     });
   }
 };
-
-export { updateSentenceInContent };
