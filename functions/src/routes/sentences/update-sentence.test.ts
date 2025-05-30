@@ -4,7 +4,6 @@ import { db } from '../../db';
 import { updateSentenceRoute } from './update-sentence';
 import { getDataSnapshot } from '../../firebase-utils/get-data-snapshot';
 
-// 🔥 Only mocking db and getDataSnapshot
 jest.mock('../../db');
 jest.mock('../../firebase-utils/get-data-snapshot');
 
