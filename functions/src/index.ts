@@ -9,6 +9,7 @@ import { updateWordRoute } from './routes/words/update-word';
 import { deleteWordRoute } from './routes/words/delete-word';
 import { updateContentMetaDataRoute } from './routes/content/update-content';
 import { updateSentenceRoute } from './routes/sentences/update-sentence';
+import { updateAdhocSentenceRoute } from './routes/sentences/update-adhoc-sentence';
 
 exports.translateText = functions.https.onRequest(translateTextRoute);
 
@@ -31,3 +32,7 @@ exports.updateContentMetaData = functions.https.onRequest(
 );
 
 exports.updateSentence = functions.https.onRequest(updateSentenceRoute);
+
+exports.updateAdhocSentence = functions.https.onRequest(
+  updateAdhocSentenceRoute,
+);
