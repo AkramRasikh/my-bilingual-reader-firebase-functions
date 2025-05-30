@@ -85,13 +85,13 @@ export const updateSentenceRoute = async (
   const { id, title, fieldToUpdate, language } = req.body;
 
   try {
-    const data = await updateSentenceInContent({
+    const updatedField = await updateSentenceInContent({
       id,
       title,
       fieldToUpdate,
       language,
     });
-    res.status(200).json(data);
+    res.status(200).json(updatedField);
   } catch (error: any) {
     res.status(500).json({
       error: error?.message || `Error adding snippet for ${language}`,
