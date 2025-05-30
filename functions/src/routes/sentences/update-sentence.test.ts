@@ -116,10 +116,7 @@ describe('updateSentenceRoute', () => {
 
     expect(updateMock).toHaveBeenCalledWith({ targetLang: '新目标语言' });
     expect(statusMock).toHaveBeenCalledWith(200);
-    expect(jsonMock).toHaveBeenCalledWith({
-      updatedFields: { targetLang: '新目标语言' },
-      content: mockContentForSentenceUpdate[0].content,
-    });
+    expect(jsonMock).toHaveBeenCalledWith({ targetLang: '新目标语言' });
   });
   it('should update a sentence successfully (reviewData)', async () => {
     // getDataSnapshot returns content mock
@@ -138,13 +135,10 @@ describe('updateSentenceRoute', () => {
 
     expect(updateMock).toHaveBeenCalledWith(updateReviewData);
     expect(statusMock).toHaveBeenCalledWith(200);
-    expect(jsonMock).toHaveBeenCalledWith({
-      updatedFields: { ...updateReviewData },
-      content: mockContentForSentenceUpdate[0].content,
-    });
+    expect(jsonMock).toHaveBeenCalledWith(updateReviewData);
   });
 
-  it.only('should update a sentence successfully (with corrupt content file- null/undefined)', async () => {
+  it('should update a sentence successfully (with corrupt content file- null/undefined)', async () => {
     // getDataSnapshot returns content mock
     (getDataSnapshot as jest.Mock).mockResolvedValue(
       mockContentForSentenceUpdateWithUndefinded,
@@ -160,8 +154,7 @@ describe('updateSentenceRoute', () => {
     expect(updateMock).toHaveBeenCalledWith({ targetLang: '新目标语言' });
     expect(statusMock).toHaveBeenCalledWith(200);
     expect(jsonMock).toHaveBeenCalledWith({
-      updatedFields: { targetLang: '新目标语言' },
-      content: mockContentForSentenceUpdateWithUndefinded[0].content,
+      targetLang: '新目标语言',
     });
   });
 

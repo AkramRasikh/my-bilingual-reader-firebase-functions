@@ -60,7 +60,7 @@ const updateSentenceInContent = async ({
           .ref(refPath)
           .child(getPathToSentenceInContent({ contentKey, sentenceKey }));
         await refObj.update(fieldToUpdate);
-        return { updatedFields: fieldToUpdate, content: thisTopicContent };
+        return fieldToUpdate;
       } else {
         throw new Error('Error cannot find sentence index');
       }
