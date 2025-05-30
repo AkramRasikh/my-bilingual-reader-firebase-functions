@@ -34,6 +34,33 @@ const mockContentForSentenceUpdate = [
     reviewHistory: ['2025-04-12T15:28:23.145Z'],
   },
 ];
+const mockContentForSentenceUpdateWithUndefinded = [
+  {
+    content: [
+      undefined,
+      {
+        baseLang: '? Actually, this is not Malaysia,',
+        id: '68170de1-0ad4-4486-8cba-d06528fc2206',
+        targetLang: '国内这个其实啊，这个不是马来西亚',
+        time: 0,
+      },
+      {
+        baseLang: 'this is a Muslim. . He has this doctrine',
+        id: '2b57b65e-9b31-4a49-90b7-0bba9e7e386c',
+        targetLang: '这是穆斯林. 他有这个教义上',
+        time: 3,
+      },
+    ],
+    title: 'huimin-marriage-miya-4',
+    hasAudio: true,
+    hasVideo: true,
+    interval: 60,
+    nextReview: '2025-04-15T15:28:21.897Z',
+    origin: 'youtube',
+    realStartTime: 180,
+    reviewHistory: ['2025-04-12T15:28:23.145Z'],
+  },
+];
 
 describe('updateSentenceRoute', () => {
   let mockReq: Partial<Request>;
@@ -79,6 +106,27 @@ describe('updateSentenceRoute', () => {
     expect(jsonMock).toHaveBeenCalledWith({
       updatedFields: { targetLang: '新目标语言' },
       content: mockContentForSentenceUpdate[0].content,
+    });
+  });
+
+  it.only('should update a sentence successfully (with corrupt content file- null/undefined)', async () => {
+    // getDataSnapshot returns content mock
+    (getDataSnapshot as jest.Mock).mockResolvedValue(
+      mockContentForSentenceUpdateWithUndefinded,
+    );
+
+    // db.ref().child().update() chain
+    const updateMock = jest.fn().mockResolvedValue(undefined);
+    const childMock = jest.fn().mockReturnValue({ update: updateMock });
+    (db.ref as jest.Mock).mockReturnValue({ child: childMock });
+
+    await updateSentenceRoute(mockReq as Request, mockRes as Response);
+
+    expect(updateMock).toHaveBeenCalledWith({ targetLang: '新目标语言' });
+    expect(statusMock).toHaveBeenCalledWith(200);
+    expect(jsonMock).toHaveBeenCalledWith({
+      updatedFields: { targetLang: '新目标语言' },
+      content: mockContentForSentenceUpdateWithUndefinded[0].content,
     });
   });
 

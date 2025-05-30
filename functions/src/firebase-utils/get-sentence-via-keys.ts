@@ -7,7 +7,8 @@ export const getThisSentenceIndex = ({ data, id }) => {
 
   // Find the index of the object to update
   const sentenceIndex = values.findIndex((item: SentenceType) => {
-    return item.id === id;
+    // added optional
+    return item?.id === id;
   });
 
   return { sentenceKeys, sentenceIndex };
