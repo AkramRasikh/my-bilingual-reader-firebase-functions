@@ -61,9 +61,15 @@ const mockContentForSentenceUpdateWithUndefinded = [
     reviewHistory: ['2025-04-12T15:28:23.145Z'],
   },
 ];
+const updateReviewData = {
+  reviewData: {
+    due: '2026-04-29T19:56:54.008Z',
+  },
+};
 
 describe('updateSentenceRoute', () => {
   let mockReq: Partial<Request>;
+  let mockReqReviewData: Partial<Request>;
   let mockRes: Partial<Response>;
   let jsonMock: jest.Mock;
   let statusMock: jest.Mock;
@@ -81,6 +87,15 @@ describe('updateSentenceRoute', () => {
       },
     };
 
+    mockReqReviewData = {
+      body: {
+        id: '68170de1-0ad4-4486-8cba-d06528fc2206',
+        title: 'huimin-marriage-miya-4',
+        language: 'chinese',
+        fieldToUpdate: { ...updateReviewData },
+      },
+    };
+
     mockRes = {
       status: statusMock,
     };
@@ -94,7 +109,6 @@ describe('updateSentenceRoute', () => {
       mockContentForSentenceUpdate,
     );
 
-    // db.ref().child().update() chain
     const updateMock = jest.fn().mockResolvedValue(undefined);
     const childMock = jest.fn().mockReturnValue({ update: updateMock });
     (db.ref as jest.Mock).mockReturnValue({ child: childMock });
@@ -105,6 +119,28 @@ describe('updateSentenceRoute', () => {
     expect(statusMock).toHaveBeenCalledWith(200);
     expect(jsonMock).toHaveBeenCalledWith({
       updatedFields: { targetLang: '新目标语言' },
+      content: mockContentForSentenceUpdate[0].content,
+    });
+  });
+  it('should update a sentence successfully (reviewData)', async () => {
+    // getDataSnapshot returns content mock
+    (getDataSnapshot as jest.Mock).mockResolvedValue(
+      mockContentForSentenceUpdate,
+    );
+
+    const updateMock = jest.fn().mockResolvedValue(undefined);
+    const childMock = jest.fn().mockReturnValue({ update: updateMock });
+    (db.ref as jest.Mock).mockReturnValue({ child: childMock });
+
+    await updateSentenceRoute(
+      mockReqReviewData as Request,
+      mockRes as Response,
+    );
+
+    expect(updateMock).toHaveBeenCalledWith(updateReviewData);
+    expect(statusMock).toHaveBeenCalledWith(200);
+    expect(jsonMock).toHaveBeenCalledWith({
+      updatedFields: { ...updateReviewData },
       content: mockContentForSentenceUpdate[0].content,
     });
   });
