@@ -7,6 +7,8 @@ import { getDataSnapshot } from '../../firebase-utils/get-data-snapshot';
 jest.mock('../../db');
 jest.mock('../../firebase-utils/get-data-snapshot');
 
+// add delete functionality
+// currently just passing reviewData: {} deletes the review
 const mockContentForSentenceUpdate = [
   {
     content: [

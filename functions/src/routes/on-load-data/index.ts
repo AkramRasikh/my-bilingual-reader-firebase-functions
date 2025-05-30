@@ -27,8 +27,6 @@ export async function onLoadDataFunc({
           [ref]: refData,
         };
       } catch (error) {
-        console.log('## onLoadDataFunc Error', error);
-        console.error('## onLoadDataFunc Error', error);
         throw new Error(`Error fetching ${ref} for ${language}`);
       }
     }),
