@@ -7,7 +7,8 @@ import { textToSpeechClient } from '../../service-clients/text-to-speech-client'
 import { routeValidator } from '../../shared-validation/route-validator';
 import { textToSpeechValidation } from './validation';
 import { google } from '@google-cloud/text-to-speech/build/protos/protos';
-import { uploadAudioFileToFirebase } from '../../firebase-utils/upload-audio-file-to-firebase';
+import { getAudioFolderViaLang } from '../../utils/get-media-folders';
+import { uploadAssetToCloudFlare } from '../../firebase-utils/upload-asset-to-cloudflare';
 
 interface SynthesizeSpeechProps {
   language: LanguageTypes;
@@ -59,16 +60,13 @@ export async function synthesizeSpeech({
 
     const writeFile = util.promisify(fs.writeFile);
     await writeFile(tempFilePath, audioContent, 'binary');
-    const buffer = fs.readFileSync(tempFilePath);
+    // const buffer = fs.readFileSync(tempFilePath);
     console.log('## Audio content written to file: output.mp3');
-    const url = await uploadAudioFileToFirebase({
-      buffer,
-      language,
-      id,
-    });
+    const filePath = getAudioFolderViaLang(language) + '/' + id + '.mp3';
+    await uploadAssetToCloudFlare({ tempFilePath, cloudflarePath: filePath });
     console.log('## output.mp3 cleaned up');
     cleanUpSynthesizeSpeech(tempFilePath);
-    return url;
+    return filePath;
   } catch (error) {
     throw new Error(
       error?.message || `Error uploading audio file for ${language}`,
