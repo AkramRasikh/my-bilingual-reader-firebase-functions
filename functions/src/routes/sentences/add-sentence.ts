@@ -180,7 +180,7 @@ const grammarContrastTTS = async (req: Request, res: Response) => {
   }
 };
 
-const adhocSentenceMinimalPairingWords = async (
+const adhocSentenceMinimalPairingRoute = async (
   req: Request,
   res: Response,
 ) => {
@@ -319,8 +319,8 @@ const adhocSentenceCustomWord = async (req: Request, res: Response) => {
 
 export {
   adhocSentenceTTSRoute,
+  adhocSentenceMinimalPairingRoute,
   adhocExpressionTTS,
   grammarContrastTTS,
-  adhocSentenceMinimalPairingWords,
   adhocSentenceCustomWord,
 };

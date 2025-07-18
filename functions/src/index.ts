@@ -10,7 +10,10 @@ import { deleteWordRoute } from './routes/words/delete-word';
 import { updateContentMetaDataRoute } from './routes/content/update-content';
 import { updateSentenceRoute } from './routes/sentences/update-sentence';
 import { updateAdhocSentenceRoute } from './routes/sentences/update-adhoc-sentence';
-import { adhocSentenceTTSRoute } from './routes/sentences/add-sentence';
+import {
+  adhocSentenceMinimalPairingRoute,
+  adhocSentenceTTSRoute,
+} from './routes/sentences/add-sentence';
 
 exports.translateText = functions.https.onRequest(translateTextRoute);
 
@@ -39,3 +42,7 @@ exports.updateAdhocSentence = functions.https.onRequest(
 );
 
 exports.addSentence = functions.https.onRequest(adhocSentenceTTSRoute);
+
+exports.addMinimalPairSentence = functions.https.onRequest(
+  adhocSentenceMinimalPairingRoute,
+);
