@@ -31,6 +31,38 @@ const getThisLanguagePrompt = ({
   throw new Error('Error matching language keys for prompt');
 };
 
+export const deepSeekChatAPI = async ({ sentence }) => {
+  const deepseekKey = config.deepSeekKey;
+  const openai = new OpenAI({
+    apiKey: deepseekKey,
+    baseURL,
+  });
+  try {
+    const completion = await openai.chat.completions.create({
+      messages: [
+        {
+          role: 'user',
+          content: sentence,
+        },
+      ],
+      model: 'deepseek-chat',
+    });
+
+    const content = completion.choices[0].message.content;
+    const cleanedContent = content
+      .replace(/```json/g, '')
+      .replace(/```/g, '')
+      .trim();
+
+    const parsed = JSON.parse(cleanedContent);
+
+    return parsed;
+  } catch (error) {
+    console.log('## Error DeepSeek: ', error);
+    throw error;
+  }
+};
+
 export const deepSeekTranslator = async ({
   word,
   context,
