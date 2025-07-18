@@ -27,6 +27,7 @@
     "jap-js": "^1.4.0",
     "openai": "^4.98.0",
     "pinyin-pro": "^3.26.0",
+    "ts-fsrs": "^5.2.1",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
