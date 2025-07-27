@@ -35,17 +35,23 @@ export const deepSeekChatAPI = async ({ sentence }) => {
   const deepseekKey = config.deepSeekKey;
   const openai = new OpenAI({
     apiKey: deepseekKey,
-    baseURL,
+    // baseURL,
   });
   try {
     const completion = await openai.chat.completions.create({
       messages: [
         {
+          role: 'system',
+          content:
+            'You are a helpful assistant that generates natural and fluent Japanese sentences based on English instructions.',
+        },
+        {
           role: 'user',
           content: sentence,
         },
       ],
-      model: 'deepseek-chat',
+      // model: 'deepseek-chat',
+      model: 'gpt-4o-mini',
     });
 
     const content = completion.choices[0].message.content;
@@ -84,11 +90,17 @@ export const deepSeekTranslator = async ({
     const completion = await openai.chat.completions.create({
       messages: [
         {
+          role: 'system',
+          content:
+            'You are a helpful assistant that generates natural and fluent Japanese sentences based on English instructions.',
+        },
+        {
           role: 'user',
           content: formattedTranslationPrompt,
         },
       ],
-      model: 'deepseek-chat',
+      // model: 'deepseek-chat',
+      model: 'gpt-4o-mini',
     });
 
     const content = completion.choices[0].message.content;

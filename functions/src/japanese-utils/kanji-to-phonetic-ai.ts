@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 import config from '../config';
 
-const baseURL = 'https://api.deepseek.com/v1';
+// const baseURL = 'https://api.deepseek.com/v1';
 
 const japaneseKanjiToPhoenticPrompt = ({ word, context = '' }) => {
   const contextInstruction = context
@@ -15,7 +15,7 @@ export const deepSeekKanjiToPhonetic = async ({ word, context }: any) => {
   const deepseekKey = config.deepSeekKey;
   const openai = new OpenAI({
     apiKey: deepseekKey,
-    baseURL,
+    // baseURL,
   });
 
   const formattedTranslationPrompt = japaneseKanjiToPhoenticPrompt({
@@ -27,11 +27,17 @@ export const deepSeekKanjiToPhonetic = async ({ word, context }: any) => {
     const completion = await openai.chat.completions.create({
       messages: [
         {
+          role: 'system',
+          content:
+            'You are a helpful assistant that generates natural and fluent Japanese sentences based on English instructions.',
+        },
+        {
           role: 'user',
           content: formattedTranslationPrompt,
         },
       ],
-      model: 'deepseek-chat',
+      // model: 'deepseek-chat',
+      model: 'gpt-4o-mini',
     });
 
     const content = completion.choices[0].message.content;
