@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { deepSeekChatAPI } from '../../ai-utils';
 import { getInitSentenceCard } from '../../srs-utils';
+import { addSentencesBulk } from '../../firebase-utils/add-sentences-bulk';
+import { synthesizeSpeech } from '../text-to-speech';
 
 // import { getInitSentenceCard } from '../../srs-utils';
 
@@ -72,17 +74,35 @@ const addExpressionRoute = async (req: Request, res: Response) => {
       sentence: expressionPrompt,
     });
 
-    const sentenceToAddFromDB = {
+    const sentenceObj = {
       ...resultContent.sentence,
       id: uuidv4(),
       topic: 'sentence-helper',
-      // hasAudio: true,
+      hasAudio: true,
       reviewData: getInitSentenceCard(),
       inquiry,
       context,
     };
 
-    res.status(200).json(sentenceToAddFromDB); // {senten}
+    const sentencesWithIds = await addSentencesBulk({
+      language,
+      sentencesBulk: [sentenceObj],
+    });
+
+    await Promise.all(
+      sentencesWithIds.map(async (item) => {
+        const id = item.id;
+        const text = item.targetLang;
+
+        return await synthesizeSpeech({
+          id,
+          text,
+          language,
+        });
+      }),
+    );
+
+    res.status(200).json(sentenceObj);
   } catch (error) {
     console.log('## /adhoc-sentence-tts error', error);
     res.status(500).json({ error });
