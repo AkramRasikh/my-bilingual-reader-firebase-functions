@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-// import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { deepSeekChatAPI } from '../../ai-utils';
+import { getInitSentenceCard } from '../../srs-utils';
 
 // import { getInitSentenceCard } from '../../srs-utils';
 
@@ -71,7 +72,17 @@ const addExpressionRoute = async (req: Request, res: Response) => {
       sentence: expressionPrompt,
     });
 
-    res.status(200).json(resultContent);
+    const sentenceToAddFromDB = {
+      ...resultContent.sentence,
+      id: uuidv4(),
+      topic: 'sentence-helper',
+      // hasAudio: true,
+      reviewData: getInitSentenceCard(),
+      inquiry,
+      context,
+    };
+
+    res.status(200).json(sentenceToAddFromDB); // {senten}
   } catch (error) {
     console.log('## /adhoc-sentence-tts error', error);
     res.status(500).json({ error });
