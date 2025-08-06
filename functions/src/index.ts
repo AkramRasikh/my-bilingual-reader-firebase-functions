@@ -15,6 +15,7 @@ import {
   adhocSentenceTTSRoute,
 } from './routes/sentences/add-sentence';
 import { addAlreadyGeneratedSentenceRoute } from './routes/sentences/add-already-generated-sentence';
+import { addExpressionRoute } from './routes/sentences/add-expression';
 
 exports.translateText = functions.https.onRequest(translateTextRoute);
 
@@ -50,3 +51,4 @@ exports.addMinimalPairSentence = functions.https.onRequest(
 exports.addAlreadyGeneratedSentence = functions.https.onRequest(
   addAlreadyGeneratedSentenceRoute,
 );
+exports.addExpression = functions.https.onRequest(addExpressionRoute);
