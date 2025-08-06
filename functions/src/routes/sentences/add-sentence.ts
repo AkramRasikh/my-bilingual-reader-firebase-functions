@@ -186,7 +186,7 @@ const adhocSentenceMinimalPairingRoute = async (
 ) => {
   const inputWord = req.body.inputWord;
   const language = req.body.language;
-  const isMeaning = req.body.isMeaning; // antonym, synonym, functional, seperate (sort out placement)
+  const isMeaning = req.body.isMeaning; // antonym, synonym, functional, seperate, conversation (sort out placement)
   const isVisual = req.body.isVisual;
 
   try {

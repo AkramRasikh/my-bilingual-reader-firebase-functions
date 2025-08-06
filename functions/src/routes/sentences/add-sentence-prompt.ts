@@ -261,17 +261,25 @@ export const adhocSentenceMinimalPairingWordsMeaningPrompt = ({
     pairingType === 'rhyme' || pairingType === 'haiku'
       ? '• A rhyme or short haiku'
       : ''
-  }
+  }  
   ${pairingType === 'functional' ? '• A functional partner' : ''}
+  ${pairingType === 'conversation' ? '• A conversational piece of text' : ''}
 
   ### Input Word:
   ${JSON.stringify(word)}
 
   ### Requirements:
+  ${
+    pairingType === 'conversation'
+      ? `      
+    Please write a short natural-sounding example dialogue using these words. The dialogue should be between two people and include **at least two exchanges** (i.e., a minimum of 2 sentences total, alternating speakers). Use questions, imperatives, natural filler words, and varied sentence types to make it conversational and engaging.
+    Keep the dialogue concise but meaningful and ideally theatrical, ensuring that the context clearly demonstrates how the words are used naturally.
+      `
+      : `
   1. Complete, natural phrase or short sentence in ${targetLanguage}
   2. Original script + romanization if non-Latin
-  3. Words may be grammatically modified
-
+  3. Words may be grammatically modified`
+  }
   ### Response Format (strict JSON):
   {
     "sentences": [{
