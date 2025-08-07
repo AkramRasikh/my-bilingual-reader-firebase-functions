@@ -16,6 +16,7 @@ import {
 } from './routes/sentences/add-sentence';
 import { addAlreadyGeneratedSentenceRoute } from './routes/sentences/add-already-generated-sentence';
 import { addExpressionRoute } from './routes/sentences/add-expression';
+import { breakdownSentenceRoute } from './routes/sentences/sentence-breakdown';
 
 exports.translateText = functions.https.onRequest(translateTextRoute);
 
@@ -52,3 +53,5 @@ exports.addAlreadyGeneratedSentence = functions.https.onRequest(
   addAlreadyGeneratedSentenceRoute,
 );
 exports.addExpression = functions.https.onRequest(addExpressionRoute);
+
+exports.breakdownSentence = functions.https.onRequest(breakdownSentenceRoute);

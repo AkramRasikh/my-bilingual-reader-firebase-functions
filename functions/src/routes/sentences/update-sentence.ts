@@ -26,7 +26,7 @@ interface UpdateSentenceInContentTypes {
 const getPathToSentenceInContent = ({ contentKey, sentenceKey }) =>
   `${contentKey}/${contentRef}/${sentenceKey}`;
 
-const updateSentenceInContent = async ({
+export const updateSentenceInContent = async ({
   id,
   language,
   title,
