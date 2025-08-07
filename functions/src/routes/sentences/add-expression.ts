@@ -104,7 +104,7 @@ const addExpressionRoute = async (req: Request, res: Response) => {
 
     res.status(200).json(sentenceObj);
   } catch (error) {
-    console.log('## /adhoc-sentence-tts error', error);
+    console.log('## /add-expression error', error);
     res.status(500).json({ error });
   }
 };
