@@ -42,7 +42,6 @@ export const updateContentMetaDataRoute = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  updateContentMetaDataValidation;
   const isValid = await routeValidator(
     req,
     res,
