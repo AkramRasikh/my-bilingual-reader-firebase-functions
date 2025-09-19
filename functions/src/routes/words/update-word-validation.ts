@@ -16,7 +16,7 @@ const wordKeysRouteValidationObj = {
   surfaceForm: 'surfaceForm',
   transliteration: 'transliteration',
   phonetic: 'phonetic',
-  imageUrl: 'imageUrl',
+  hasImage: 'hasImage',
 };
 
 const wordKeysRouteValidationArr = Object.keys(wordKeysRouteValidationObj);
