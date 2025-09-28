@@ -34,7 +34,7 @@ export interface AddWordType {
 
 export interface UpdateWordFieldType {
   baseForm?: string;
-  hasImage?: boolean;
+  imageUrl?: string;
   definition?: string;
   contexts?: string[];
   reviewData?: ReviewDataType;
