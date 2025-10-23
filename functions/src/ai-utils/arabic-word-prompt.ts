@@ -1,36 +1,22 @@
-const wordProperties = {
-  baseForm: 'baseForm',
-  surfaceForm: 'surfaceForm',
-  definition: 'definition',
-  transliteration: 'transliteration',
-  phonetic: 'phonetic',
-  notes: 'notes',
-};
-
-const jsonFormatBasicExample = {
-  baseForm: '扒手',
-  surfaceForm: '扒手',
-  definition: 'pickpocket',
-  transliteration: 'Páshǒu',
-  phonetic: 'Páshǒu',
-  notes:
-    "扒手 (pāshǒu) means pickpocket in arabic. It refers to someone who steals small items, usually money or valuables, from others' pockets or bags without them noticing",
-};
+import { sharedWordProperties } from './shared-word-properties';
 
 const jsonFormatVerbExample = {
-  definition: 'Two Less, One Leniency policy',
-  transliteration: 'Liǎng shǎo yī kuān',
-  baseForm: '两少一宽',
-  phonetic: 'Liǎng shǎo yī kuān',
-  surfaceForm: '两少一宽',
+  definition: 'To rely on / depend upon',
+  transliteration: 'Iʿtamada ʿalā',
+  baseForm: 'اعتمد على',
+  phonetic: 'I‘ta-ma-da ʿa-laa',
+  surfaceForm: 'اعتمدتُ على صديقي',
   notes:
-    'The "Two Less, One Leniency" (两少一宽) policy in 1980s China aimed to reduce arrests and death penalties for ethnic minorities and juvenile offenders, while granting them more lenient sentencing. It sought to promote social stability and rehabilitation over harsh punishment',
+    'The phrase "اعتمد على" (iʿtamada ʿalā) literally means "to lean on," but idiomatically it expresses reliance or dependence — both physical and metaphorical. The surface form "اعتمدتُ على صديقي" means "I relied on my friend." The preposition "على" (ʿalā) is essential; without it, the meaning changes. The verb اعتمد comes from the root ع-م-د (ʿ-m-d), meaning "to support" or "to lean." This expression can be used in many contexts: اعتمد على الله (“rely on God”), اعتمد على نفسه (“rely on himself”), or اعتمد على النظام (“depend on the system”). Note that object pronouns attach to the preposition, not the verb (e.g., اعتمدتُ عليه).',
 };
 
-const baseFormPrompt = `${wordProperties.baseForm}: Give me the base form of the word provided. For example the base form (infinite form) of 泳げます is 泳ぐ. If possible, also do this when multiple verbs are used together for example 勉強して遊びたい => 勉強して遊ぶ. However, if this detracts from the meaning then leave it as the surface level provided i.e. 勉強して遊びたい. If it is a phrase then leave it as it is for example じゃあいってきます can be left as it is.`;
-const notePrompt = `${wordProperties.notes}: This is a field to mention anything nuanced happening in the language that may be missed. For example 彷徨う is pronounced ‘samayou’ but 彷徨 is pronounced ‘hōkō’. Anything that may be relevant to the learner given the word, it’s use in the context provided and how the word maybe used in another context would be useful.`;
-const transliterationPrompt = `${wordProperties.transliteration}: is the transliteration of the baseForm.`;
-const phoneticPrompt = `${wordProperties.phonetic}: is the romanji/katakana of the ${wordProperties.baseForm}.`;
+const baseFormPrompt = `${sharedWordProperties.baseForm}: Give me the base or root form of the word or phrase provided. For example, the base form of يعتمد على is اعتمد على. If multiple words are used together to form a fixed verbal phrase, such as اعتمد على or شارك في, keep the full expression as the base form.`;
+
+const notePrompt = `${sharedWordProperties.notes}: Use this field to highlight nuances in Arabic usage. For instance, verbs that take specific prepositions can change meaning (e.g., فكر في means “to think about,” while فكر بـ may imply “to consider doing something”). Clarify root meanings, particle attachment, or differences between formal and colloquial uses if relevant.`;
+
+const transliterationPrompt = `${sharedWordProperties.transliteration}: is the transliteration of the ${sharedWordProperties.baseForm}. Use standard academic or simplified transliteration (e.g., Iʿtamada ʿalā).`;
+
+const phoneticPrompt = `${sharedWordProperties.phonetic}: is the phonetic or romanized pronunciation of the ${sharedWordProperties.baseForm}, simplified for learners (e.g., I‘ta-ma-da ʿa-laa).`;
 
 const arabicformatTranslationPrompt = (arabicWord, context) => {
   return `
@@ -44,11 +30,6 @@ const arabicformatTranslationPrompt = (arabicWord, context) => {
   ${JSON.stringify(phoneticPrompt)}
 
   For example, given ${
-    jsonFormatBasicExample.surfaceForm
-  } I want the return object:
-    ${JSON.stringify(jsonFormatBasicExample)}
-
-  A more comprehensive example for ${
     jsonFormatVerbExample.surfaceForm
   } I want the return object: 
 

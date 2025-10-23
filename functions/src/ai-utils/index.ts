@@ -1,8 +1,9 @@
 import OpenAI from 'openai';
-import { chinese, japanese, LanguageTypes } from '../language-keys';
+import { arabic, chinese, japanese, LanguageTypes } from '../language-keys';
 import { japaneseformatTranslationPrompt } from './japanese-word-prompt';
 import { chineseformatTranslationPrompt } from './chinese-word-prompt';
 import config from '../config';
+import { arabicformatTranslationPrompt } from './arabic-word-prompt';
 
 interface deepSeekTranslatorParams {
   word: string;
@@ -27,6 +28,8 @@ const getThisLanguagePrompt = ({
     return japaneseformatTranslationPrompt(word, context);
   } else if (language === chinese) {
     return chineseformatTranslationPrompt(word, context);
+  } else if (language === arabic) {
+    return arabicformatTranslationPrompt(word, context);
   }
   throw new Error('Error matching language keys for prompt');
 };
