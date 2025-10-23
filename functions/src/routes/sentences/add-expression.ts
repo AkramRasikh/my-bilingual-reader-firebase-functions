@@ -72,6 +72,7 @@ const addExpressionRoute = async (req: Request, res: Response) => {
   try {
     const resultContent = await deepSeekChatAPI({
       sentence: expressionPrompt,
+      language,
     });
 
     const sentenceObj = {

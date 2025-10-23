@@ -29,6 +29,7 @@ export const breakdownSentenceRoute = async (req: Request, res: Response) => {
   try {
     const breakdown = await deepSeekChatAPI({
       sentence: prompt,
+      language,
     });
 
     if (breakdown) {

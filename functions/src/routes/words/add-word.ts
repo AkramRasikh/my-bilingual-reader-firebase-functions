@@ -51,7 +51,7 @@ const addWord = async ({
   contextSentence,
   isGoogle,
   reviewData,
-  meaning,
+  meaning = '',
 }: AddWordType) => {
   try {
     const refPath = getRefPath({

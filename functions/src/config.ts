@@ -10,6 +10,7 @@ const config = {
   dbUrl: process.env.DB_URL,
   projectId: process.env.PROJECT_ID,
   bucketName: process.env.BUCKETNAME,
+  openAiKey: process.env.OPENAI_KEY,
   deepSeekKey: process.env.DEEPSEEK_KEY,
 };
 

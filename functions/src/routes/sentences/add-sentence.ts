@@ -32,6 +32,7 @@ const adhocSentenceTTSRoute = async (req: Request, res: Response) => {
   try {
     const resultContent = await deepSeekChatAPI({
       sentence: sentencePrompt,
+      language,
     });
 
     const sentencesFromResult = resultContent.sentences;
@@ -85,6 +86,7 @@ const adhocExpressionTTS = async (req: Request, res: Response) => {
   try {
     const resultContent = await deepSeekChatAPI({
       sentence: sentencePrompt,
+      language,
     });
 
     const sentencesFromResult = resultContent.sentences;
@@ -142,6 +144,7 @@ const grammarContrastTTS = async (req: Request, res: Response) => {
   try {
     const resultContent = await deepSeekChatAPI({
       sentence: sentencePrompt,
+      language,
     });
 
     const sentencesFromResult = resultContent.sentences;
@@ -212,6 +215,7 @@ const adhocSentenceMinimalPairingRoute = async (
         });
     const resultContent = await deepSeekChatAPI({
       sentence: sentencePrompt,
+      language,
     });
     const sentencesFromResult = resultContent.sentences;
 
@@ -271,6 +275,7 @@ const adhocSentenceCustomWord = async (req: Request, res: Response) => {
 
     const resultContent = await deepSeekChatAPI({
       sentence: sentencePrompt,
+      language,
     });
     const sentencesFromResult = resultContent.sentences;
 

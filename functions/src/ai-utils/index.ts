@@ -17,7 +17,7 @@ interface GetThisLanguagePromptTypes {
   context: string;
 }
 
-// const baseURL = 'https://api.deepseek.com/v1';
+const deepSeekBaseUrl = 'https://api.deepseek.com/v1';
 
 const getThisLanguagePrompt = ({
   word,
@@ -34,27 +34,27 @@ const getThisLanguagePrompt = ({
   throw new Error('Error matching language keys for prompt');
 };
 
-export const deepSeekChatAPI = async ({ sentence }) => {
+export const deepSeekChatAPI = async ({ sentence, language }) => {
+  const openAiKey = config.openAiKey;
   const deepseekKey = config.deepSeekKey;
+  const isChinese = language === chinese;
   const openai = new OpenAI({
-    apiKey: deepseekKey,
-    // baseURL,
+    apiKey: isChinese ? deepseekKey : openAiKey,
+    baseURL: isChinese ? deepSeekBaseUrl : undefined,
   });
   try {
     const completion = await openai.chat.completions.create({
       messages: [
         {
           role: 'system',
-          content:
-            'You are a helpful assistant that generates natural and fluent Japanese sentences based on English instructions.',
+          content: `You are a helpful assistant that generates natural and fluent ${language} sentences based on English instructions.`,
         },
         {
           role: 'user',
           content: sentence,
         },
       ],
-      // model: 'deepseek-chat',
-      model: 'gpt-4o-mini',
+      model: isChinese ? 'deepseek-chat' : 'gpt-4o-mini',
     });
 
     const content = completion.choices[0].message.content;
@@ -77,9 +77,12 @@ export const deepSeekTranslator = async ({
   context,
   language,
 }: deepSeekTranslatorParams) => {
+  const openAiKey = config.openAiKey;
   const deepseekKey = config.deepSeekKey;
+  const isChinese = language === chinese;
   const openai = new OpenAI({
-    apiKey: deepseekKey,
+    apiKey: isChinese ? deepseekKey : openAiKey,
+    baseURL: isChinese ? deepSeekBaseUrl : undefined,
   });
 
   const formattedTranslationPrompt = getThisLanguagePrompt({
@@ -93,16 +96,14 @@ export const deepSeekTranslator = async ({
       messages: [
         {
           role: 'system',
-          content:
-            'You are a helpful assistant that generates natural and fluent Japanese sentences based on English instructions.',
+          content: `You are a helpful assistant that generates natural and fluent ${language} sentences based on English instructions.`,
         },
         {
           role: 'user',
           content: formattedTranslationPrompt,
         },
       ],
-      // model: 'deepseek-chat',
-      model: 'gpt-4o-mini',
+      model: isChinese ? 'deepseek-chat' : 'gpt-4o-mini',
     });
 
     const content = completion.choices[0].message.content;
