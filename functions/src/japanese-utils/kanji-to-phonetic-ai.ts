@@ -12,9 +12,9 @@ const japaneseKanjiToPhoenticPrompt = ({ word, context = '' }) => {
 };
 
 export const deepSeekKanjiToPhonetic = async ({ word, context }: any) => {
-  const deepseekKey = config.deepSeekKey;
+  const openAiKey = config.openAiKey;
   const openai = new OpenAI({
-    apiKey: deepseekKey,
+    apiKey: openAiKey,
     // baseURL,
   });
 
