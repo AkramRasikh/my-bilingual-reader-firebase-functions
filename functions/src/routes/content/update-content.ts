@@ -23,13 +23,13 @@ const updateContentMetaData = async ({ title, language, fieldToUpdate }) => {
     if (index !== -1) {
       const key = keys[index];
 
-      const updatedContent = await updateDatabaseViaIndex({
+      await updateDatabaseViaIndex({
         language,
         indexKey: key.toString(),
         ref: contentRef,
         fieldToUpdate,
       });
-      return updatedContent;
+      return fieldToUpdate;
     } else {
       throw new Error("Couldn't find content to update");
     }
@@ -50,6 +50,7 @@ export const updateContentMetaDataRoute = async (
   if (!isValid) {
     return;
   }
+
   const { language, title, fieldToUpdate } = req.body;
 
   try {
@@ -58,6 +59,7 @@ export const updateContentMetaDataRoute = async (
       fieldToUpdate,
       language,
     });
+
     res.status(200).json(fieldToUpdateRes);
   } catch (error) {
     res
