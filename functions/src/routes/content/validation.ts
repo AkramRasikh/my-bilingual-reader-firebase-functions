@@ -10,6 +10,7 @@ const updateContentKeysRouteValidationObj = {
   reviewHistory: `${fieldToUpdatePrefix}.reviewHistory`,
   isCore: `${fieldToUpdatePrefix}.isCore`,
   hasAudio: `${fieldToUpdatePrefix}.hasAudio`,
+  snippets: `${fieldToUpdatePrefix}.snippets`,
 };
 const updateContentKeysRouteValidationArr = Object.keys(
   updateContentKeysRouteValidationObj,
@@ -46,4 +47,5 @@ export const updateContentMetaDataValidation = [
   body(updateContentKeysRouteValidationObj.reviewHistory).optional(),
   body(updateContentKeysRouteValidationObj.isCore).optional().isBoolean(),
   body(updateContentKeysRouteValidationObj.hasAudio).optional().isBoolean(),
+  body(updateContentKeysRouteValidationObj.snippets).optional().isArray(),
 ];
