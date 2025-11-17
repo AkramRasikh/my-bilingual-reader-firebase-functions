@@ -11,6 +11,7 @@ const updateContentKeysRouteValidationObj = {
   isCore: `${fieldToUpdatePrefix}.isCore`,
   hasAudio: `${fieldToUpdatePrefix}.hasAudio`,
   snippets: `${fieldToUpdatePrefix}.snippets`,
+  contentIndex: `${fieldToUpdatePrefix}.contentIndex`,
 };
 const updateContentKeysRouteValidationArr = Object.keys(
   updateContentKeysRouteValidationObj,
@@ -48,4 +49,5 @@ export const updateContentMetaDataValidation = [
   body(updateContentKeysRouteValidationObj.isCore).optional().isBoolean(),
   body(updateContentKeysRouteValidationObj.hasAudio).optional().isBoolean(),
   body(updateContentKeysRouteValidationObj.snippets).optional().isArray(),
+  body(updateContentKeysRouteValidationObj.contentIndex).optional().isNumeric(),
 ];
