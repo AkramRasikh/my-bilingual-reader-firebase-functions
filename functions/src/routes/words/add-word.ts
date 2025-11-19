@@ -41,6 +41,7 @@ export interface UpdateWordFieldType {
   surfaceForm?: string;
   transliteration?: string;
   phonetic?: string;
+  mnemonic?: string;
   notes?: string;
 }
 
