@@ -17,6 +17,7 @@ const wordKeysRouteValidationObj = {
   transliteration: 'transliteration',
   phonetic: 'phonetic',
   imageUrl: 'imageUrl',
+  mnemonic: 'mnemonic',
 };
 
 const wordKeysRouteValidationArr = Object.keys(wordKeysRouteValidationObj);
