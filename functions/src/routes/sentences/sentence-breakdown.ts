@@ -18,7 +18,7 @@ const sentenceStructureObj = {
 };
 
 export const breakdownSentenceRoute = async (req: Request, res: Response) => {
-  const { id, language, targetLang, title } = req.body;
+  const { id, language, targetLang, indexKey } = req.body;
 
   const prompt = `Break down the following ${language} sentence strictly into valid JSON output. Do not include explanations, preamble, or any additional text. 
   The JSON format should have the following structure: vocab: An array of objects where each object contains: surfaceForm: The word or phrase as it appears in the sentence. meaning: A brief explanation of its meaning in English. 
@@ -36,7 +36,7 @@ export const breakdownSentenceRoute = async (req: Request, res: Response) => {
       await updateSentenceInContent({
         id,
         language,
-        title,
+        indexKey,
         fieldToUpdate: breakdown,
       });
       res.status(200).json({ ...breakdown });

@@ -3,15 +3,15 @@ import { sharedUpdateSentenceValidation } from './shared-validation';
 
 const updateSentenceKeys = {
   id: 'id',
-  title: 'title',
+  indexKey: 'indexKey',
 };
 
 const updateSentenceValidation = [
-  body(updateSentenceKeys.title)
+  body(updateSentenceKeys.indexKey)
     .notEmpty()
     .isString()
     .withMessage(
-      `Validation error passing ${updateSentenceKeys.title} for update sentence`,
+      `Validation error passing ${updateSentenceKeys.indexKey} for update sentence`,
     ),
   ...sharedUpdateSentenceValidation,
 ];

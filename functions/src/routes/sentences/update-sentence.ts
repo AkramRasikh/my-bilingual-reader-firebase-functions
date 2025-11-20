@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { db } from '../../db';
-import { getContentIndexViaTitle } from '../../firebase-utils/get-content-index-via-title';
-import { getDataSnapshot } from '../../firebase-utils/get-data-snapshot';
+// import { getContentIndexViaTitle } from '../../firebase-utils/get-content-index-via-title';
+// import { getDataSnapshot } from '../../firebase-utils/get-data-snapshot';
 import { getRefPath } from '../../firebase-utils/get-ref-path';
-import { getThisSentenceIndex } from '../../firebase-utils/get-sentence-via-keys';
+// import { getThisSentenceIndex } from '../../firebase-utils/get-sentence-via-keys';
 import { contentRef } from '../../refs';
 import { routeValidator } from '../../shared-validation/route-validator';
 import { SentenceType } from '../content/types';
@@ -18,54 +18,36 @@ interface SentenceFieldToUpdateType {
 
 interface UpdateSentenceInContentTypes {
   id: string;
-  title: string;
+  indexKey: string;
   language: LangaugeAndContentTypes['language'];
   fieldToUpdate: SentenceFieldToUpdateType;
 }
 
-const getPathToSentenceInContent = ({ contentKey, sentenceKey }) =>
-  `${contentKey}/${contentRef}/${sentenceKey}`;
-
 export const updateSentenceInContent = async ({
   id,
   language,
-  title,
   fieldToUpdate,
+  indexKey,
 }: UpdateSentenceInContentTypes) => {
   try {
     const refPath = getRefPath({ language, ref: contentRef });
+    const thisContentPath = `${refPath}/${indexKey}/content`;
+    const sentencesArrInContent = await db
+      .ref(`${refPath}/${indexKey}/content`)
+      .once('value');
+    const sentencesArrInContentSnapshot = sentencesArrInContent.val();
+    const sentenceIndex = sentencesArrInContentSnapshot.findIndex(
+      (item: SentenceType) => {
+        return item?.id === id;
+      },
+    );
 
-    const contentSnapshotArr = await getDataSnapshot({
-      language,
-      ref: contentRef,
-      db,
-    });
-
-    const { index: contentKey, keys } = getContentIndexViaTitle({
-      data: contentSnapshotArr,
-      title,
-    });
-
-    if (isFinite(contentKey) && contentKey !== -1) {
-      const key = keys[contentKey];
-      const thisTopicContent = contentSnapshotArr[key].content;
-      const { sentenceKeys, sentenceIndex } = getThisSentenceIndex({
-        data: thisTopicContent,
-        id,
-      });
-
-      if (isFinite(sentenceIndex) && sentenceIndex !== -1) {
-        const sentenceKey = sentenceKeys[sentenceIndex];
-        const refObj = db
-          .ref(refPath)
-          .child(getPathToSentenceInContent({ contentKey, sentenceKey }));
-        await refObj.update(fieldToUpdate);
-        return fieldToUpdate;
-      } else {
-        throw new Error('Error cannot find sentence index');
-      }
+    if (isFinite(sentenceIndex) && sentenceIndex !== -1) {
+      const refObj = db.ref(thisContentPath).child(sentenceIndex);
+      await refObj.update(fieldToUpdate);
+      return fieldToUpdate;
     } else {
-      throw new Error('Error cannot find content index');
+      throw new Error('Error cannot find sentence index');
     }
   } catch (error) {
     throw new Error(error || 'Error updating sentence via content');
@@ -82,12 +64,12 @@ export const updateSentenceRoute = async (
     return;
   }
 
-  const { id, title, fieldToUpdate, language } = req.body;
+  const { id, indexKey, fieldToUpdate, language } = req.body;
 
   try {
     const updatedField = await updateSentenceInContent({
       id,
-      title,
+      indexKey,
       fieldToUpdate,
       language,
     });
