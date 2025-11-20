@@ -1,47 +1,25 @@
 import { Request, Response } from 'express';
-// import { contentRef } from '../../refs';
-// import { getDataSnapshot } from '../../firebase-utils/get-data-snapshot';
 import { db } from '../../db';
-// import { getContentIndexViaTitle } from '../../firebase-utils/get-content-index-via-title';
 import { updateContentMetaDataValidation } from './validation';
 import { routeValidator } from '../../shared-validation/route-validator';
-// import { updateDatabaseViaIndex } from '../../firebase-utils/update-database-via-index';
-import { getContentRange } from '../../firebase-utils/experimental/read-content-efficient';
-import { ContentType } from './types';
 import { getRefPath } from '../../firebase-utils/get-ref-path';
 import { LanguageTypes } from '../../language-keys';
-import { contentRef, RefTypes } from '../../refs';
-
-function findByTitleWithIndexKey(
-  rangeObj: Record<string, any>,
-  targetTitle: string,
-): { indexKey: string; contentItem: ContentType } | null {
-  const entry = Object.entries(rangeObj).find(
-    ([_, value]) => value.title === targetTitle,
-  );
-
-  if (!entry) return null;
-
-  const [indexKey, contentItem] = entry;
-  return { indexKey, contentItem };
-}
+import { contentRef } from '../../refs';
 
 interface updateDatabaseViaIndexProps {
   language: LanguageTypes;
-  indexKey: string | number; // numeric or string index
-  ref: RefTypes;
-  fieldToUpdate: Record<string, any>; // only the fields you want to update
+  indexKey: string; // now the content id
+  fieldToUpdate: Record<string, any>;
 }
 
-const updateContentDatabaseViaIndex = async ({
+const updateContentDatabaseViaId = async ({
   language,
-  indexKey,
+  indexKey, // this is the id
   fieldToUpdate,
-  ref,
 }: updateDatabaseViaIndexProps) => {
   try {
-    const refPath = getRefPath({ language, ref });
-    const childRef = db.ref(`${refPath}/${indexKey.toString()}`);
+    const refPath = getRefPath({ language, ref: contentRef });
+    const childRef = db.ref(`${refPath}/${indexKey}`); // id is the key
 
     // Update only the specified fields
     await childRef.update(fieldToUpdate);
@@ -50,43 +28,20 @@ const updateContentDatabaseViaIndex = async ({
     const updatedSnapshot = await childRef.once('value');
     return updatedSnapshot.val();
   } catch (error) {
-    console.error('Error updating database:', error);
+    console.error('## Error updating database:', error);
     throw new Error(
-      `Error updating content at indexKey "${indexKey}" for ${language}/${ref}`,
+      `Error updating content with id "${indexKey}" for ${language}/${contentRef}`,
     );
   }
 };
 
-const updateContentMetaData = async ({
-  title,
-  language,
-  contentIndex,
-  fieldToUpdate,
-}) => {
+const updateContentMetaData = async ({ language, fieldToUpdate, indexKey }) => {
   try {
-    const contentSnapshotObj = await getContentRange({
+    return await updateContentDatabaseViaId({
       language,
-      db,
-      contentIndex,
+      indexKey,
+      fieldToUpdate,
     });
-
-    const { indexKey, contentItem } = findByTitleWithIndexKey(
-      contentSnapshotObj,
-      title,
-    );
-
-    if (contentItem) {
-      return await updateContentDatabaseViaIndex({
-        language,
-        indexKey,
-        fieldToUpdate,
-        ref: contentRef,
-      });
-    } else {
-      throw new Error(
-        `Error finding content item title: ${title} indexKey: ${indexKey}`,
-      );
-    }
   } catch (error) {
     throw new Error('Error updating content metadata');
   }
@@ -105,14 +60,13 @@ export const updateContentMetaDataRoute = async (
     return;
   }
 
-  const { language, title, fieldToUpdate, contentIndex } = req.body;
+  const { language, fieldToUpdate, indexKey } = req.body;
 
   try {
     const fieldToUpdateRes = await updateContentMetaData({
-      title,
       fieldToUpdate,
       language,
-      contentIndex,
+      indexKey,
     });
 
     res.status(200).json(fieldToUpdateRes);

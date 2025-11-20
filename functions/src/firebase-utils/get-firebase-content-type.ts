@@ -3,6 +3,7 @@ import { contentRef, RefTypes } from '../refs';
 import { filterOutNestedNulls } from '../utils/filter-out-nested-nulls';
 import { getDataSnapshot } from './get-data-snapshot';
 import { db } from '../db';
+import { getRefPath } from './get-ref-path';
 
 export interface LangaugeAndContentTypes {
   language: LanguageTypes;
@@ -19,20 +20,16 @@ export const getFirebaseContentType = async ({
       ref,
       db,
     });
-    const realValues = filterOutNestedNulls(thisContentTypeSnapShot);
     if (ref === contentRef) {
-      const filteredOutUndefinedNull = realValues.map(
-        (thisLangaugeContentItem) => {
-          return {
-            ...thisLangaugeContentItem,
-            content: filterOutNestedNulls(thisLangaugeContentItem.content),
-          };
-        },
-      );
-      return filteredOutUndefinedNull;
-    } else {
-      return realValues;
+      const snapshot = await db
+        .ref(getRefPath({ language, ref: contentRef }))
+        .once('value');
+      const contentObj = snapshot.val();
+      const contentArray = Object.values(contentObj);
+      return contentArray;
     }
+    const realValues = filterOutNestedNulls(thisContentTypeSnapShot);
+    return realValues;
   } catch (error) {
     throw new Error(
       error || `Failed to get contentType ${ref} for ${language}`,

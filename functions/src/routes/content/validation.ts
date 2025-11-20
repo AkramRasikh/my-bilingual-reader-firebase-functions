@@ -3,7 +3,7 @@ import { languageValidation } from '../../shared-validation';
 
 const fieldToUpdatePrefix = 'fieldToUpdate';
 const updateContentKeysRouteValidationObj = {
-  title: 'title',
+  indexKey: 'indexKey',
   reviewData: `${fieldToUpdatePrefix}.reviewData`,
   nextReview: `${fieldToUpdatePrefix}.nextReview`,
   origin: `${fieldToUpdatePrefix}.origin`,
@@ -11,7 +11,6 @@ const updateContentKeysRouteValidationObj = {
   isCore: `${fieldToUpdatePrefix}.isCore`,
   hasAudio: `${fieldToUpdatePrefix}.hasAudio`,
   snippets: `${fieldToUpdatePrefix}.snippets`,
-  contentIndex: `${fieldToUpdatePrefix}.contentIndex`,
 };
 const updateContentKeysRouteValidationArr = Object.keys(
   updateContentKeysRouteValidationObj,
@@ -42,6 +41,7 @@ const updateFieldForContentValidation = (value: object) => {
 export const updateContentMetaDataValidation = [
   ...languageValidation,
   body(fieldToUpdatePrefix).notEmpty().custom(updateFieldForContentValidation),
+  body(updateContentKeysRouteValidationObj.indexKey).notEmpty().isString(),
   body(updateContentKeysRouteValidationObj.reviewData).optional(),
   body(updateContentKeysRouteValidationObj.nextReview).optional(),
   body(updateContentKeysRouteValidationObj.origin).optional().isString(),
@@ -49,5 +49,4 @@ export const updateContentMetaDataValidation = [
   body(updateContentKeysRouteValidationObj.isCore).optional().isBoolean(),
   body(updateContentKeysRouteValidationObj.hasAudio).optional().isBoolean(),
   body(updateContentKeysRouteValidationObj.snippets).optional().isArray(),
-  body(updateContentKeysRouteValidationObj.contentIndex).optional().isNumeric(),
 ];
