@@ -21,10 +21,11 @@ export const sharedUpdateSentenceValidation = [
       !fieldToUpdate.baseLang &&
       !fieldToUpdate.notes &&
       !fieldToUpdate.time &&
-      !fieldToUpdate.reviewData
+      !fieldToUpdate.reviewData &&
+      !fieldToUpdate.removeReview
     ) {
       throw new Error(
-        'At least one of targetLang, baseLang, notes, time, or reviewData is required in fieldToUpdate',
+        'At least one of targetLang, baseLang, notes, time, removeReview, or reviewData is required in fieldToUpdate',
       );
     }
     return true;
@@ -38,6 +39,7 @@ export const sharedUpdateSentenceValidation = [
 
   // reviewData minimal check: if reviewData and reviewData.due exists, it must be ISO8601
   body('fieldToUpdate.reviewData').optional().isObject(),
+  body('fieldToUpdate.removeReview').optional().isBoolean(),
   body('fieldToUpdate.reviewData.due')
     .optional()
     .isISO8601()

@@ -14,6 +14,8 @@ interface SentenceFieldToUpdateType {
   targetLang?: SentenceType['targetLang'];
   notes?: SentenceType['notes'];
   baseLang?: SentenceType['baseLang'];
+  reviewData?: SentenceType['reviewData'];
+  removeReview?: boolean;
 }
 
 interface UpdateSentenceInContentTypes {
@@ -29,6 +31,14 @@ export const updateSentenceInContent = async ({
   fieldToUpdate,
   indexKey,
 }: UpdateSentenceInContentTypes) => {
+  const isRemoveReview = fieldToUpdate?.removeReview;
+
+  const updatedFieldProperties = isRemoveReview
+    ? {
+        reviewData: null,
+      }
+    : fieldToUpdate;
+
   try {
     const refPath = getRefPath({ language, ref: contentRef });
     const thisContentPath = `${refPath}/${indexKey}/content`;
@@ -44,8 +54,8 @@ export const updateSentenceInContent = async ({
 
     if (isFinite(sentenceIndex) && sentenceIndex !== -1) {
       const refObj = db.ref(thisContentPath).child(sentenceIndex);
-      await refObj.update(fieldToUpdate);
-      return fieldToUpdate;
+      await refObj.update(updatedFieldProperties);
+      return updatedFieldProperties;
     } else {
       throw new Error('Error cannot find sentence index');
     }
@@ -54,17 +64,26 @@ export const updateSentenceInContent = async ({
   }
 };
 
+//
 export const updateSentenceRoute = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
   const isValid = await routeValidator(req, res, updateSentenceValidation);
 
+  console.log('## updateSentenceRoute 1');
+
   if (!isValid) {
     return;
   }
 
   const { id, indexKey, fieldToUpdate, language } = req.body;
+  console.log('## updateSentenceRoute 2', {
+    id,
+    indexKey,
+    fieldToUpdate,
+    language,
+  });
 
   try {
     const updatedField = await updateSentenceInContent({
