@@ -64,26 +64,17 @@ export const updateSentenceInContent = async ({
   }
 };
 
-//
 export const updateSentenceRoute = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
   const isValid = await routeValidator(req, res, updateSentenceValidation);
 
-  console.log('## updateSentenceRoute 1');
-
   if (!isValid) {
     return;
   }
 
   const { id, indexKey, fieldToUpdate, language } = req.body;
-  console.log('## updateSentenceRoute 2', {
-    id,
-    indexKey,
-    fieldToUpdate,
-    language,
-  });
 
   try {
     const updatedField = await updateSentenceInContent({
