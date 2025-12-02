@@ -3,7 +3,7 @@ import { languageValidation } from '../../shared-validation';
 
 const fieldToUpdatePrefix = 'fieldToUpdate';
 const updateContentKeysRouteValidationObj = {
-  indexKey: 'indexKey',
+  contentId: 'contentId',
   reviewData: `${fieldToUpdatePrefix}.reviewData`,
   nextReview: `${fieldToUpdatePrefix}.nextReview`,
   origin: `${fieldToUpdatePrefix}.origin`,
@@ -41,7 +41,7 @@ const updateFieldForContentValidation = (value: object) => {
 export const updateContentMetaDataValidation = [
   ...languageValidation,
   body(fieldToUpdatePrefix).notEmpty().custom(updateFieldForContentValidation),
-  body(updateContentKeysRouteValidationObj.indexKey).notEmpty().isString(),
+  body(updateContentKeysRouteValidationObj.contentId).notEmpty().isString(),
   body(updateContentKeysRouteValidationObj.reviewData).optional(),
   body(updateContentKeysRouteValidationObj.nextReview).optional(),
   body(updateContentKeysRouteValidationObj.origin).optional().isString(),

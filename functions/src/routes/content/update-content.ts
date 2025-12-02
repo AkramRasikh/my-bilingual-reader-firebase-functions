@@ -8,18 +8,18 @@ import { contentRef } from '../../refs';
 
 interface updateDatabaseViaIndexProps {
   language: LanguageTypes;
-  indexKey: string; // now the content id
+  contentId: string; // now the content id
   fieldToUpdate: Record<string, any>;
 }
 
 const updateContentDatabaseViaId = async ({
   language,
-  indexKey, // this is the id
+  contentId, // this is the id
   fieldToUpdate,
 }: updateDatabaseViaIndexProps) => {
   try {
     const refPath = getRefPath({ language, ref: contentRef });
-    const childRef = db.ref(`${refPath}/${indexKey}`); // id is the key
+    const childRef = db.ref(`${refPath}/${contentId}`); // id is the key
 
     // Update only the specified fields
     await childRef.update(fieldToUpdate);
@@ -30,16 +30,20 @@ const updateContentDatabaseViaId = async ({
   } catch (error) {
     console.error('## Error updating database:', error);
     throw new Error(
-      `Error updating content with id "${indexKey}" for ${language}/${contentRef}`,
+      `Error updating content with id "${contentId}" for ${language}/${contentRef}`,
     );
   }
 };
 
-const updateContentMetaData = async ({ language, fieldToUpdate, indexKey }) => {
+const updateContentMetaData = async ({
+  language,
+  fieldToUpdate,
+  contentId,
+}) => {
   try {
     return await updateContentDatabaseViaId({
       language,
-      indexKey,
+      contentId,
       fieldToUpdate,
     });
   } catch (error) {
@@ -60,13 +64,13 @@ export const updateContentMetaDataRoute = async (
     return;
   }
 
-  const { language, fieldToUpdate, indexKey } = req.body;
+  const { language, fieldToUpdate, contentId } = req.body;
 
   try {
     const fieldToUpdateRes = await updateContentMetaData({
       fieldToUpdate,
       language,
-      indexKey,
+      contentId,
     });
 
     res.status(200).json(fieldToUpdateRes);
