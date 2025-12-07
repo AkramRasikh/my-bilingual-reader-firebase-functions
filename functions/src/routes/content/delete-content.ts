@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { db } from '../../db';
 import { deleteAssetFromCloudFlare } from '../../firebase-utils/upload-asset-to-cloudflare';
+import { removeMultiItemFromSnapshot } from '../../firebase-utils/remove-item-from-snapshot';
+import { wordsRef } from '../../refs';
 
 const deleteContentToDB = async ({ language, id, title }) => {
   try {
@@ -26,7 +28,7 @@ export const deleteContentRoute = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const { id, title, language } = req.body;
+  const { id, title, language, wordIds } = req.body;
 
   // 1. Validate inputs
   if (!id || !title || !language) {
@@ -38,22 +40,36 @@ export const deleteContentRoute = async (
 
   try {
     // 2. Delete content from DB (returns true/false)
-    const success = await deleteContentToDB({ id, title, language });
+    const deletedContentSuccess = await deleteContentToDB({
+      id,
+      title,
+      language,
+    });
 
-    if (!success) {
+    if (!deletedContentSuccess) {
       res.status(404).json({
         message: `Content not found: ${id}`,
       });
       return;
     }
+    let deletedWordsIds;
+
+    if (wordIds?.length > 0) {
+      deletedWordsIds = await removeMultiItemFromSnapshot({
+        ids: wordIds,
+        ref: wordsRef,
+        language,
+      });
+    }
 
     // 3. Delete Cloudflare audio (optional)
-    // await deleteAssetFromCloudFlare(`japanese-audio/${id}.mp3`);
+    await deleteAssetFromCloudFlare(`${language}-audio/${id}.mp3`);
 
     // 4. Respond OK
     res.status(200).json({
       message: 'Content deleted successfully.',
       id,
+      deletedWordsIds,
     });
   } catch (error: any) {
     console.error('Delete content error:', error);

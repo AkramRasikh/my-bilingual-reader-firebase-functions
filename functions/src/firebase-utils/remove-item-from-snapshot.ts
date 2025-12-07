@@ -38,3 +38,39 @@ export const removeItemFromSnapshot = async ({ ref, language, id }) => {
     throw new Error(`Error removing item from db: ${language} ${ref}`);
   }
 };
+
+export const removeMultiItemFromSnapshot = async ({ ref, language, ids }) => {
+  try {
+    const refPath = getRefPath({
+      ref,
+      language,
+    });
+    const snapshotArr = await getDataSnapshot({
+      ref,
+      language,
+      db,
+    });
+
+    const deletedItemIds = [];
+
+    const updatedSnapShot =
+      snapshotArr?.length > 0
+        ? snapshotArr.filter((item) => {
+            if (!isValidItem(item)) {
+              return false;
+            }
+            if (ids.includes(item.id)) {
+              deletedItemIds.push(item.id);
+              return false;
+            }
+
+            return true;
+          })
+        : [];
+
+    await db.ref(refPath).set(updatedSnapShot);
+    return deletedItemIds;
+  } catch (error) {
+    throw new Error(`Error removing item from db: ${language} ${ref}`);
+  }
+};
