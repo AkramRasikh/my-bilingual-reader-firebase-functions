@@ -1,0 +1,526 @@
+{
+  "japanese": {
+    "content": {
+      "f1850154-1b34-4bd4-8a97-7bf6433a0e6c": {
+        "content": [
+          {
+            "baseLang": "(Door pulling)",
+            "id": "64cd378b-0253-4197-8c6f-1856d3e34622",
+            "targetLang": "（ドアを引く音）",
+            "time": 3
+          },
+          {
+            "baseLang": "(Door pulling)",
+            "id": "c04c4354-49ce-42f9-baca-fd2c64f483df",
+            "targetLang": "（ドアを引く音）",
+            "time": 4
+          },
+          {
+            "baseLang": "(Fukutoku) Oh, good morning!",
+            "id": "1972b78b-9846-41e8-ae92-56c2100f7e24",
+            "targetLang": "（福徳(()ふくとく())）あっおはようございま～す",
+            "time": 7
+          },
+          {
+            "baseLang": "(Goto) Yes, yes!",
+            "id": "b015027c-fcfd-499b-903d-34f2b9f7810d",
+            "targetLang": "（後藤(()ごとう())）はいはい",
+            "time": 8
+          },
+          {
+            "baseLang": " ",
+            "id": "a5cc2bbc-b0b7-4c07-ab60-f5ffc96106c7",
+            "targetLang": "今日もよろしくね（福徳）あっお願いしま～す（後藤）は～い",
+            "time": 10
+          },
+          {
+            "baseLang": "(Fukutoku) Thank you! (Goto) Yes, yes!",
+            "id": "fe1018f3-5cc8-4c62-b845-84134a1c72ad",
+            "targetLang": "（福徳）お願いします（後藤）はいは～い",
+            "time": 14
+          },
+          {
+            "baseLang": "(Door pulling)",
+            "id": "ec2c8c8b-9375-4720-a52e-fa3ccad0f2bf",
+            "targetLang": "（ドアを引く音）",
+            "time": 16
+          },
+          {
+            "baseLang": "(Laughter)",
+            "id": "973da8c6-8d8a-4220-a549-cf1db6a81227",
+            "targetLang": "（笑い声）",
+            "time": 17
+          },
+          {
+            "baseLang": "<i>(Narration) The next day</i>",
+            "id": "df3f6ce3-5ae0-4c5c-9ab0-27617d2e46a8",
+            "targetLang": "<i>（ナレーション）次の日</i>",
+            "time": 20
+          },
+          {
+            "baseLang": "(Door pulling)",
+            "id": "f1bd076e-9b33-44e9-8591-85daaaea617a",
+            "targetLang": "（ドアを引く音）",
+            "time": 27
+          },
+          {
+            "baseLang": "(Door pulling)",
+            "id": "b642063a-62cb-41df-a10d-56939e1c528b",
+            "targetLang": "（ドアを引く音）",
+            "time": 28
+          },
+          {
+            "baseLang": "(Door pulling)",
+            "id": "881b6783-281c-4375-9c86-d62c36cdb547",
+            "targetLang": "（ドアを引く音）",
+            "time": 29
+          },
+          {
+            "baseLang": "Oh, good morning!",
+            "id": "eebb8a70-4da2-4540-96f2-d3d3677c8d42",
+            "targetLang": "あっおはようございま～す",
+            "time": 32
+          },
+          {
+            "baseLang": "Yes, yes!",
+            "id": "110330af-5f51-4360-854c-db2950265dc9",
+            "targetLang": "はいはい",
+            "time": 33
+          },
+          {
+            "baseLang": "Um, I'm a little busy today.",
+            "id": "0d90bde3-ce84-49de-b609-40b722162931",
+            "targetLang": "あの今日ちょっと忙しいから",
+            "time": 34
+          },
+          {
+            "baseLang": "Oh, really?",
+            "id": "f594e232-707c-4760-84aa-e8e24bac89a4",
+            "targetLang": "ああそうなんっすか",
+            "time": 35
+          },
+          {
+            "baseLang": "(Goto) Yeah, hang in there!",
+            "id": "05a7dd78-4934-41ea-a29a-48648863edac",
+            "targetLang": "（後藤）うんちょっと頑張ってね",
+            "time": 36
+          },
+          {
+            "baseLang": "(Fukutoku) Thank you. (Goto) Yes.",
+            "id": "26775998-192f-474b-9977-a206dd7f4d70",
+            "targetLang": "（福徳）お願いします（後藤）はい",
+            "time": 37
+          },
+          {
+            "baseLang": "(Fukutoku) Excuse me. (Goto) Yes.",
+            "id": "6b75daac-aba6-4550-a1ba-dd81bb2b271b",
+            "targetLang": "（福徳）失礼しま～す（後藤）はい",
+            "time": 39
+          },
+          {
+            "baseLang": "(Door opening)",
+            "id": "f642ec68-17cb-4e42-a1d8-72cd3ae7ffa2",
+            "targetLang": "（ドアを引く音）",
+            "time": 41
+          },
+          {
+            "baseLang": "(Laughter)",
+            "id": "0ea9c158-8843-49b7-8c2e-609fc1959bda",
+            "targetLang": "（笑い声）",
+            "time": 42
+          },
+          {
+            "baseLang": "<i>(Narration) The next day</i>",
+            "id": "ad8675ae-0f20-4386-99bf-672bfcf76e9a",
+            "targetLang": "<i>（ナレーション）次の日</i>",
+            "time": 45
+          },
+          {
+            "baseLang": "(Door opening)",
+            "id": "5a151d02-56c7-4518-ba3d-8711d8c94569",
+            "targetLang": "（ドアを引く音）",
+            "time": 51
+          },
+          {
+            "baseLang": "(Door opening)",
+            "id": "451c2642-d421-47b7-9477-c07898877ee6",
+            "targetLang": "（ドアを引く音）",
+            "time": 52
+          },
+          {
+            "baseLang": "(Door opening)",
+            "id": "33f2752d-a964-4bb3-8799-15f9a0d78e4f",
+            "targetLang": "（ドアを引く音）",
+            "time": 54
+          },
+          {
+            "baseLang": "(Door opening)",
+            "id": "4485460b-be94-4c4c-ba12-53530bf6d4f2",
+            "targetLang": "（ドアを引く音）",
+            "time": 55
+          },
+          {
+            "baseLang": "(Door opening)",
+            "id": "8e1967d5-5982-43a6-9995-3cbc848acf43",
+            "targetLang": "（ドアを引く音）",
+            "time": 57
+          },
+          {
+            "baseLang": "(Laughter)",
+            "id": "7a47db8b-714f-4538-9b8b-6bb1b1c30120",
+            "targetLang": "（笑い声）",
+            "time": 60
+          },
+          {
+            "baseLang": "(Fukutoku) Good morning.",
+            "id": "37c44e51-f93f-49d3-b182-d8f09afa9477",
+            "targetLang": "（福徳）おはようございま～す",
+            "time": 61
+          },
+          {
+            "baseLang": "(Goto) Oh, can I come in now?",
+            "id": "5be723a7-a05e-42fa-9b0b-db3f6756e51b",
+            "targetLang": "（後藤）あっちょっとええかな？",
+            "time": 62
+          },
+          {
+            "baseLang": "(Fukutoku) Yes?",
+            "id": "87abd2df-1b7a-4e38-9ee9-23ee4a131196",
+            "targetLang": "（福徳）はい？",
+            "time": 63
+          },
+          {
+            "baseLang": "You always get the wrong door.",
+            "id": "0e04deab-4e82-46d8-92e9-97887fa7794d",
+            "meaning": "You always make a mistake with that door, you know.",
+            "sentenceStructure": "君 (you) + あれ (that) + やない (is not) + いつも (always) + ドア (door) + 間違えてる (are making a mistake) + な (you know)",
+            "targetLang": "君あれやないつもドア間違えてるな",
+            "time": 64,
+            "vocab": [
+              {
+                "meaning": "you",
+                "surfaceForm": "君"
+              },
+              {
+                "meaning": "that",
+                "surfaceForm": "あれ"
+              },
+              {
+                "meaning": "is not",
+                "surfaceForm": "やない"
+              },
+              {
+                "meaning": "always",
+                "surfaceForm": "いつも"
+              },
+              {
+                "meaning": "door",
+                "surfaceForm": "ドア"
+              },
+              {
+                "meaning": "are making a mistake",
+                "surfaceForm": "間違えてる"
+              },
+              {
+                "meaning": "you know (informal sentence ending)",
+                "surfaceForm": "な"
+              }
+            ]
+          },
+          {
+            "baseLang": "Huh? Oh, wait, this is the only entrance, right?",
+            "id": "8cd63679-2b65-4a5a-a827-358a782a7d4b",
+            "targetLang": "え？あっいや入り口ここしかないっすよね？",
+            "time": 68
+          },
+          {
+            "baseLang": "Oh, no, no, um...yeah",
+            "id": "d1c23df0-f0c0-4aac-b213-a88a0811c965",
+            "targetLang": "あっ違う違うあの…うん",
+            "time": 70
+          },
+          {
+            "baseLang": "You're confusing pushing and pulling.",
+            "id": "9e12c12a-ef78-4942-9e2d-cfb061bdff08",
+            "meaning": "You're getting the push and pull mixed up.",
+            "sentenceStructure": "あの (that) + 押す (push) + の (nominalizer) + と (and) + 引く (pull) + の (nominalizer) + 間違えてる (is mistaken) + なあ (I see)",
+            "targetLang": "あの押すのと引くの間違えてるなあ",
+            "time": 72,
+            "vocab": [
+              {
+                "meaning": "that",
+                "surfaceForm": "あの"
+              },
+              {
+                "meaning": "push",
+                "surfaceForm": "押す"
+              },
+              {
+                "meaning": "nominalizer",
+                "surfaceForm": "の"
+              },
+              {
+                "meaning": "and",
+                "surfaceForm": "と"
+              },
+              {
+                "meaning": "pull",
+                "surfaceForm": "引く"
+              },
+              {
+                "meaning": "nominalizer",
+                "surfaceForm": "の"
+              },
+              {
+                "meaning": "is mistaken",
+                "surfaceForm": "間違えてる"
+              },
+              {
+                "meaning": "I see (casual expression)",
+                "surfaceForm": "なあ"
+              }
+            ]
+          },
+          {
+            "baseLang": "Ah! Oh, this is it!",
+            "id": "7aabcfbb-30fa-482b-804d-30968110cdf2",
+            "targetLang": "ああ～！ああこれか！",
+            "time": 74
+          },
+          {
+            "baseLang": "(Goto) That's right, you make that \"clack!\" sound, right?",
+            "id": "32899140-43c4-433f-8d80-4e9db22ec5ec",
+            "targetLang": "（後藤）そうやねん“ガチャン！”ってやるやんか？",
+            "time": 76
+          },
+          {
+            "baseLang": "Doesn't this look like it's supposed to be pulled?",
+            "id": "65b68c0c-2a88-4321-ac1e-a2b7f59694b8",
+            "meaning": "Doesn't this seem like it's something to pull/draw?",
+            "sentenceStructure": "これ (this) + なんか (something like) + 引く (to pull/draw) + っぽくない (doesn't seem like) + ですか (is it?)",
+            "targetLang": "これなんか引くっぽくないですか？",
+            "time": 77,
+            "vocab": [
+              {
+                "meaning": "this",
+                "surfaceForm": "これ"
+              },
+              {
+                "meaning": "something like",
+                "surfaceForm": "なんか"
+              },
+              {
+                "meaning": "to pull/draw",
+                "surfaceForm": "引く"
+              },
+              {
+                "meaning": "doesn't seem like",
+                "surfaceForm": "っぽくない"
+              },
+              {
+                "meaning": "is it?",
+                "surfaceForm": "ですか"
+              }
+            ]
+          },
+          {
+            "baseLang": "(Goto) Ah, this is the one you push.",
+            "id": "beedfd10-1f15-45c1-b327-35f8a1c448f7",
+            "targetLang": "（後藤）あっこれ押すやつやねん",
+            "time": 78
+          },
+          {
+            "baseLang": "(Fukutoku) Oh, is that so?",
+            "id": "72c813db-fdcd-460c-b77b-3d02dc571123",
+            "targetLang": "（福徳）ああそうなんすっか",
+            "time": 79
+          },
+          {
+            "baseLang": "That \"clack!\" sound is really stressful for the person inside.",
+            "id": "60ff9492-3cbc-48dd-80fa-6e7ff5e2a98d",
+            "targetLang": "その“ガチャン！”ってやんのが中の人間にとっては",
+            "time": 80
+          },
+          {
+            "baseLang": "It's a little stressful, after all.",
+            "id": "670e86af-d425-4f06-bc0f-6b1d69839d9c",
+            "targetLang": "ちょっとだけやっぱストレスやねん",
+            "time": 82
+          },
+          {
+            "baseLang": "(Fukutoku) Really... (Goto) Yeah.",
+            "id": "af3ceec9-73d0-4e73-9526-475e5c3ba1ea",
+            "targetLang": "（福徳）へえ…（後藤）うん",
+            "time": 84
+          },
+          {
+            "baseLang": "So, be careful.",
+            "id": "212ca91b-d71a-48aa-ad67-ec1b480fa6db",
+            "targetLang": "だからあの気を付けて",
+            "time": 85
+          },
+          {
+            "baseLang": "(Fukutoku) Ah, yes! (Goto) Yes.",
+            "id": "c0728c26-7435-4599-820c-1a84e8090abc",
+            "targetLang": "（福徳）あっはい！（後藤）はい",
+            "time": 86
+          },
+          {
+            "baseLang": "(Fukutoku) Thank you! (Goto) I'm busy today.",
+            "id": "2a1ba54f-ef51-4934-8c56-9ea22fe78273",
+            "targetLang": "（福徳）お願いします！（後藤）今日忙しいからね",
+            "time": 87
+          },
+          {
+            "baseLang": "(Fukutoku) Oh, really? (Goto) Yes.",
+            "id": "965fdfc1-405c-400c-b054-3bb3faefcc4c",
+            "targetLang": "（福徳）あっそうなんすか（後藤）はい",
+            "time": 88
+          },
+          {
+            "baseLang": "(Fukutoku) Thank you.",
+            "id": "d860bcf5-6a89-4e5d-af43-d40a5a588f7c",
+            "targetLang": "（福徳）お願いします",
+            "time": 89
+          },
+          {
+            "baseLang": " ",
+            "id": "6afe73d9-2a22-46c8-b9dd-ce842f34e458",
+            "targetLang": "（ドアを引く音）（後藤）閉めるときも",
+            "time": 90
+          },
+          {
+            "baseLang": "(Laughter)",
+            "id": "281c2893-c78f-4a70-90ba-00f9db5bb0c5",
+            "targetLang": "（笑い声）",
+            "time": 91
+          },
+          {
+            "baseLang": "<i>(Narration) The next day</i>",
+            "id": "97f46321-d239-4747-8014-43dcb475f9f7",
+            "targetLang": "<i>（ナレーション）次の日</i>",
+            "time": 94
+          },
+          {
+            "baseLang": "(Sound of door opening)",
+            "id": "4728a2db-6733-4d1b-af87-ae67e271900a",
+            "targetLang": "（ドアを引く音）",
+            "time": 99
+          },
+          {
+            "baseLang": "(Sound of door opening)",
+            "id": "07b5ae04-53f0-4042-90ef-012581e884f3",
+            "targetLang": "（ドアを引く音）",
+            "time": 101
+          },
+          {
+            "baseLang": "(Sound of door opening)",
+            "id": "4d1fbbe7-4df2-4b1b-b80f-52a927c7e9b6",
+            "targetLang": "（ドアを引く音）",
+            "time": 102
+          },
+          {
+            "baseLang": "(Sound of door opening)",
+            "id": "c21e781a-d0ab-483b-b4ea-5d062a3553a4",
+            "targetLang": "（ドアを引く音）",
+            "time": 103
+          },
+          {
+            "baseLang": "(Fukutoku) Huh? Is the manager off today?",
+            "id": "4f374268-b669-4714-a054-ce8ebd6846a3",
+            "targetLang": "（福徳）あれ？今日店長休み？",
+            "time": 105
+          },
+          {
+            "baseLang": "Seriously? This guy.",
+            "id": "e282467b-726a-4a22-a338-b93360524906",
+            "targetLang": "マジか？こいつ",
+            "time": 106
+          },
+          {
+            "baseLang": "(Laughter)",
+            "id": "92906156-e924-471d-bfa3-6506a9fbd93d",
+            "targetLang": "（笑い声）",
+            "time": 107
+          },
+          {
+            "baseLang": "(Fukutoku) The door's locked. (Goto) Seriously?",
+            "id": "6b3770de-b2f7-48a4-b49b-71da26c81bce",
+            "targetLang": "（福徳）鍵閉まってんで？（後藤）こいつマジか？",
+            "time": 108
+          },
+          {
+            "baseLang": "(Fukutoku) What are we going to do with the time card? This one.",
+            "id": "20d630a3-4301-4104-8acd-ce5295e4da7c",
+            "targetLang": "（福徳）タイムカードどうすんの？これ",
+            "time": 110
+          },
+          {
+            "baseLang": "(Goto) It's here!",
+            "id": "e7401120-b0f6-4482-a8c7-e402d5df3dd9",
+            "targetLang": "（後藤）おるよ！",
+            "time": 112
+          },
+          {
+            "baseLang": "(Fukutoku) Huh? (Goto) Yes, I'm there!",
+            "id": "f10012bf-77e8-41c7-85ff-81c8834f9a24",
+            "targetLang": "（福徳）えっ？（後藤）おるよ！",
+            "time": 113
+          },
+          {
+            "baseLang": "Excuse me, please unlock the door.",
+            "id": "9887eb12-a6c1-4713-907b-ea3cbfb289da",
+            "targetLang": "すいません鍵開けてください",
+            "time": 115
+          },
+          {
+            "baseLang": "It's open.",
+            "id": "a730bd28-1b84-42a6-8e97-e84b6d09da6f",
+            "targetLang": "開いてるよ",
+            "time": 116
+          },
+          {
+            "baseLang": "(Fukutoku) Huh? (Goto) It's open.",
+            "id": "9c2fdbff-81c6-4d1c-915d-caeb19c39e12",
+            "targetLang": "（福徳）えっ？（後藤）開いてる",
+            "time": 117
+          },
+          {
+            "baseLang": "(Fukutoku) No, it's not open.",
+            "id": "d70be94a-3483-4ab5-864a-73735033bc60",
+            "targetLang": "（福徳）いや開いてないっすよ",
+            "time": 118
+          },
+          {
+            "baseLang": "I'm going to press it!",
+            "id": "61802ace-8e46-42c4-971f-248358f43b75",
+            "targetLang": "押すねん！",
+            "time": 119
+          },
+          {
+            "baseLang": "(Goto) I'm going to press it.",
+            "id": "b8cbf3b1-38d3-4b37-97b5-f8b3e1f4d736",
+            "targetLang": "（後藤）押すねん",
+            "time": 121
+          },
+          {
+            "baseLang": "(Fukutoku) Ha...",
+            "id": "11c5f11a-b062-4350-bf3f-1d392df61c85",
+            "targetLang": "（福徳）はっ…",
+            "time": 122
+          }
+        ],
+        "createdAt": "2025-11-03T12:45:00.515Z",
+        "hasAudio": true,
+        "id": "f1850154-1b34-4bd4-8a97-7bf6433a0e6c",
+        "nextReview": "2025-11-23T19:24:38.445Z",
+        "origin": "youtube",
+        "reviewHistory": [
+          "2025-11-20T19:25:48.571Z"
+        ],
+        "title": "jaru-jaru-push-pull-door",
+        "url": "https://www.youtube.com/watch?v=DaCmjtB-5To"
+      }
+    }
+  }
+}

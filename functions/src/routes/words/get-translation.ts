@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { deepSeekTranslator } from '../../ai-utils';
 import { getGoogleTranslate } from '../translate-text/google-translate-route';
-import { ReviewDataType } from '../../types/shared-types';
+import { ReviewDataTypes } from '../../types/shared-types';
 import { AddWordType } from './add-word';
 
 export interface WordType {
@@ -9,7 +9,7 @@ export interface WordType {
   baseForm: string;
   definition: string;
   contexts: string[];
-  reviewData?: ReviewDataType;
+  reviewData?: ReviewDataTypes;
   surfaceForm: string;
   transliteration: string;
   phonetic: string;

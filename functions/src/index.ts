@@ -17,6 +17,7 @@ import { addExpressionRoute } from './routes/sentences/add-expression';
 import { breakdownSentenceRoute } from './routes/sentences/sentence-breakdown';
 import { deleteContentRoute } from './routes/content/delete-content';
 import { updateSentenceReviewBulkRoute } from './routes/sentences/update-sentence-review-bulk';
+import { saveSnippetRoute } from './routes/snippets/save-snippet';
 
 exports.translateText = functions.https.onRequest(translateTextRoute);
 
@@ -57,3 +58,5 @@ exports.deleteContent = functions.https.onRequest(deleteContentRoute);
 exports.updateSentenceReviewBulk = functions.https.onRequest(
   updateSentenceReviewBulkRoute,
 );
+
+exports.saveSnippet = functions.https.onRequest(saveSnippetRoute);

@@ -8,14 +8,14 @@ import { LangaugeAndContentTypes } from '../on-load-data';
 import { routeValidator } from '../../shared-validation/route-validator';
 import { addWordValidation } from './add-word-validation';
 import { getTranslationData } from './get-translation';
-import { ReviewDataType } from '../../types/shared-types';
+import { ReviewDataTypes } from '../../types/shared-types';
 
 export interface WordType {
   id: string;
   baseForm: string;
   definition: string;
   contexts: string[];
-  reviewData?: ReviewDataType;
+  reviewData?: ReviewDataTypes;
   surfaceForm: string;
   transliteration: string;
   phonetic: string;
@@ -37,7 +37,7 @@ export interface UpdateWordFieldType {
   imageUrl?: string;
   definition?: string;
   contexts?: string[];
-  reviewData?: ReviewDataType;
+  reviewData?: ReviewDataTypes;
   surfaceForm?: string;
   transliteration?: string;
   phonetic?: string;

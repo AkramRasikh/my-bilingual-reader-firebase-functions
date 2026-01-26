@@ -1,4 +1,4 @@
-import { LegacyReviewTypes, ReviewDataType } from '../../types/shared-types';
+import { LegacyReviewTypes, ReviewDataTypes } from '../../types/shared-types';
 
 type MediaOriginTypes = 'netflix' | 'youtube';
 
@@ -9,7 +9,7 @@ export interface SentenceType extends LegacyReviewTypes {
   targetLang: string;
   notes?: string;
   time?: number;
-  reviewData?: ReviewDataType;
+  reviewData?: ReviewDataTypes;
 }
 export interface ContentType {
   title: string;
