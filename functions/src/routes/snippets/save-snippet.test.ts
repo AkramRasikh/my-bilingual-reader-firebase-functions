@@ -191,6 +191,73 @@ describe('saveSnippetToContent with Firebase Emulator', () => {
     expect(snippets['snippet-2'].baseLang).toBe('Second');
   });
 
+  it('should remove reviewData when overwriting snippet without reviewData', async () => {
+    const contentId = 'content-review-removal';
+    const snippetId = 'snippet-with-review';
+
+    // First save snippet WITH reviewData
+    const snippetWithReview: Snippet = {
+      id: snippetId,
+      baseLang: 'Review test',
+      targetLang: 'レビューテスト',
+      time: 3.5,
+      reviewData: {
+        difficulty: 5,
+        due: new Date('2026-02-01'),
+        ease: 2.5,
+        elapsed_days: 1,
+        interval: 3,
+        lapses: 0,
+        last_review: new Date('2026-01-26'),
+        reps: 1,
+        scheduled_days: 3,
+        stability: 2.0,
+        state: 1,
+      },
+    };
+
+    await saveSnippetToContent({
+      db,
+      language: 'japanese',
+      contentId,
+      snippetData: snippetWithReview,
+    });
+
+    // Verify reviewData exists
+    const beforeSnapshot = await db
+      .ref(`japanese/content/${contentId}/snippets/${snippetId}`)
+      .once('value');
+    const beforeData = beforeSnapshot.val();
+    expect(beforeData.reviewData).toBeDefined();
+
+    // Now overwrite with same snippet WITHOUT reviewData
+    const snippetWithoutReview: Snippet = {
+      id: snippetId,
+      baseLang: 'Review test',
+      targetLang: 'レビューテスト',
+      time: 3.5,
+    };
+
+    await saveSnippetToContent({
+      db,
+      language: 'japanese',
+      contentId,
+      snippetData: snippetWithoutReview,
+    });
+
+    // Verify reviewData is completely removed
+    const afterSnapshot = await db
+      .ref(`japanese/content/${contentId}/snippets/${snippetId}`)
+      .once('value');
+    const afterData = afterSnapshot.val();
+
+    expect(afterData.reviewData).toBeUndefined();
+    expect(afterData.id).toBe(snippetId);
+    expect(afterData.baseLang).toBe('Review test');
+    expect(afterData.targetLang).toBe('レビューテスト');
+    expect(afterData.time).toBe(3.5);
+  });
+
   it('should throw error if database operation fails', async () => {
     const snippetData: Snippet = {
       id: 'snippet-error',
