@@ -14,7 +14,47 @@ const snippetKeys = {
   contentId: 'contentId',
 };
 
+const ALLOWED_SNIPPET_KEYS = [
+  'id',
+  'baseLang',
+  'targetLang',
+  'time',
+  'reviewData',
+  'focusedText',
+  'isContracted',
+  'isPreSnippet',
+  'suggestedFocusText',
+];
+
+const ALLOWED_BODY_KEYS = ['language', 'contentId', 'snippetData'];
+
 export const saveSnippetValidation = [
+  // Check for extra keys at body level
+  body().custom((value, { req }) => {
+    const extraKeys = Object.keys(req.body).filter(
+      (key) => !ALLOWED_BODY_KEYS.includes(key),
+    );
+    if (extraKeys.length > 0) {
+      throw new Error(`Unexpected fields: ${extraKeys.join(', ')}`);
+    }
+    return true;
+  }),
+
+  // Check for extra keys in snippetData
+  body('snippetData').custom((value) => {
+    if (value && typeof value === 'object') {
+      const extraKeys = Object.keys(value).filter(
+        (key) => !ALLOWED_SNIPPET_KEYS.includes(key),
+      );
+      if (extraKeys.length > 0) {
+        throw new Error(
+          `Unexpected snippetData fields: ${extraKeys.join(', ')}`,
+        );
+      }
+    }
+    return true;
+  }),
+
   ...languageValidation,
   body(snippetKeys.contentId)
     .notEmpty()

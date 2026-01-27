@@ -249,4 +249,60 @@ describe('saveSnippetRoute', () => {
       }),
     );
   });
+
+  it('should return 400 when request body contains unexpected fields', async () => {
+    mockReq.body = {
+      language: 'japanese',
+      contentId: 'content-123',
+      snippetData: {
+        id: 'snippet-456',
+        baseLang: 'Hello world',
+        targetLang: 'こんにちは世界',
+        time: 5.5,
+      },
+      unexpectedField: 'should not be here',
+      anotherBadField: 'also bad',
+    };
+
+    await saveSnippetRoute(mockReq as Request, mockRes as Response);
+
+    expect(statusMock).toHaveBeenCalledWith(400);
+    expect(jsonMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        errors: expect.arrayContaining([
+          expect.objectContaining({
+            msg: expect.stringContaining('Unexpected fields'),
+          }),
+        ]),
+      }),
+    );
+  });
+
+  it('should return 400 when snippetData contains unexpected fields', async () => {
+    mockReq.body = {
+      language: 'japanese',
+      contentId: 'content-123',
+      snippetData: {
+        id: 'snippet-456',
+        baseLang: 'Hello world',
+        targetLang: 'こんにちは世界',
+        time: 5.5,
+        maliciousField: 'injected data',
+        extraProperty: 'not allowed',
+      },
+    };
+
+    await saveSnippetRoute(mockReq as Request, mockRes as Response);
+
+    expect(statusMock).toHaveBeenCalledWith(400);
+    expect(jsonMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        errors: expect.arrayContaining([
+          expect.objectContaining({
+            msg: expect.stringContaining('Unexpected snippetData fields'),
+          }),
+        ]),
+      }),
+    );
+  });
 });
