@@ -1,5 +1,5 @@
 import { pinyin } from 'pinyin-pro';
-import { chinese, googleLanguagesKey, japanese } from '../../language-keys';
+import { chinese, french, googleLanguagesKey, japanese } from '../../language-keys';
 import config from '../../config';
 import japJs from 'jap-js';
 import { translationClient } from '../../service-clients/translation-service-client';
@@ -22,7 +22,9 @@ export const getGoogleTranslate = async ({ word, language }) => {
     const [translation] = await translationClient.translateText(request);
     const definition = translation.translations[0].translatedText;
 
-    if (language !== chinese) {
+    if (language === french) {
+      transliteration = word;
+    } else if (language !== chinese) {
       const [romanized] = await translationClient.romanizeText(request);
       transliteration = romanized.romanizations[0].romanizedText;
     } else {

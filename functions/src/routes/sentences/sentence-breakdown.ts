@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { arabic, chinese, japanese } from '../../language-keys';
+import { arabic, chinese, french, japanese } from '../../language-keys';
 import { updateSentenceInContent } from './update-sentence';
 import { deepSeekChatAPI } from '../../ai-utils';
 
@@ -10,11 +10,14 @@ const chineseSentenceStructure =
   '"我已经开始学习中文了": "我 (I) + 已经 (already) + 开始 (begin) + 学习 (study) + 中文 (Chinese) + 了 (completed action particle)"';
 const arabicSentenceStructure =
   '"ذهبت إلى المكتبة لكن لم أدرس": "ذهبت (I went) + إلى (to) + المكتبة (the library) + لكن (but) + لم (negation for past) + أدرس (I study)"';
+const frenchSentenceStructure =
+  '"Je vais apprendre le francais demain": "Je (I) + vais (am going) + apprendre (to learn) + le (the) + francais (French) + demain (tomorrow)"';
 
 const sentenceStructureObj = {
   [japanese]: japaneseSentenceStructure,
   [chinese]: chineseSentenceStructure,
   [arabic]: arabicSentenceStructure,
+  [french]: frenchSentenceStructure,
 };
 
 export const breakdownSentenceRoute = async (req: Request, res: Response) => {
@@ -23,7 +26,7 @@ export const breakdownSentenceRoute = async (req: Request, res: Response) => {
   const prompt = `Break down the following ${language} sentence strictly into valid JSON output. Do not include explanations, preamble, or any additional text. 
   The JSON format should have the following structure: vocab: An array of objects where each object contains: surfaceForm: The word or phrase as it appears in the sentence. meaning: A brief explanation of its meaning in English. 
   sentenceStructure: A string that represents the sentence structure, maintaining the original word order but adding inline English meanings. For example: Format Example: word (meaning) + word (meaning) + word (meaning) Example Output for a sentence like ${
-    sentenceStructureObj[language] || sentenceStructureObj[language]
+    sentenceStructureObj[language] || sentenceStructureObj[japanese]
   }. meaning: A string giving a natural translation or explanation of the full sentence in English. Sentence to analyze: ${targetLang}`;
 
   try {
