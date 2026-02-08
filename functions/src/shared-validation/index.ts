@@ -1,8 +1,13 @@
 import { body } from 'express-validator';
 
-export type LanguageTypes = 'japanese' | 'chinese' | 'arabic';
+export type LanguageTypes = 'japanese' | 'chinese' | 'arabic' | 'french';
 
-const allowedLanguages: LanguageTypes[] = ['japanese', 'chinese', 'arabic'];
+const allowedLanguages: LanguageTypes[] = [
+  'japanese',
+  'chinese',
+  'arabic',
+  'french',
+];
 
 const languageValidation = [
   body('language')
