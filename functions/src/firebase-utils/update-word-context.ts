@@ -5,14 +5,12 @@ import { getFirebaseContentType } from './get-firebase-content-type';
 import { getRefPath } from './get-ref-path';
 
 interface UpdateWordContextProps {
-  matchedWord?: string;
   wordId?: string;
   sentenceId: string;
   language: LanguageTypes;
 }
 
 const updateWordContext = async ({
-  matchedWord,
   wordId,
   sentenceId,
   language,
@@ -22,9 +20,7 @@ const updateWordContext = async ({
     language,
   });
 
-  const index = snapshotArr.findIndex(
-    (i) => i.baseForm === matchedWord || i.id === wordId,
-  );
+  const index = snapshotArr.findIndex((i) => i.id === wordId);
 
   if (index !== -1) {
     const wordData = snapshotArr[index];
@@ -47,7 +43,7 @@ const updateWordContext = async ({
       contexts: newContexts,
     };
   } else {
-    throw new Error(`Couldn't find baseForm matching ${matchedWord || wordId}`);
+    throw new Error(`Couldn't find word matching ${wordId}`);
   }
 };
 

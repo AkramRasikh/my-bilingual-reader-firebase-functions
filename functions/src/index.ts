@@ -9,6 +9,7 @@ import { updateContentMetaDataRoute } from './routes/content/update-content';
 import { updateSentenceRoute } from './routes/sentences/update-sentence';
 import { updateAdhocSentenceRoute } from './routes/sentences/update-adhoc-sentence';
 import {
+  adhocSentenceCustomWord,
   adhocSentenceMinimalPairingRoute,
   adhocSentenceTTSRoute,
 } from './routes/sentences/add-sentence';
@@ -46,6 +47,9 @@ exports.addSentence = functions.https.onRequest(adhocSentenceTTSRoute);
 
 exports.addMinimalPairSentence = functions.https.onRequest(
   adhocSentenceMinimalPairingRoute,
+);
+exports.adhocSentenceCustomWord = functions.https.onRequest(
+  adhocSentenceCustomWord,
 );
 exports.addAlreadyGeneratedSentence = functions.https.onRequest(
   addAlreadyGeneratedSentenceRoute,

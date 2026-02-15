@@ -5,7 +5,6 @@ import {
   adhocSentenceMinimalPairingWordsMeaningPrompt,
   adhocSentenceMinimalPairingWordsPrompt,
   chineseCharacterSeperatePrompt,
-  customWordPrompt,
   grammarContrastPrompt,
   howToExpressPrompt,
   howToSayPrompt,
@@ -16,6 +15,9 @@ import { deepSeekChatAPI } from '../../ai-utils';
 import { updateWordContext } from '../../firebase-utils/update-word-context';
 import { addSentencesBulk } from '../../firebase-utils/add-sentences-bulk';
 import { synthesizeSpeech } from '../text-to-speech';
+import { buildMinimalSentencePrompt } from './add-minimal-sentence';
+import { saveSentenceToContent } from '../../firebase-utils/add-sentence';
+import { db } from '../../db';
 
 const adhocSentenceTTSRoute = async (req: Request, res: Response) => {
   const language = req.body.language;
@@ -199,20 +201,20 @@ const adhocSentenceMinimalPairingRoute = async (
           word: inputWord,
         })
       : isMeaning === 'seperate'
-      ? chineseCharacterSeperatePrompt({
-          language,
-          word: inputWord,
-        })
-      : isMeaning
-      ? adhocSentenceMinimalPairingWordsMeaningPrompt({
-          targetLanguage: language,
-          word: inputWord,
-          pairingType: isMeaning,
-        })
-      : adhocSentenceMinimalPairingWordsPrompt({
-          targetLanguage: language,
-          word: inputWord,
-        });
+        ? chineseCharacterSeperatePrompt({
+            language,
+            word: inputWord,
+          })
+        : isMeaning
+          ? adhocSentenceMinimalPairingWordsMeaningPrompt({
+              targetLanguage: language,
+              word: inputWord,
+              pairingType: isMeaning,
+            })
+          : adhocSentenceMinimalPairingWordsPrompt({
+              targetLanguage: language,
+              word: inputWord,
+            });
     const resultContent = await deepSeekChatAPI({
       sentence: sentencePrompt,
       language,
@@ -263,59 +265,46 @@ const adhocSentenceMinimalPairingRoute = async (
 };
 const adhocSentenceCustomWord = async (req: Request, res: Response) => {
   const inputWord = req.body.inputWord;
+  const wordId = req.body.id;
   const language = req.body.language;
-  const prompt = req.body.prompt;
+  const context = req.body.context;
 
   try {
-    const sentencePrompt = customWordPrompt({
+    const sentencePrompt = buildMinimalSentencePrompt(
+      inputWord,
       language,
-      word: inputWord,
-      prompt,
-    });
+      context,
+    );
 
     const resultContent = await deepSeekChatAPI({
       sentence: sentencePrompt,
       language,
     });
-    const sentencesFromResult = resultContent.sentences;
 
-    const sentencesWithIds = sentencesFromResult.map((sentence) => ({
+    const sentenceWithId = {
       id: uuidv4(),
-      topic: 'sentence-helper',
-      hasAudio: true,
-      ...sentence,
-      reviewData: getInitSentenceCard(),
-    }));
+      ...resultContent,
+    };
 
-    const sentencesToAddFromDB = await addSentencesBulk({
+    await saveSentenceToContent({
       language,
-      sentencesBulk: sentencesWithIds,
+      sentenceData: sentenceWithId,
+      db,
     });
 
-    await Promise.all(
-      sentencesWithIds.map(async (item) => {
-        const id = item.id;
-        const text = item.targetLang;
+    await synthesizeSpeech({
+      id: sentenceWithId.id,
+      text: sentenceWithId.targetLang,
+      language,
+    });
 
-        return await synthesizeSpeech({
-          id,
-          text,
-          language,
-        });
-      }),
-    );
+    await updateWordContext({
+      wordId: wordId,
+      sentenceId: sentenceWithId.id,
+      language,
+    });
 
-    await Promise.all(
-      sentencesToAddFromDB.map(async (sentence) => {
-        const sentenceId = sentence.id;
-        return await updateWordContext({
-          wordId: inputWord.id,
-          sentenceId,
-          language,
-        });
-      }),
-    );
-    res.status(200).json(sentencesToAddFromDB);
+    res.status(200).json(sentenceWithId);
   } catch (error) {
     console.log('## /custom-word-prompt error', error);
     res.status(500).json({ error });
