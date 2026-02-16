@@ -1,5 +1,5 @@
 import { LanguageTypes } from '../language-keys';
-import { contentRef, RefTypes } from '../refs';
+import { contentRef, RefTypes, sentencesRef } from '../refs';
 import { filterOutNestedNulls } from '../utils/filter-out-nested-nulls';
 import { getDataSnapshot } from './get-data-snapshot';
 import { db } from '../db';
@@ -20,13 +20,16 @@ export const getFirebaseContentType = async ({
       ref,
       db,
     });
-    if (ref === contentRef) {
+    if (ref === contentRef || ref === sentencesRef) {
       const snapshot = await db
-        .ref(getRefPath({ language, ref: contentRef }))
+        .ref(getRefPath({ language, ref }))
         .once('value');
-      const contentObj = snapshot.val();
-      const contentArray = Object.values(contentObj);
-      return contentArray;
+      if (!snapshot.exists()) {
+        return [];
+      }
+      const refObj = snapshot.val();
+      const refValuesArray = Object.values(refObj);
+      return refValuesArray;
     }
     const realValues = filterOutNestedNulls(thisContentTypeSnapShot);
     return realValues;
