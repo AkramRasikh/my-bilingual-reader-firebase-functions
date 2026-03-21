@@ -1,7 +1,7 @@
 import { LanguageTypes } from '../../shared-validation';
 import { sentencesRef } from '../../refs';
-import { deleteAssetFromCloudFlare } from '../../firebase-utils/upload-asset-to-cloudflare';
 import { db } from '../../db';
+import { deleteAssetFromCloudFlare } from '../../firebase-utils/delete-asset-from-cloudflare';
 
 export const deleteSentenceFromContent = async ({
   language,

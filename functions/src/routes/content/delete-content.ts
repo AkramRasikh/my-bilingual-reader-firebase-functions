@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { db } from '../../db';
-import { deleteAssetFromCloudFlare } from '../../firebase-utils/upload-asset-to-cloudflare';
 import { removeMultiItemFromSnapshot } from '../../firebase-utils/remove-item-from-snapshot';
 import { wordsRef } from '../../refs';
+import { deleteAssetFromCloudFlare } from '../../firebase-utils/delete-asset-from-cloudflare';
 
 const deleteContentToDB = async ({ language, id, title }) => {
   try {
@@ -10,13 +10,11 @@ const deleteContentToDB = async ({ language, id, title }) => {
     const ref = db.ref(`${language}/content/${id}`);
     await ref.remove();
     console.log(`## Deleted ${language}/content/${id}`);
-
-    // get title and delete audio by title
-
     const audioToDelete = `${language}-audio/${title}.mp3`;
-    console.log('## audio to delete: ', audioToDelete);
+    const videoToDelete = `${language}-video/${title}.mp4`;
 
     await deleteAssetFromCloudFlare(audioToDelete);
+    await deleteAssetFromCloudFlare(videoToDelete);
     return true;
   } catch (error) {
     console.log('## deleteContentToDB error', error);
@@ -61,9 +59,6 @@ export const deleteContentRoute = async (
         language,
       });
     }
-
-    // 3. Delete Cloudflare audio (optional)
-    await deleteAssetFromCloudFlare(`${language}-audio/${id}.mp3`);
 
     // 4. Respond OK
     res.status(200).json({
