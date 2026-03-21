@@ -3,7 +3,7 @@ import { routeValidator } from '../../shared-validation/route-validator';
 import { deleteWordValidation } from './delete-word-validation';
 import { wordsRef } from '../../refs';
 import { removeItemFromSnapshot } from '../../firebase-utils/remove-item-from-snapshot';
-import { deleteSentenceFromContent } from '../sentences/delete-sentence';
+import { deleteAdditionalWordContext } from './delete-additional-word-context';
 
 export const deleteWordRoute = async (
   req: Request,
@@ -22,13 +22,10 @@ export const deleteWordRoute = async (
       language,
     });
 
-    let sentenceIds = [];
-    if (Array.isArray(additionalContext) && additionalContext.length > 0) {
-      const deletePromises = additionalContext.map((sentenceId) => {
-        return deleteSentenceFromContent({ language, sentenceId });
-      });
-      sentenceIds = await Promise.all(deletePromises);
-    }
+    const sentenceIds = await deleteAdditionalWordContext({
+      language,
+      additionalContext,
+    });
 
     if (deletedWordId) {
       res.status(200).json({ id: deletedWordId, sentenceIds });

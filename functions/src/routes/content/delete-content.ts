@@ -3,6 +3,8 @@ import { db } from '../../db';
 import { removeMultiItemFromSnapshot } from '../../firebase-utils/remove-item-from-snapshot';
 import { wordsRef } from '../../refs';
 import { deleteAssetFromCloudFlare } from '../../firebase-utils/delete-asset-from-cloudflare';
+import { LanguageTypes } from '../../shared-validation';
+import { deleteAdditionalWordContext } from '../words/delete-additional-word-context';
 
 const deleteContentToDB = async ({ language, id, title }) => {
   try {
@@ -26,7 +28,7 @@ export const deleteContentRoute = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const { id, title, language, wordIds } = req.body;
+  const { id, title, language, wordIds, additionalContext } = req.body;
 
   // 1. Validate inputs
   if (!id || !title || !language) {
@@ -51,6 +53,7 @@ export const deleteContentRoute = async (
       return;
     }
     let deletedWordsIds;
+    let sentenceIds: string[] | undefined;
 
     if (wordIds?.length > 0) {
       deletedWordsIds = await removeMultiItemFromSnapshot({
@@ -58,6 +61,16 @@ export const deleteContentRoute = async (
         ref: wordsRef,
         language,
       });
+
+      if (
+        Array.isArray(additionalContext) &&
+        additionalContext.length > 0
+      ) {
+        sentenceIds = await deleteAdditionalWordContext({
+          language: language as LanguageTypes,
+          additionalContext,
+        });
+      }
     }
 
     // 4. Respond OK
@@ -65,6 +78,7 @@ export const deleteContentRoute = async (
       message: 'Content deleted successfully.',
       id,
       deletedWordsIds,
+      ...(sentenceIds !== undefined && { sentenceIds }),
     });
   } catch (error: any) {
     console.error('Delete content error:', error);
