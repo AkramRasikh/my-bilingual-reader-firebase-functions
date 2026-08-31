@@ -24,7 +24,14 @@ interface GetThisLanguagePromptTypes {
   context: string;
 }
 
+interface ChatMessage {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+}
+
 const deepSeekBaseUrl = 'https://api.deepseek.com/v1';
+const DEEPSEEK_MODEL = 'deepseek-v4-flash';
+const OPENAI_FALLBACK_MODEL = 'gpt-4o-mini';
 
 const getThisLanguagePrompt = ({
   word,
@@ -44,16 +51,115 @@ const getThisLanguagePrompt = ({
   }
 };
 
-export const deepSeekChatAPI = async ({ sentence, language }) => {
-  const openAiKey = config.openAiKey;
-  const deepseekKey = config.deepSeekKey;
-  const isChinese = language === chinese;
-  const openai = new OpenAI({
-    apiKey: isChinese ? deepseekKey : openAiKey,
-    baseURL: isChinese ? deepSeekBaseUrl : undefined,
+const parseJsonContent = (content: string) => {
+  const cleanedContent = content
+    .replace(/```json/g, '')
+    .replace(/```/g, '')
+    .trim();
+  return JSON.parse(cleanedContent);
+};
+
+const createDeepSeekClient = () =>
+  new OpenAI({
+    apiKey: config.deepSeekKey,
+    baseURL: deepSeekBaseUrl,
   });
+
+const createOpenAiClient = () =>
+  new OpenAI({
+    apiKey: config.openAiKey,
+  });
+
+const extractContent = (
+  completion: OpenAI.Chat.ChatCompletion,
+): string => {
+  const content = completion.choices[0]?.message?.content;
+  if (!content || !content.trim()) {
+    throw new Error('Empty model content');
+  }
+  return content;
+};
+
+const messagesForJsonMode = (messages: ChatMessage[]): ChatMessage[] => {
+  const alreadyMentionsJson = messages.some((message) =>
+    /json/i.test(message.content),
+  );
+  if (alreadyMentionsJson) {
+    return messages;
+  }
+
+  const [first, ...rest] = messages;
+  if (first?.role === 'system') {
+    return [
+      {
+        ...first,
+        content: `${first.content} Return a JSON object.`,
+      },
+      ...rest,
+    ];
+  }
+
+  return [{ role: 'system', content: 'Return a JSON object.' }, ...messages];
+};
+
+const callDeepSeek = async ({
+  messages,
+  json,
+}: {
+  messages: ChatMessage[];
+  json?: boolean;
+}) => {
+  const client = createDeepSeekClient();
+  const completion = await client.chat.completions.create({
+    model: DEEPSEEK_MODEL,
+    messages,
+    stream: false,
+    ...(json ? { response_format: { type: 'json_object' as const } } : {}),
+    thinking: { type: 'disabled' },
+  } as OpenAI.Chat.ChatCompletionCreateParamsNonStreaming);
+  return extractContent(completion);
+};
+
+const callOpenAiFallback = async ({
+  messages,
+  json,
+}: {
+  messages: ChatMessage[];
+  json?: boolean;
+}) => {
+  const client = createOpenAiClient();
+  const completion = await client.chat.completions.create({
+    model: OPENAI_FALLBACK_MODEL,
+    messages,
+    ...(json ? { response_format: { type: 'json_object' as const } } : {}),
+  });
+  return extractContent(completion);
+};
+
+export const completeChatWithFallback = async ({
+  messages,
+  json,
+}: {
+  messages: ChatMessage[];
+  json?: boolean;
+}) => {
+  const requestMessages = json ? messagesForJsonMode(messages) : messages;
   try {
-    const completion = await openai.chat.completions.create({
+    const content = await callDeepSeek({ messages: requestMessages, json });
+    if (json) {
+      parseJsonContent(content);
+    }
+    return content;
+  } catch (error) {
+    console.log('## DeepSeek failed, falling back to gpt-4o-mini', error);
+    return callOpenAiFallback({ messages: requestMessages, json });
+  }
+};
+
+export const deepSeekChatAPI = async ({ sentence, language }) => {
+  try {
+    const content = await completeChatWithFallback({
+      json: true,
       messages: [
         {
           role: 'system',
@@ -64,18 +170,8 @@ export const deepSeekChatAPI = async ({ sentence, language }) => {
           content: sentence,
         },
       ],
-      model: isChinese ? 'deepseek-chat' : 'gpt-4o-mini',
     });
-
-    const content = completion.choices[0].message.content;
-    const cleanedContent = content
-      .replace(/```json/g, '')
-      .replace(/```/g, '')
-      .trim();
-
-    const parsed = JSON.parse(cleanedContent);
-
-    return parsed;
+    return parseJsonContent(content);
   } catch (error) {
     console.log('## Error DeepSeek: ', error);
     throw error;
@@ -87,14 +183,6 @@ export const deepSeekTranslator = async ({
   context,
   language,
 }: deepSeekTranslatorParams) => {
-  const openAiKey = config.openAiKey;
-  const deepseekKey = config.deepSeekKey;
-  const isChinese = language === chinese;
-  const openai = new OpenAI({
-    apiKey: isChinese ? deepseekKey : openAiKey,
-    baseURL: isChinese ? deepSeekBaseUrl : undefined,
-  });
-
   const formattedTranslationPrompt = getThisLanguagePrompt({
     word,
     context,
@@ -102,7 +190,8 @@ export const deepSeekTranslator = async ({
   });
 
   try {
-    const completion = await openai.chat.completions.create({
+    const content = await completeChatWithFallback({
+      json: true,
       messages: [
         {
           role: 'system',
@@ -113,19 +202,10 @@ export const deepSeekTranslator = async ({
           content: formattedTranslationPrompt,
         },
       ],
-      model: isChinese ? 'deepseek-chat' : 'gpt-4o-mini',
     });
-
-    const content = completion.choices[0].message.content;
-    const cleanedContent = content
-      .replace(/```json/g, '')
-      .replace(/```/g, '')
-      .trim();
-
-    const parsed = JSON.parse(cleanedContent);
-    return parsed;
+    return parseJsonContent(content);
   } catch (error) {
-    console.error('Deepseek Status Code:', error.response.status);
+    console.error('Deepseek Status Code:', error.response?.status);
     console.error('Deepseek Error:', error.message);
     if (error.message) {
       throw new Error(error.message);

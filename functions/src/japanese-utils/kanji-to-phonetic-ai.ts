@@ -1,7 +1,4 @@
-import OpenAI from 'openai';
-import config from '../config';
-
-// const baseURL = 'https://api.deepseek.com/v1';
+import { completeChatWithFallback } from '../ai-utils';
 
 const japaneseKanjiToPhoenticPrompt = ({ word, context = '' }) => {
   const contextInstruction = context
@@ -12,19 +9,13 @@ const japaneseKanjiToPhoenticPrompt = ({ word, context = '' }) => {
 };
 
 export const deepSeekKanjiToPhonetic = async ({ word, context }: any) => {
-  const openAiKey = config.openAiKey;
-  const openai = new OpenAI({
-    apiKey: openAiKey,
-    // baseURL,
-  });
-
   const formattedTranslationPrompt = japaneseKanjiToPhoenticPrompt({
     word,
     context,
   });
 
   try {
-    const completion = await openai.chat.completions.create({
+    const content = await completeChatWithFallback({
       messages: [
         {
           role: 'system',
@@ -36,14 +27,10 @@ export const deepSeekKanjiToPhonetic = async ({ word, context }: any) => {
           content: formattedTranslationPrompt,
         },
       ],
-      // model: 'deepseek-chat',
-      model: 'gpt-4o-mini',
     });
-
-    const content = completion.choices[0].message.content;
     return content.trim();
   } catch (error) {
-    console.error('Deepseek Status Code:', error.response.status);
+    console.error('Deepseek Status Code:', error.response?.status);
     console.error('Deepseek Error:', error.message);
     if (error.message) {
       throw new Error(error.message);
