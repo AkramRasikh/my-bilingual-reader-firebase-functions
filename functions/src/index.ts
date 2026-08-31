@@ -3,6 +3,7 @@ import { onLoadDataRoute } from './routes/on-load-data';
 import { translateTextRoute } from './routes/translate-text';
 import { textToSpeechRoute } from './routes/text-to-speech';
 import { addWordRoute } from './routes/words/add-word';
+import { addImprovWordRoute } from './routes/words/add-improv-word';
 import { updateWordRoute } from './routes/words/update-word';
 import { deleteWordRoute } from './routes/words/delete-word';
 import { updateContentMetaDataRoute } from './routes/content/update-content';
@@ -28,6 +29,8 @@ exports.textToSpeech = functions.https.onRequest(textToSpeechRoute);
 exports.getOnLoadData = functions.https.onRequest(onLoadDataRoute);
 
 exports.addWord = functions.https.onRequest(addWordRoute);
+
+exports.addImprovWord = functions.https.onRequest(addImprovWordRoute);
 
 exports.updateWord = functions.https.onRequest(updateWordRoute);
 

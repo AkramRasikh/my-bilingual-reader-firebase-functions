@@ -15,8 +15,7 @@ const getEmptyCard = () => {
   return card;
 };
 
-const initFsrs = () => {
-  const retentionKey = srsRetentionKey.sentences;
+const initFsrs = (retentionKey: number) => {
   const params = generatorParameters({
     maximum_interval: 1000,
     request_retention: retentionKey,
@@ -24,9 +23,9 @@ const initFsrs = () => {
   return fsrs(params);
 };
 
-export const getInitSentenceCard = () => {
+const buildInitCard = (retentionKey: number) => {
   const card = getEmptyCard();
-  const f = initFsrs();
+  const f = initFsrs(retentionKey);
   const hardCardData = f.repeat(card, new Date())['1'].card;
 
   return {
@@ -35,3 +34,8 @@ export const getInitSentenceCard = () => {
     last_review: hardCardData.last_review.toISOString(),
   };
 };
+
+export const getInitSentenceCard = () =>
+  buildInitCard(srsRetentionKey.sentences);
+
+export const getInitVocabCard = () => buildInitCard(srsRetentionKey.vocab);
