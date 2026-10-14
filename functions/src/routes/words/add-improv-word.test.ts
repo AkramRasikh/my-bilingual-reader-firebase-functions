@@ -169,6 +169,66 @@ describe('addImprovWordRoute', () => {
     });
   });
 
+  it('runs one prompt per inquiry and returns results in order', async () => {
+    (uuidv4 as jest.Mock)
+      .mockReset()
+      .mockReturnValueOnce('sentence-id-1')
+      .mockReturnValueOnce('word-id-1')
+      .mockReturnValueOnce('sentence-id-2')
+      .mockReturnValueOnce('word-id-2');
+    mockReq.body = {
+      language: japanese,
+      inquiries: ['How do you say festival', 'How do you say army'],
+    };
+
+    await addImprovWordRoute(mockReq as Request, mockRes as Response);
+
+    expect(deepSeekChatAPI).toHaveBeenCalledTimes(2);
+    expect(statusMock).toHaveBeenCalledWith(200);
+    expect(jsonMock).toHaveBeenCalledWith({
+      results: [
+        expect.objectContaining({
+          word: expect.objectContaining({ id: 'word-id-1' }),
+          sentence: expect.objectContaining({
+            inquiry: 'How do you say festival',
+          }),
+        }),
+        expect.objectContaining({
+          word: expect.objectContaining({ id: 'word-id-2' }),
+          sentence: expect.objectContaining({
+            inquiry: 'How do you say army',
+          }),
+        }),
+      ],
+    });
+  });
+
+  it('keeps a per-item error from failing the rest of the list', async () => {
+    (getDataSnapshot as jest.Mock)
+      .mockResolvedValueOnce([
+        { baseForm: '準軍事組織', surfaceForm: '準軍事組織' },
+      ])
+      .mockResolvedValue([]);
+
+    mockReq.body = {
+      language: japanese,
+      inquiries: ['already saved', 'a new one'],
+    };
+
+    await addImprovWordRoute(mockReq as Request, mockRes as Response);
+
+    expect(statusMock).toHaveBeenCalledWith(200);
+    expect(jsonMock).toHaveBeenCalledWith({
+      results: [
+        { error: 'Word already exists' },
+        expect.objectContaining({
+          word: expect.objectContaining({ id: 'word-id-1' }),
+        }),
+      ],
+    });
+    expect(addSentencesBulk).toHaveBeenCalledTimes(1);
+  });
+
   it('returns 500 if TTS fails', async () => {
     (synthesizeSpeech as jest.Mock).mockRejectedValue(
       new Error('Error uploading audio file for japanese'),
