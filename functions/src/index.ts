@@ -3,18 +3,13 @@ import { onLoadDataRoute } from './routes/on-load-data';
 import { translateTextRoute } from './routes/translate-text';
 import { textToSpeechRoute } from './routes/text-to-speech';
 import { addWordRoute } from './routes/words/add-word';
-import { addImprovWordRoute } from './routes/words/add-improv-word';
 import { updateWordRoute } from './routes/words/update-word';
 import { deleteWordRoute } from './routes/words/delete-word';
 import { updateContentMetaDataRoute } from './routes/content/update-content';
 import { updateSentenceRoute } from './routes/sentences/update-sentence';
 import { updateAdhocSentenceRoute } from './routes/sentences/update-adhoc-sentence';
-import {
-  adhocSentenceCustomWord,
-  adhocSentenceMinimalPairingRoute,
-  adhocSentenceTTSRoute,
-} from './routes/sentences/add-sentence';
-import { addAlreadyGeneratedSentenceRoute } from './routes/sentences/add-already-generated-sentence';
+import { adhocSentenceCustomWord } from './routes/sentences/add-sentence';
+import { addComplexSentenceRoute } from './routes/sentences/add-complex-sentence';
 import { addExpressionRoute } from './routes/sentences/add-expression';
 import { breakdownSentenceRoute } from './routes/sentences/sentence-breakdown';
 import { deleteContentRoute } from './routes/content/delete-content';
@@ -30,8 +25,6 @@ exports.getOnLoadData = functions.https.onRequest(onLoadDataRoute);
 
 exports.addWord = functions.https.onRequest(addWordRoute);
 
-exports.addImprovWord = functions.https.onRequest(addImprovWordRoute);
-
 exports.updateWord = functions.https.onRequest(updateWordRoute);
 
 exports.deleteWord = functions.https.onRequest(deleteWordRoute);
@@ -46,17 +39,10 @@ exports.updateAdhocSentence = functions.https.onRequest(
   updateAdhocSentenceRoute,
 );
 
-exports.addSentence = functions.https.onRequest(adhocSentenceTTSRoute);
-
-exports.addMinimalPairSentence = functions.https.onRequest(
-  adhocSentenceMinimalPairingRoute,
-);
 exports.adhocSentenceCustomWord = functions.https.onRequest(
   adhocSentenceCustomWord,
 );
-exports.addAlreadyGeneratedSentence = functions.https.onRequest(
-  addAlreadyGeneratedSentenceRoute,
-);
+exports.addComplexSentence = functions.https.onRequest(addComplexSentenceRoute);
 exports.addExpression = functions.https.onRequest(addExpressionRoute);
 
 exports.breakdownSentence = functions.https.onRequest(breakdownSentenceRoute);
