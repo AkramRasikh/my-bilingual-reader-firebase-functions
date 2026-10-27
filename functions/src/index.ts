@@ -11,7 +11,6 @@ import { updateSentenceRoute } from './routes/sentences/update-sentence';
 import { updateAdhocSentenceRoute } from './routes/sentences/update-adhoc-sentence';
 import { adhocSentenceCustomWord } from './routes/sentences/add-sentence';
 import { addComplexSentenceRoute } from './routes/sentences/add-complex-sentence';
-import { addExpressionRoute } from './routes/sentences/add-expression';
 import { breakdownSentenceRoute } from './routes/sentences/sentence-breakdown';
 import { deleteContentRoute } from './routes/content/delete-content';
 import { updateSentenceReviewBulkRoute } from './routes/sentences/update-sentence-review-bulk';
@@ -46,7 +45,6 @@ exports.adhocSentenceCustomWord = functions.https.onRequest(
   adhocSentenceCustomWord,
 );
 exports.addComplexSentence = functions.https.onRequest(addComplexSentenceRoute);
-exports.addExpression = functions.https.onRequest(addExpressionRoute);
 
 exports.breakdownSentence = functions.https.onRequest(breakdownSentenceRoute);
 
