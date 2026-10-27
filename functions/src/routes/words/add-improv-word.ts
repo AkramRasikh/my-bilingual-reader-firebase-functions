@@ -9,7 +9,7 @@ import { getRefPath } from '../../firebase-utils/get-ref-path';
 import { LanguageTypes } from '../../language-keys';
 import { wordsRef } from '../../refs';
 import { routeValidator } from '../../shared-validation/route-validator';
-import { getInitSentenceCard, getInitVocabCard } from '../../srs-utils';
+import { getInitVocabCard } from '../../srs-utils';
 import { filterOutNestedNulls } from '../../utils/filter-out-nested-nulls';
 import { synthesizeSpeech } from '../text-to-speech';
 import { WordType } from './add-word';
@@ -123,7 +123,6 @@ type ImprovInquiryResult = {
     hasAudio: boolean;
     inquiry: string;
     context?: string;
-    reviewData: ReturnType<typeof getInitSentenceCard>;
     targetLang: string;
     baseLang: string;
     notes?: string;
@@ -168,7 +167,6 @@ const addOneImprovInquiry = async ({
     hasAudio: true,
     inquiry,
     ...(isNonEmptyString(context) ? { context } : {}),
-    reviewData: getInitSentenceCard(),
     targetLang: parsed.sentence.targetLang,
     baseLang: parsed.sentence.baseLang,
     ...(parsed.sentence.notes ? { notes: parsed.sentence.notes } : {}),

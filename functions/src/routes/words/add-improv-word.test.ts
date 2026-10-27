@@ -24,7 +24,6 @@ jest.mock('uuid', () => ({
   v4: jest.fn(),
 }));
 jest.mock('../../srs-utils', () => ({
-  getInitSentenceCard: jest.fn(() => ({ due: '2026-01-01T00:00:00.000Z' })),
   getInitVocabCard: jest.fn(() => ({ due: '2026-01-01T00:00:00.000Z' })),
 }));
 
@@ -109,6 +108,9 @@ describe('addImprovWordRoute', () => {
         ],
       }),
     );
+    const savedSentence = (addSentencesBulk as jest.Mock).mock.calls[0][0]
+      .sentencesBulk[0];
+    expect(savedSentence).not.toHaveProperty('reviewData');
     expect(synthesizeSpeech).toHaveBeenCalledWith({
       id: 'sentence-id-1',
       text: aiResult.sentence.targetLang,
