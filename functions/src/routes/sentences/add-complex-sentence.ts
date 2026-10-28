@@ -21,7 +21,11 @@ import {
 interface BreakdownVocab {
   surfaceForm?: string;
   meaning?: string;
+  transliteration?: string;
 }
+
+const includesVocabTransliteration = (language: string) =>
+  language.toLowerCase() !== 'french';
 
 interface ComplexSentenceAiResult {
   targetLang?: string;
@@ -36,19 +40,33 @@ interface ComplexSentenceAiResult {
 const isNonEmptyString = (value: unknown): value is string =>
   typeof value === 'string' && value.trim().length > 0;
 
-export const parseComplexSentenceResult = (result: ComplexSentenceAiResult) => {
+export const parseComplexSentenceResult = (
+  result: ComplexSentenceAiResult,
+  language = '',
+) => {
   const targetLang = result?.targetLang?.trim();
   const baseLang = result?.baseLang?.trim();
   const transliteration = result?.transliteration?.trim();
+  const withVocabTransliteration = includesVocabTransliteration(language);
 
   const sentenceStructure = result?.sentenceStructure?.trim();
   const meaning = result?.meaning?.trim();
   const vocab = Array.isArray(result?.vocab)
     ? result.vocab
-        .map((item) => ({
-          surfaceForm: item?.surfaceForm?.trim() ?? '',
-          meaning: item?.meaning?.trim() ?? '',
-        }))
+        .map((item) => {
+          const entry: {
+            surfaceForm: string;
+            meaning: string;
+            transliteration?: string;
+          } = {
+            surfaceForm: item?.surfaceForm?.trim() ?? '',
+            meaning: item?.meaning?.trim() ?? '',
+          };
+          if (withVocabTransliteration) {
+            entry.transliteration = item?.transliteration?.trim() ?? '';
+          }
+          return entry;
+        })
         .filter((item) => item.surfaceForm && item.meaning)
     : [];
 
@@ -58,10 +76,12 @@ export const parseComplexSentenceResult = (result: ComplexSentenceAiResult) => {
     !transliteration ||
     !sentenceStructure ||
     !meaning ||
-    vocab.length === 0
+    vocab.length === 0 ||
+    (withVocabTransliteration &&
+      vocab.some((item) => !item.transliteration))
   ) {
     throw new Error(
-      'Complex sentence result missing targetLang, baseLang, transliteration, vocab, sentenceStructure, or meaning',
+      'Complex sentence result missing targetLang, baseLang, transliteration, vocab, sentenceStructure, meaning, or vocab transliteration',
     );
   }
 
@@ -103,7 +123,7 @@ export const addComplexSentenceRoute = async (
       sentence: prompt,
       language,
     });
-    const parsed = parseComplexSentenceResult(resultContent);
+    const parsed = parseComplexSentenceResult(resultContent, language);
     const sentenceToSave = {
       id: uuidv4(),
       topic: 'sentence-helper',

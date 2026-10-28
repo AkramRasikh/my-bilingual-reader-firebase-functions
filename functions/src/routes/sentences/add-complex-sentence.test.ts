@@ -45,11 +45,23 @@ const aiResult = {
   transliteration: 'Kinō no hanashi ni mo kakawarazu, kare wa mada shinjite iru.',
   notes: 'Uses a concessive phrase.',
   vocab: [
-    { surfaceForm: '昨日の話', meaning: "yesterday's conversation" },
-    { surfaceForm: 'にもかかわらず', meaning: 'despite' },
-    { surfaceForm: '彼は', meaning: 'he' },
-    { surfaceForm: 'まだ', meaning: 'still' },
-    { surfaceForm: '信じている', meaning: 'believes' },
+    {
+      surfaceForm: '昨日の話',
+      meaning: "yesterday's conversation",
+      transliteration: 'kinō no hanashi',
+    },
+    {
+      surfaceForm: 'にもかかわらず',
+      meaning: 'despite',
+      transliteration: 'ni mo kakawarazu',
+    },
+    { surfaceForm: '彼は', meaning: 'he', transliteration: 'kare wa' },
+    { surfaceForm: 'まだ', meaning: 'still', transliteration: 'mada' },
+    {
+      surfaceForm: '信じている',
+      meaning: 'believes',
+      transliteration: 'shinjite iru',
+    },
   ],
   sentenceStructure:
     '昨日の話 (yesterday\'s conversation) + にもかかわらず (despite) + 彼は (he) + まだ (still) + 信じている (believes)',
@@ -100,8 +112,17 @@ describe('buildComplexSentencePrompt', () => {
 
     expect(japanesePrompt).toContain('Hepburn');
     expect(japanesePrompt).toContain('macrons');
+    expect(japanesePrompt).toContain(
+      '"transliteration": "romanization of this token"',
+    );
     expect(frenchPrompt).toContain('consistent romanization of the complete french sentence');
     expect(frenchPrompt).not.toContain('Hepburn');
+    expect(frenchPrompt).toContain(
+      'Do not add a transliteration field to vocab items',
+    );
+    expect(frenchPrompt).not.toContain(
+      '"transliteration": "romanization of this token"',
+    );
   });
 
   it('keeps explicit true and false settings and leaves the rest on auto', () => {
@@ -148,6 +169,37 @@ describe('parseComplexSentenceResult', () => {
         transliteration: 'bun',
       }),
     ).toThrow(/vocab/);
+  });
+
+  it('requires a transliteration on each vocab item', () => {
+    expect(() =>
+      parseComplexSentenceResult(
+        {
+          ...aiResult,
+          vocab: [{ surfaceForm: '文', meaning: 'sentence' }],
+        },
+        'japanese',
+      ),
+    ).toThrow(/vocab transliteration/);
+  });
+
+  it('omits vocab transliteration for french', () => {
+    const parsed = parseComplexSentenceResult(
+      {
+        ...aiResult,
+        vocab: aiResult.vocab.map((item) => ({
+          ...item,
+          transliteration: 'should-drop',
+        })),
+      },
+      'french',
+    );
+
+    expect(parsed.vocab[0]).toEqual({
+      surfaceForm: '昨日の話',
+      meaning: "yesterday's conversation",
+    });
+    expect(parsed.vocab[0]).not.toHaveProperty('transliteration');
   });
 });
 

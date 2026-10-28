@@ -26,6 +26,8 @@ const settingMeaning = (setting: GrammarSetting) => {
   return 'Choose this only when it is among the most relevant structures for this language, these words, and their contexts.';
 };
 
+const isFrench = (language: string) => language.toLowerCase() === 'french';
+
 const transliterationRules = (language: string) => {
   if (language.toLowerCase() === 'japanese') {
     return `Write the sentence in ordinary Japanese, with kanji and kana as appropriate.
@@ -38,6 +40,27 @@ Do not write a separate spoken sentence and written sentence.`;
   return `transliteration is a consistent romanization of the complete ${language} sentence.
 It must match that sentence exactly. It is not a loose pronunciation spelling.`;
 };
+
+const vocabRules = (language: string) => {
+  if (isFrench(language)) {
+    return `vocab is an array of objects. Each object contains surfaceForm, the word or phrase as it appears in the sentence, and meaning, a brief explanation of that token in English.
+Do not add a transliteration field to vocab items.`;
+  }
+
+  const system =
+    language.toLowerCase() === 'japanese'
+      ? 'Use Hepburn with macrons, the same system as the sentence transliteration.'
+      : 'Use the same romanization system as the sentence transliteration.';
+
+  return `vocab is an array of objects. Each object contains surfaceForm, the word or phrase as it appears in the sentence, meaning, a brief explanation of that token in English, and transliteration, the romanization of that surfaceForm only.
+${system}
+The vocab transliteration covers only that token, not the whole sentence.`;
+};
+
+const vocabExample = (language: string) =>
+  isFrench(language)
+    ? '{ "surfaceForm": "token as it appears in the sentence", "meaning": "brief English meaning" }'
+    : '{ "surfaceForm": "token as it appears in the sentence", "meaning": "brief English meaning", "transliteration": "romanization of this token" }';
 
 export const buildComplexSentencePrompt = ({
   language,
@@ -103,7 +126,7 @@ ${transliterationRules(language)}
 ## Response
 Return only this JSON object. One sentence, not a list.
 Include the sentence and its breakdown in the same object.
-vocab is an array of objects. Each object contains surfaceForm, the word or phrase as it appears in the sentence, and meaning, a brief explanation of that token in English.
+${vocabRules(language)}
 sentenceStructure is a string of the sentence structure in the original word order, with inline English meanings, in the form: word (meaning) + word (meaning) + word (meaning).
 meaning is a string giving a natural translation or explanation of the full sentence in English.
 {
@@ -112,7 +135,7 @@ meaning is a string giving a natural translation or explanation of the full sent
   "transliteration": "romanization of the complete target sentence",
   "notes": "optional; include only for a real limitation or nuance",
   "vocab": [
-    { "surfaceForm": "token as it appears in the sentence", "meaning": "brief English meaning" }
+    ${vocabExample(language)}
   ],
   "sentenceStructure": "token (meaning) + token (meaning)",
   "meaning": "natural translation or explanation of the full sentence in English"
