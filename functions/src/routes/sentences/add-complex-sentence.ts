@@ -18,11 +18,19 @@ import {
   GrammarSetting,
 } from './complex-sentence-grammar';
 
+interface BreakdownVocab {
+  surfaceForm?: string;
+  meaning?: string;
+}
+
 interface ComplexSentenceAiResult {
   targetLang?: string;
   baseLang?: string;
   transliteration?: string;
   notes?: string;
+  vocab?: BreakdownVocab[];
+  sentenceStructure?: string;
+  meaning?: string;
 }
 
 const isNonEmptyString = (value: unknown): value is string =>
@@ -33,9 +41,27 @@ export const parseComplexSentenceResult = (result: ComplexSentenceAiResult) => {
   const baseLang = result?.baseLang?.trim();
   const transliteration = result?.transliteration?.trim();
 
-  if (!targetLang || !baseLang || !transliteration) {
+  const sentenceStructure = result?.sentenceStructure?.trim();
+  const meaning = result?.meaning?.trim();
+  const vocab = Array.isArray(result?.vocab)
+    ? result.vocab
+        .map((item) => ({
+          surfaceForm: item?.surfaceForm?.trim() ?? '',
+          meaning: item?.meaning?.trim() ?? '',
+        }))
+        .filter((item) => item.surfaceForm && item.meaning)
+    : [];
+
+  if (
+    !targetLang ||
+    !baseLang ||
+    !transliteration ||
+    !sentenceStructure ||
+    !meaning ||
+    vocab.length === 0
+  ) {
     throw new Error(
-      'Complex sentence result missing targetLang, baseLang, or transliteration',
+      'Complex sentence result missing targetLang, baseLang, transliteration, vocab, sentenceStructure, or meaning',
     );
   }
 
@@ -44,6 +70,9 @@ export const parseComplexSentenceResult = (result: ComplexSentenceAiResult) => {
     baseLang,
     transliteration,
     notes: isNonEmptyString(result?.notes) ? result.notes.trim() : undefined,
+    vocab,
+    sentenceStructure,
+    meaning,
   };
 };
 
@@ -83,6 +112,9 @@ export const addComplexSentenceRoute = async (
       targetLang: parsed.targetLang,
       baseLang: parsed.baseLang,
       transliteration: parsed.transliteration,
+      vocab: parsed.vocab,
+      sentenceStructure: parsed.sentenceStructure,
+      meaning: parsed.meaning,
       ...(parsed.notes ? { notes: parsed.notes } : {}),
       ...(isNonEmptyString(notes) ? { inquiry: notes.trim() } : {}),
     };

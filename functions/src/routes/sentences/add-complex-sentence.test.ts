@@ -44,6 +44,16 @@ const aiResult = {
   baseLang: 'Despite yesterday’s conversation, he still believes it.',
   transliteration: 'Kinō no hanashi ni mo kakawarazu, kare wa mada shinjite iru.',
   notes: 'Uses a concessive phrase.',
+  vocab: [
+    { surfaceForm: '昨日の話', meaning: "yesterday's conversation" },
+    { surfaceForm: 'にもかかわらず', meaning: 'despite' },
+    { surfaceForm: '彼は', meaning: 'he' },
+    { surfaceForm: 'まだ', meaning: 'still' },
+    { surfaceForm: '信じている', meaning: 'believes' },
+  ],
+  sentenceStructure:
+    '昨日の話 (yesterday\'s conversation) + にもかかわらず (despite) + 彼は (he) + まだ (still) + 信じている (believes)',
+  meaning: 'Despite yesterday’s conversation, he still believes it.',
 };
 
 const validBody = {
@@ -108,6 +118,19 @@ describe('buildComplexSentencePrompt', () => {
     expect(prompt).toContain('clauseEmbedding: true');
     expect(prompt).toContain('mood: auto');
   });
+
+  it('asks for the same breakdown fields as a broken-down sentence', () => {
+    const prompt = buildComplexSentencePrompt({
+      language: japanese,
+      words: [word],
+    });
+
+    expect(prompt).toContain('"vocab"');
+    expect(prompt).toContain('"surfaceForm"');
+    expect(prompt).toContain('"sentenceStructure"');
+    expect(prompt).toContain('"meaning"');
+    expect(prompt).toContain('word (meaning) + word (meaning)');
+  });
 });
 
 describe('parseComplexSentenceResult', () => {
@@ -115,6 +138,16 @@ describe('parseComplexSentenceResult', () => {
     expect(() =>
       parseComplexSentenceResult({ targetLang: '文', baseLang: 'A sentence' }),
     ).toThrow(/transliteration/);
+  });
+
+  it('requires vocab, sentence structure, and the full-sentence meaning', () => {
+    expect(() =>
+      parseComplexSentenceResult({
+        targetLang: '文',
+        baseLang: 'A sentence',
+        transliteration: 'bun',
+      }),
+    ).toThrow(/vocab/);
   });
 });
 
@@ -203,6 +236,9 @@ describe('addComplexSentenceRoute', () => {
         transliteration: aiResult.transliteration,
         notes: aiResult.notes,
         inquiry: 'keep the concessive sense',
+        vocab: aiResult.vocab,
+        sentenceStructure: aiResult.sentenceStructure,
+        meaning: aiResult.meaning,
       }),
     );
     expect(addSentencesBulk).not.toHaveBeenCalled();

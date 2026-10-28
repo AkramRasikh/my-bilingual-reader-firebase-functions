@@ -102,11 +102,20 @@ ${transliterationRules(language)}
 
 ## Response
 Return only this JSON object. One sentence, not a list.
+Include the sentence and its breakdown in the same object.
+vocab is an array of objects. Each object contains surfaceForm, the word or phrase as it appears in the sentence, and meaning, a brief explanation of that token in English.
+sentenceStructure is a string of the sentence structure in the original word order, with inline English meanings, in the form: word (meaning) + word (meaning) + word (meaning).
+meaning is a string giving a natural translation or explanation of the full sentence in English.
 {
   "targetLang": "the sentence in ${language}",
   "baseLang": "natural English translation",
   "transliteration": "romanization of the complete target sentence",
-  "notes": "optional; include only for a real limitation or nuance"
+  "notes": "optional; include only for a real limitation or nuance",
+  "vocab": [
+    { "surfaceForm": "token as it appears in the sentence", "meaning": "brief English meaning" }
+  ],
+  "sentenceStructure": "token (meaning) + token (meaning)",
+  "meaning": "natural translation or explanation of the full sentence in English"
 }
-Do not add other fields.`;
+Do not add fields beyond these.`;
 };
