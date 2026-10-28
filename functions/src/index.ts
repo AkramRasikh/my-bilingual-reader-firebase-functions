@@ -9,6 +9,7 @@ import { deleteWordRoute } from './routes/words/delete-word';
 import { updateContentMetaDataRoute } from './routes/content/update-content';
 import { updateSentenceRoute } from './routes/sentences/update-sentence';
 import { updateAdhocSentenceRoute } from './routes/sentences/update-adhoc-sentence';
+import { updateStandaloneSentenceRoute } from './routes/sentences/update-standalone-sentence';
 import { adhocSentenceCustomWord } from './routes/sentences/add-sentence';
 import { addComplexSentenceRoute } from './routes/sentences/add-complex-sentence';
 import { breakdownSentenceRoute } from './routes/sentences/sentence-breakdown';
@@ -39,6 +40,9 @@ exports.updateSentence = functions.https.onRequest(updateSentenceRoute);
 
 exports.updateAdhocSentence = functions.https.onRequest(
   updateAdhocSentenceRoute,
+);
+exports.updateStandaloneSentence = functions.https.onRequest(
+  updateStandaloneSentenceRoute,
 );
 
 exports.adhocSentenceCustomWord = functions.https.onRequest(
