@@ -40,6 +40,16 @@ interface ComplexSentenceAiResult {
 const isNonEmptyString = (value: unknown): value is string =>
   typeof value === 'string' && value.trim().length > 0;
 
+const withoutSpacingOrPunctuation = (value: string) =>
+  value.replace(/[\s\p{P}\p{S}]/gu, '');
+
+const vocabCoversTarget = (
+  targetLang: string,
+  vocab: { surfaceForm: string }[],
+) =>
+  withoutSpacingOrPunctuation(vocab.map((item) => item.surfaceForm).join('')) ===
+  withoutSpacingOrPunctuation(targetLang);
+
 export const parseComplexSentenceResult = (
   result: ComplexSentenceAiResult,
   language = '',
@@ -78,10 +88,14 @@ export const parseComplexSentenceResult = (
     !meaning ||
     vocab.length === 0 ||
     (withVocabTransliteration &&
-      vocab.some((item) => !item.transliteration))
+      vocab.some((item) => !item.transliteration)) ||
+    (targetLang &&
+      vocab.length > 0 &&
+      !vocabCoversTarget(targetLang, vocab)) ||
+    vocab.some((item) => sentenceStructure && !sentenceStructure.includes(item.surfaceForm))
   ) {
     throw new Error(
-      'Complex sentence result missing targetLang, baseLang, transliteration, vocab, sentenceStructure, meaning, or vocab transliteration',
+      'Complex sentence result missing targetLang, baseLang, transliteration, vocab, sentenceStructure, meaning, or vocab transliteration, or vocab does not cover targetLang',
     );
   }
 

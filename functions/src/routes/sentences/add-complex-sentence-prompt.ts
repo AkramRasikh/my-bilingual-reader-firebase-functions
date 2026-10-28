@@ -106,7 +106,9 @@ Romaji: ${ROMAJI_MODE}
 Use a coherent subset of the supplied items. Do not force every item into the sentence.
 Preserve the intended meaning of each item you use.
 You may adapt inflection, conjugation, particles, or grammatical form.
-Do not invent vocabulary that was not supplied.
+Do not invent content words that were not supplied.
+A natural sentence may include the grammatical words it needs.
+Those words are part of the sentence and must appear in the breakdown.
 localContext is the existing sentence for that item. Use it only to keep the intended sense. Do not copy a context sentence as the new sentence.
 
 ${vocabulary}
@@ -127,7 +129,12 @@ ${transliterationRules(language)}
 Return only this JSON object. One sentence, not a list.
 Include the sentence and its breakdown in the same object.
 ${vocabRules(language)}
-sentenceStructure is a string of the sentence structure in the original word order, with inline English meanings, in the form: word (meaning) + word (meaning) + word (meaning).
+vocab and sentenceStructure break down the entire targetLang, not only the supplied study items.
+List every word or phrase in targetLang, in order, including particles and other grammatical words.
+Do not stop after the supplied items.
+Punctuation is not a vocab item.
+Joining the surfaceForm values in order must reproduce targetLang, ignoring spaces and punctuation.
+sentenceStructure uses those same tokens in that same order, in the form: word (meaning) + word (meaning) + word (meaning).
 meaning is a string giving a natural translation or explanation of the full sentence in English.
 {
   "targetLang": "the sentence in ${language}",

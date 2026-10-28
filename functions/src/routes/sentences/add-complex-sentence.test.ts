@@ -146,6 +146,8 @@ describe('buildComplexSentencePrompt', () => {
       words: [word],
     });
 
+    expect(prompt).toContain('entire targetLang');
+    expect(prompt).toContain('not only the supplied study items');
     expect(prompt).toContain('"vocab"');
     expect(prompt).toContain('"surfaceForm"');
     expect(prompt).toContain('"sentenceStructure"');
@@ -169,6 +171,18 @@ describe('parseComplexSentenceResult', () => {
         transliteration: 'bun',
       }),
     ).toThrow(/vocab/);
+  });
+
+  it('rejects vocab that covers only some of the target sentence', () => {
+    expect(() =>
+      parseComplexSentenceResult(
+        {
+          ...aiResult,
+          vocab: [aiResult.vocab[0]],
+        },
+        'japanese',
+      ),
+    ).toThrow(/targetLang/);
   });
 
   it('requires a transliteration on each vocab item', () => {
