@@ -1,0 +1,530 @@
+{
+  "category": "expressive_functions",
+  "schema_version": "1.0",
+  "title": "Expressive Functions",
+  "description": "A practical learning taxonomy of communicative purposes. Categories may overlap; they are not intended as mutually exclusive linguistic classes.",
+  "expressive_functions": [
+    {
+      "id": "asserting",
+      "name": "Asserting",
+      "description": "Presenting information, viewpoints, explanations, or claims as something the speaker stands behind.",
+      "subcategories": [
+        {
+          "id": "stating_facts",
+          "name": "Stating facts"
+        },
+        {
+          "id": "expressing_opinions",
+          "name": "Expressing opinions"
+        },
+        {
+          "id": "making_claims",
+          "name": "Making claims"
+        },
+        {
+          "id": "reporting_information",
+          "name": "Reporting information"
+        },
+        {
+          "id": "describing",
+          "name": "Describing people, things, or situations"
+        },
+        {
+          "id": "explaining",
+          "name": "Explaining how or why something happens"
+        },
+        {
+          "id": "giving_reasons",
+          "name": "Giving reasons"
+        },
+        {
+          "id": "justifying_actions",
+          "name": "Justifying actions or decisions"
+        },
+        {
+          "id": "drawing_conclusions",
+          "name": "Drawing conclusions"
+        },
+        {
+          "id": "making_predictions",
+          "name": "Making predictions"
+        },
+        {
+          "id": "stating_assumptions",
+          "name": "Stating assumptions"
+        },
+        {
+          "id": "expressing_certainty_or_uncertainty",
+          "name": "Expressing certainty or uncertainty"
+        }
+      ]
+    },
+    {
+      "id": "questioning",
+      "name": "Questioning",
+      "description": "Seeking information, checking understanding, or prompting a response.",
+      "subcategories": [
+        {
+          "id": "asking_for_information",
+          "name": "Asking for information"
+        },
+        {
+          "id": "asking_for_clarification",
+          "name": "Asking for clarification"
+        },
+        {
+          "id": "asking_for_confirmation",
+          "name": "Asking for confirmation"
+        },
+        {
+          "id": "asking_for_explanations",
+          "name": "Asking for explanations or reasons"
+        },
+        {
+          "id": "asking_for_opinions",
+          "name": "Asking for opinions"
+        },
+        {
+          "id": "asking_about_experiences",
+          "name": "Asking about experiences"
+        },
+        {
+          "id": "checking_understanding",
+          "name": "Checking understanding"
+        },
+        {
+          "id": "expressing_curiosity",
+          "name": "Expressing curiosity"
+        },
+        {
+          "id": "challenging_through_questions",
+          "name": "Challenging or probing through questions"
+        },
+        {
+          "id": "rhetorical_questions",
+          "name": "Using rhetorical questions"
+        },
+        {
+          "id": "asking_hypothetical_questions",
+          "name": "Asking hypothetical questions"
+        }
+      ]
+    },
+    {
+      "id": "directing",
+      "name": "Directing",
+      "description": "Trying to influence another person's actions or choices.",
+      "subcategories": [
+        {
+          "id": "giving_commands",
+          "name": "Giving commands"
+        },
+        {
+          "id": "making_requests",
+          "name": "Making requests"
+        },
+        {
+          "id": "giving_instructions",
+          "name": "Giving instructions"
+        },
+        {
+          "id": "giving_advice",
+          "name": "Giving advice"
+        },
+        {
+          "id": "making_suggestions",
+          "name": "Making suggestions"
+        },
+        {
+          "id": "making_recommendations",
+          "name": "Making recommendations"
+        },
+        {
+          "id": "giving_warnings",
+          "name": "Giving warnings"
+        },
+        {
+          "id": "granting_permission",
+          "name": "Granting permission"
+        },
+        {
+          "id": "prohibiting",
+          "name": "Prohibiting or forbidding"
+        },
+        {
+          "id": "inviting",
+          "name": "Inviting someone"
+        },
+        {
+          "id": "encouraging",
+          "name": "Encouraging someone"
+        },
+        {
+          "id": "discouraging",
+          "name": "Discouraging someone"
+        },
+        {
+          "id": "urging",
+          "name": "Urging or persuading someone to act"
+        }
+      ]
+    },
+    {
+      "id": "expressing_emotions",
+      "name": "Expressing emotions",
+      "description": "Communicating feelings, emotional reactions, or personal states.",
+      "subcategories": [
+        {
+          "id": "expressing_happiness",
+          "name": "Expressing happiness"
+        },
+        {
+          "id": "expressing_sadness",
+          "name": "Expressing sadness"
+        },
+        {
+          "id": "expressing_anger",
+          "name": "Expressing anger"
+        },
+        {
+          "id": "expressing_frustration",
+          "name": "Expressing frustration"
+        },
+        {
+          "id": "expressing_disappointment",
+          "name": "Expressing disappointment"
+        },
+        {
+          "id": "expressing_excitement",
+          "name": "Expressing excitement"
+        },
+        {
+          "id": "expressing_fear",
+          "name": "Expressing fear"
+        },
+        {
+          "id": "expressing_anxiety",
+          "name": "Expressing anxiety or worry"
+        },
+        {
+          "id": "expressing_guilt_or_shame",
+          "name": "Expressing guilt or shame"
+        },
+        {
+          "id": "expressing_regret",
+          "name": "Expressing regret"
+        },
+        {
+          "id": "expressing_relief",
+          "name": "Expressing relief"
+        },
+        {
+          "id": "expressing_gratitude",
+          "name": "Expressing gratitude"
+        },
+        {
+          "id": "expressing_affection",
+          "name": "Expressing affection"
+        },
+        {
+          "id": "expressing_sympathy",
+          "name": "Expressing sympathy"
+        },
+        {
+          "id": "expressing_admiration",
+          "name": "Expressing admiration"
+        }
+      ]
+    },
+    {
+      "id": "apologising_and_reconciling",
+      "name": "Apologising and reconciling",
+      "description": "Acknowledging harm or responsibility and attempting to repair a relationship.",
+      "subcategories": [
+        {
+          "id": "apologising",
+          "name": "Apologising"
+        },
+        {
+          "id": "admitting_fault",
+          "name": "Admitting fault"
+        },
+        {
+          "id": "taking_responsibility",
+          "name": "Taking responsibility"
+        },
+        {
+          "id": "expressing_remorse",
+          "name": "Expressing remorse"
+        },
+        {
+          "id": "asking_forgiveness",
+          "name": "Asking for forgiveness"
+        },
+        {
+          "id": "acknowledging_impact",
+          "name": "Acknowledging the impact on someone"
+        },
+        {
+          "id": "explaining_what_happened",
+          "name": "Explaining what happened"
+        },
+        {
+          "id": "offering_to_make_amends",
+          "name": "Offering to make amends"
+        },
+        {
+          "id": "reassuring_after_conflict",
+          "name": "Reassuring someone after conflict"
+        },
+        {
+          "id": "seeking_reconciliation",
+          "name": "Seeking reconciliation"
+        }
+      ]
+    },
+    {
+      "id": "promising_and_committing",
+      "name": "Promising and committing",
+      "description": "Committing oneself or another party to a future action or outcome.",
+      "subcategories": [
+        {
+          "id": "making_promises",
+          "name": "Making promises"
+        },
+        {
+          "id": "making_pledges_or_vows",
+          "name": "Making pledges or vows"
+        },
+        {
+          "id": "giving_assurances",
+          "name": "Giving assurances"
+        },
+        {
+          "id": "making_offers",
+          "name": "Making offers"
+        },
+        {
+          "id": "making_commitments",
+          "name": "Making commitments"
+        },
+        {
+          "id": "stating_intentions",
+          "name": "Stating intentions"
+        },
+        {
+          "id": "guaranteeing_outcomes",
+          "name": "Guaranteeing outcomes"
+        },
+        {
+          "id": "making_threats",
+          "name": "Making threats"
+        },
+        {
+          "id": "accepting_obligations",
+          "name": "Accepting obligations"
+        }
+      ]
+    },
+    {
+      "id": "evaluating_and_judging",
+      "name": "Evaluating and judging",
+      "description": "Assessing people, actions, objects, ideas, or situations.",
+      "subcategories": [
+        {
+          "id": "praising",
+          "name": "Praising"
+        },
+        {
+          "id": "criticising",
+          "name": "Criticising"
+        },
+        {
+          "id": "giving_compliments",
+          "name": "Giving compliments"
+        },
+        {
+          "id": "condemning",
+          "name": "Condemning"
+        },
+        {
+          "id": "expressing_approval",
+          "name": "Expressing approval"
+        },
+        {
+          "id": "expressing_disapproval",
+          "name": "Expressing disapproval"
+        },
+        {
+          "id": "expressing_preferences",
+          "name": "Expressing preferences"
+        },
+        {
+          "id": "comparing",
+          "name": "Comparing"
+        },
+        {
+          "id": "ranking",
+          "name": "Ranking or rating"
+        },
+        {
+          "id": "making_quality_judgements",
+          "name": "Making quality judgements"
+        },
+        {
+          "id": "making_moral_judgements",
+          "name": "Making moral judgements"
+        }
+      ]
+    },
+    {
+      "id": "agreeing_and_disagreeing",
+      "name": "Agreeing and disagreeing",
+      "description": "Responding to another person's position, claim, or proposal.",
+      "subcategories": [
+        {
+          "id": "expressing_agreement",
+          "name": "Expressing agreement"
+        },
+        {
+          "id": "expressing_strong_agreement",
+          "name": "Expressing strong agreement"
+        },
+        {
+          "id": "expressing_partial_agreement",
+          "name": "Expressing partial agreement"
+        },
+        {
+          "id": "expressing_disagreement",
+          "name": "Expressing disagreement"
+        },
+        {
+          "id": "rejecting_an_argument",
+          "name": "Rejecting an argument or proposal"
+        },
+        {
+          "id": "challenging_a_claim",
+          "name": "Challenging a claim"
+        },
+        {
+          "id": "making_a_concession",
+          "name": "Making a concession"
+        },
+        {
+          "id": "finding_compromise",
+          "name": "Finding or proposing a compromise"
+        },
+        {
+          "id": "correcting_someone",
+          "name": "Correcting someone"
+        },
+        {
+          "id": "acknowledging_another_view",
+          "name": "Acknowledging another viewpoint"
+        }
+      ]
+    },
+    {
+      "id": "declaring",
+      "name": "Declaring",
+      "description": "Making an utterance that formally announces or changes a status, decision, or social reality in an appropriate context.",
+      "subcategories": [
+        {
+          "id": "making_announcements",
+          "name": "Making announcements"
+        },
+        {
+          "id": "making_formal_declarations",
+          "name": "Making formal declarations"
+        },
+        {
+          "id": "appointing",
+          "name": "Appointing someone"
+        },
+        {
+          "id": "resigning",
+          "name": "Resigning"
+        },
+        {
+          "id": "authorising",
+          "name": "Authorising"
+        },
+        {
+          "id": "granting_or_revoking_permission",
+          "name": "Granting or revoking permission"
+        },
+        {
+          "id": "naming_or_designating",
+          "name": "Naming or designating"
+        },
+        {
+          "id": "issuing_verdicts",
+          "name": "Issuing verdicts or decisions"
+        },
+        {
+          "id": "formally_accepting_or_rejecting",
+          "name": "Formally accepting or rejecting"
+        }
+      ]
+    },
+    {
+      "id": "conversational_and_social",
+      "name": "Conversational and social",
+      "description": "Managing social interaction, relationships, and the flow of conversation.",
+      "subcategories": [
+        {
+          "id": "greeting",
+          "name": "Greeting"
+        },
+        {
+          "id": "saying_goodbye",
+          "name": "Saying goodbye"
+        },
+        {
+          "id": "introducing_people",
+          "name": "Introducing people"
+        },
+        {
+          "id": "introducing_oneself",
+          "name": "Introducing oneself"
+        },
+        {
+          "id": "thanking",
+          "name": "Thanking"
+        },
+        {
+          "id": "welcoming",
+          "name": "Welcoming"
+        },
+        {
+          "id": "congratulating",
+          "name": "Congratulating"
+        },
+        {
+          "id": "offering_condolences",
+          "name": "Offering condolences"
+        },
+        {
+          "id": "making_small_talk",
+          "name": "Making small talk"
+        },
+        {
+          "id": "changing_the_topic",
+          "name": "Changing the topic"
+        },
+        {
+          "id": "interrupting_politely",
+          "name": "Interrupting politely"
+        },
+        {
+          "id": "managing_turn_taking",
+          "name": "Managing turn-taking"
+        },
+        {
+          "id": "ending_a_conversation",
+          "name": "Ending a conversation"
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import { body } from 'express-validator';
 import { languageValidation } from '../../shared-validation';
 
-const allowedRefs = ['snippets', 'content', 'sentences', 'words'];
+const allowedRefs = ['snippets', 'content', 'sentences', 'words', 'settings'];
 
 const onLoadDataValidation = [
   ...languageValidation,

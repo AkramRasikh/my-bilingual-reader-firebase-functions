@@ -17,6 +17,10 @@ import { deleteContentRoute } from './routes/content/delete-content';
 import { updateSentenceReviewBulkRoute } from './routes/sentences/update-sentence-review-bulk';
 import { saveSnippetRoute } from './routes/snippets/save-snippet';
 import { deleteSnippetRoute } from './routes/snippets/delete-snippet';
+import {
+  getRuleCatalogRoute,
+  updateBreakdownRulesRoute,
+} from './routes/settings/breakdown-rules';
 
 exports.translateText = functions.https.onRequest(translateTextRoute);
 
@@ -61,3 +65,9 @@ exports.updateSentenceReviewBulk = functions.https.onRequest(
 exports.saveSnippet = functions.https.onRequest(saveSnippetRoute);
 
 exports.deleteSnippet = functions.https.onRequest(deleteSnippetRoute);
+
+exports.getRuleCatalog = functions.https.onRequest(getRuleCatalogRoute);
+
+exports.updateBreakdownRules = functions.https.onRequest(
+  updateBreakdownRulesRoute,
+);

@@ -1,0 +1,504 @@
+{
+  "category": "constructions",
+  "schema_version": "1.0",
+  "title": "Linguistic Constructions and Sentence Features",
+  "description": "A practical, language-adaptable set of dimensions for shaping how an utterance is expressed. These are mostly parallel dimensions, not a single hierarchy. Not every option applies in every language or combines naturally with every other option.",
+  "dimensions": [
+    {
+      "id": "sentence_type",
+      "name": "Sentence type",
+      "description": "The broad communicative/grammatical form of the sentence.",
+      "options": [
+        {
+          "id": "declarative",
+          "name": "Declarative (statement)"
+        },
+        {
+          "id": "interrogative",
+          "name": "Interrogative (question form)"
+        },
+        {
+          "id": "imperative",
+          "name": "Imperative (command/request form)"
+        },
+        {
+          "id": "exclamative",
+          "name": "Exclamative (exclamation)"
+        }
+      ]
+    },
+    {
+      "id": "grammatical_mood",
+      "name": "Grammatical mood",
+      "description": "A grammatical category that marks how the clause is presented; the available moods vary by language.",
+      "options": [
+        {
+          "id": "indicative",
+          "name": "Indicative"
+        },
+        {
+          "id": "subjunctive",
+          "name": "Subjunctive"
+        },
+        {
+          "id": "conditional_mood",
+          "name": "Conditional"
+        },
+        {
+          "id": "imperative_mood",
+          "name": "Imperative"
+        },
+        {
+          "id": "language_specific_other",
+          "name": "Other language-specific mood"
+        }
+      ]
+    },
+    {
+      "id": "tense_and_time_reference",
+      "name": "Tense and time reference",
+      "description": "When an event or state takes place. Tense systems differ across languages; time reference can also be expressed without a dedicated tense.",
+      "options": [
+        {
+          "id": "present",
+          "name": "Present"
+        },
+        {
+          "id": "past",
+          "name": "Past"
+        },
+        {
+          "id": "future",
+          "name": "Future"
+        },
+        {
+          "id": "habitual",
+          "name": "Habitual"
+        },
+        {
+          "id": "ongoing_or_progressive",
+          "name": "Ongoing or progressive"
+        },
+        {
+          "id": "completed_or_perfect",
+          "name": "Completed or perfect"
+        },
+        {
+          "id": "timeless_or_general",
+          "name": "Timeless or general"
+        }
+      ]
+    },
+    {
+      "id": "aspect",
+      "name": "Aspect",
+      "description": "How an event is viewed internally, such as ongoing, completed, repeated, or habitual.",
+      "options": [
+        {
+          "id": "simple",
+          "name": "Simple"
+        },
+        {
+          "id": "progressive_or_continuous",
+          "name": "Progressive or continuous"
+        },
+        {
+          "id": "perfect",
+          "name": "Perfect"
+        },
+        {
+          "id": "perfective",
+          "name": "Perfective"
+        },
+        {
+          "id": "imperfective",
+          "name": "Imperfective"
+        },
+        {
+          "id": "habitual_aspect",
+          "name": "Habitual"
+        },
+        {
+          "id": "iterative",
+          "name": "Iterative or repeated"
+        }
+      ]
+    },
+    {
+      "id": "sentence_structure",
+      "name": "Sentence structure",
+      "description": "How clauses and phrases are organised and connected.",
+      "options": [
+        {
+          "id": "simple_sentence",
+          "name": "Simple sentence"
+        },
+        {
+          "id": "compound_sentence",
+          "name": "Compound sentence"
+        },
+        {
+          "id": "complex_sentence",
+          "name": "Complex sentence"
+        },
+        {
+          "id": "coordination",
+          "name": "Coordination"
+        },
+        {
+          "id": "subordination",
+          "name": "Subordination"
+        },
+        {
+          "id": "relative_clause",
+          "name": "Relative clause"
+        },
+        {
+          "id": "conditional_clause",
+          "name": "Conditional clause"
+        },
+        {
+          "id": "causal_clause",
+          "name": "Causal clause"
+        },
+        {
+          "id": "concessive_clause",
+          "name": "Concessive clause"
+        },
+        {
+          "id": "purpose_clause",
+          "name": "Purpose clause"
+        },
+        {
+          "id": "reported_speech",
+          "name": "Reported speech"
+        },
+        {
+          "id": "direct_speech",
+          "name": "Direct speech"
+        }
+      ]
+    },
+    {
+      "id": "modality",
+      "name": "Modality",
+      "description": "Meaning related to possibility, necessity, obligation, permission, ability, or likelihood.",
+      "options": [
+        {
+          "id": "possibility",
+          "name": "Possibility"
+        },
+        {
+          "id": "probability",
+          "name": "Probability"
+        },
+        {
+          "id": "certainty",
+          "name": "Certainty"
+        },
+        {
+          "id": "necessity",
+          "name": "Necessity"
+        },
+        {
+          "id": "obligation",
+          "name": "Obligation"
+        },
+        {
+          "id": "permission",
+          "name": "Permission"
+        },
+        {
+          "id": "ability",
+          "name": "Ability"
+        },
+        {
+          "id": "intention",
+          "name": "Intention"
+        },
+        {
+          "id": "prediction",
+          "name": "Prediction"
+        },
+        {
+          "id": "volition_or_willingness",
+          "name": "Willingness or volition"
+        }
+      ]
+    },
+    {
+      "id": "voice",
+      "name": "Voice",
+      "description": "How the relationship between the action and its participants is grammatically presented.",
+      "options": [
+        {
+          "id": "active",
+          "name": "Active"
+        },
+        {
+          "id": "passive",
+          "name": "Passive"
+        },
+        {
+          "id": "middle_or_reflexive",
+          "name": "Middle or reflexive (where applicable)"
+        },
+        {
+          "id": "causative",
+          "name": "Causative"
+        }
+      ]
+    },
+    {
+      "id": "person_and_perspective",
+      "name": "Person and perspective",
+      "description": "The grammatical person and viewpoint used.",
+      "options": [
+        {
+          "id": "first_person_singular",
+          "name": "First person singular"
+        },
+        {
+          "id": "first_person_plural",
+          "name": "First person plural"
+        },
+        {
+          "id": "second_person",
+          "name": "Second person"
+        },
+        {
+          "id": "third_person",
+          "name": "Third person"
+        },
+        {
+          "id": "impersonal",
+          "name": "Impersonal construction"
+        },
+        {
+          "id": "inclusive_or_exclusive_we",
+          "name": "Inclusive or exclusive 'we' (where applicable)"
+        }
+      ]
+    },
+    {
+      "id": "polarity_and_negation",
+      "name": "Polarity and negation",
+      "description": "Whether and how the utterance is affirmed or negated.",
+      "options": [
+        {
+          "id": "affirmative",
+          "name": "Affirmative"
+        },
+        {
+          "id": "negative",
+          "name": "Negative"
+        },
+        {
+          "id": "partial_negation",
+          "name": "Partial negation"
+        },
+        {
+          "id": "double_negation",
+          "name": "Double negation (where applicable)"
+        },
+        {
+          "id": "negative_question",
+          "name": "Negative question"
+        }
+      ]
+    },
+    {
+      "id": "information_structure_and_emphasis",
+      "name": "Information structure and emphasis",
+      "description": "How information is foregrounded, contrasted, or emphasised.",
+      "options": [
+        {
+          "id": "neutral_word_order",
+          "name": "Neutral word order"
+        },
+        {
+          "id": "topicalisation",
+          "name": "Topicalisation"
+        },
+        {
+          "id": "focus_or_clefting",
+          "name": "Focus or cleft construction"
+        },
+        {
+          "id": "contrastive_emphasis",
+          "name": "Contrastive emphasis"
+        },
+        {
+          "id": "fronting_or_inversion",
+          "name": "Fronting or inversion"
+        },
+        {
+          "id": "repetition_for_emphasis",
+          "name": "Repetition for emphasis"
+        }
+      ]
+    },
+    {
+      "id": "clause_pattern",
+      "name": "Clause pattern",
+      "description": "Common patterns for combining verbs, complements, and other clause elements.",
+      "options": [
+        {
+          "id": "verb_plus_infinitive",
+          "name": "Verb + infinitive"
+        },
+        {
+          "id": "verb_plus_gerund_or_verbal_noun",
+          "name": "Verb + gerund or verbal noun"
+        },
+        {
+          "id": "verb_plus_that_clause",
+          "name": "Verb + that-clause / content clause"
+        },
+        {
+          "id": "verb_plus_object_plus_complement",
+          "name": "Verb + object + complement"
+        },
+        {
+          "id": "there_is_or_existential",
+          "name": "Existential construction (there is / there are)"
+        },
+        {
+          "id": "it_is_adjective_that_clause",
+          "name": "Impersonal evaluative pattern (it is + adjective + clause)"
+        },
+        {
+          "id": "cleft_pattern",
+          "name": "Cleft pattern"
+        }
+      ]
+    }
+  ],
+  "separate_expression_dimensions": [
+    {
+      "id": "register",
+      "name": "Register",
+      "description": "Social level or style of language; not itself a grammatical construction.",
+      "options": [
+        {
+          "id": "very_formal",
+          "name": "Very formal"
+        },
+        {
+          "id": "formal",
+          "name": "Formal"
+        },
+        {
+          "id": "neutral",
+          "name": "Neutral"
+        },
+        {
+          "id": "informal",
+          "name": "Informal"
+        },
+        {
+          "id": "casual",
+          "name": "Casual"
+        },
+        {
+          "id": "professional",
+          "name": "Professional"
+        }
+      ]
+    },
+    {
+      "id": "tone",
+      "name": "Tone",
+      "description": "The interpersonal or emotional quality conveyed.",
+      "options": [
+        {
+          "id": "friendly",
+          "name": "Friendly"
+        },
+        {
+          "id": "warm",
+          "name": "Warm"
+        },
+        {
+          "id": "polite",
+          "name": "Polite"
+        },
+        {
+          "id": "direct",
+          "name": "Direct"
+        },
+        {
+          "id": "diplomatic",
+          "name": "Diplomatic"
+        },
+        {
+          "id": "reassuring",
+          "name": "Reassuring"
+        },
+        {
+          "id": "enthusiastic",
+          "name": "Enthusiastic"
+        },
+        {
+          "id": "frustrated",
+          "name": "Frustrated"
+        },
+        {
+          "id": "sarcastic",
+          "name": "Sarcastic"
+        },
+        {
+          "id": "serious",
+          "name": "Serious"
+        },
+        {
+          "id": "playful",
+          "name": "Playful"
+        }
+      ]
+    },
+    {
+      "id": "context",
+      "name": "Context",
+      "description": "The situation and relationship that affect which expression is appropriate.",
+      "options": [
+        {
+          "id": "speaking_to_friend",
+          "name": "Speaking to a friend"
+        },
+        {
+          "id": "speaking_to_family",
+          "name": "Speaking to family"
+        },
+        {
+          "id": "speaking_to_stranger",
+          "name": "Speaking to a stranger"
+        },
+        {
+          "id": "speaking_to_colleague",
+          "name": "Speaking to a colleague"
+        },
+        {
+          "id": "speaking_to_superior",
+          "name": "Speaking to a superior or authority figure"
+        },
+        {
+          "id": "service_interaction",
+          "name": "Service interaction"
+        },
+        {
+          "id": "workplace",
+          "name": "Workplace"
+        },
+        {
+          "id": "academic",
+          "name": "Academic setting"
+        },
+        {
+          "id": "online_or_messaging",
+          "name": "Online or messaging"
+        }
+      ]
+    }
+  ]
+}

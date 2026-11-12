@@ -10,6 +10,10 @@ export interface SentenceType extends LegacyReviewTypes {
   notes?: string;
   time?: number;
   reviewData?: ReviewDataTypes;
+  vocab?: { surfaceForm: string; meaning: string }[];
+  sentenceStructure?: string;
+  meaning?: string;
+  structures?: string[]; // matched rule keys, e.g. "constructions.subjunctive"
 }
 export interface ContentType {
   title: string;
