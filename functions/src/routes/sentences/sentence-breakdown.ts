@@ -3,6 +3,10 @@ import { Request, Response } from 'express';
 import { arabic, chinese, french, japanese } from '../../language-keys';
 import { updateSentenceInContent } from './update-sentence';
 import { deepSeekChatAPI } from '../../ai-utils';
+import {
+  normalizeBreakdownVocab,
+  vocabPromptLine,
+} from './sentence-breakdown-vocab';
 import { resolveRuleKeys } from '../../rules';
 import {
   buildStructuresPrompt,
@@ -77,7 +81,7 @@ export const breakdownSentenceRoute = async (req: Request, res: Response) => {
       : '';
 
   const prompt = `Break down the following ${language} sentence strictly into valid JSON output. Do not include explanations, preamble, or any additional text. 
-  The JSON format should have the following structure: vocab: An array of objects where each object contains: surfaceForm: The word or phrase as it appears in the sentence. meaning: A brief explanation of its meaning in English. 
+  The JSON format should have the following structure: ${vocabPromptLine(language)}
   sentenceStructure: A string that represents the sentence structure, maintaining the original word order but adding inline English meanings. For example: Format Example: word (meaning) + word (meaning) + word (meaning) Example Output for a sentence like ${
     sentenceStructureObj[language] || sentenceStructureObj[japanese]
   }. meaning: A string giving a natural translation or explanation of the full sentence in English.${structuresSchemaPrompt} Sentence to analyze: ${targetLang}.${additionalContextPrompt}
@@ -92,7 +96,9 @@ export const breakdownSentenceRoute = async (req: Request, res: Response) => {
     });
 
     if (breakdown) {
-      const { structures: rawStructures, ...rest } = breakdown;
+      const { structures: rawStructures, ...parsed } = breakdown;
+      const vocab = normalizeBreakdownVocab(parsed.vocab, language);
+      const rest = vocab ? { ...parsed, vocab } : parsed;
       const fieldToUpdate = hasStructureRules
         ? {
             ...rest,
