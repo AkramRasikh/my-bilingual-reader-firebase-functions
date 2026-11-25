@@ -11,6 +11,10 @@ const snippetKeys = {
   isContracted: 'snippetData.isContracted',
   isPreSnippet: 'snippetData.isPreSnippet',
   suggestedFocusText: 'snippetData.suggestedFocusText',
+  sentenceId: 'snippetData.sentenceId',
+  start: 'snippetData.start',
+  end: 'snippetData.end',
+  origin: 'snippetData.origin',
   contentId: 'contentId',
 };
 
@@ -24,6 +28,11 @@ const ALLOWED_SNIPPET_KEYS = [
   'isContracted',
   'isPreSnippet',
   'suggestedFocusText',
+  // Sentence snippets: a custom-length clip nested inside one transcript sentence.
+  'sentenceId',
+  'start',
+  'end',
+  'origin',
 ];
 
 const ALLOWED_BODY_KEYS = ['language', 'contentId', 'snippetData'];
@@ -91,4 +100,32 @@ export const saveSnippetValidation = [
   body(snippetKeys.isContracted).optional().isBoolean(),
   body(snippetKeys.isPreSnippet).optional().isBoolean(),
   body(snippetKeys.suggestedFocusText).optional().isString(),
+  body(snippetKeys.sentenceId).optional().isString().notEmpty(),
+  body(snippetKeys.start)
+    .optional()
+    .isFloat({ min: 0 })
+    .withMessage('snippetData.start must be a non-negative number'),
+  body(snippetKeys.end)
+    .optional()
+    .isFloat({ min: 0 })
+    .withMessage('snippetData.end must be a non-negative number'),
+  body(snippetKeys.origin)
+    .optional()
+    .isIn(['sentence'])
+    .withMessage("snippetData.origin must be 'sentence'"),
+  // A sentence snippet carries its sentence and both edges together, with end after start.
+  body('snippetData').custom((value) => {
+    if (!value || typeof value !== 'object') return true;
+    const fields = ['sentenceId', 'start', 'end', 'origin'];
+    const present = fields.filter((key) => value[key] !== undefined);
+    if (present.length && present.length !== fields.length) {
+      throw new Error(
+        'Sentence snippets need sentenceId, start, end and origin together',
+      );
+    }
+    if (present.length && !(Number(value.end) > Number(value.start))) {
+      throw new Error('snippetData.end must be after snippetData.start');
+    }
+    return true;
+  }),
 ];

@@ -97,6 +97,72 @@ describe('saveSnippetRoute', () => {
     );
   });
 
+  describe('sentence snippets', () => {
+    const sentenceSnippet = {
+      id: 'clip-1',
+      baseLang: 'It is Japanese',
+      targetLang: '日本語です',
+      time: 64.95,
+      isPreSnippet: false,
+      sentenceId: 'sentence-1',
+      start: 64.5,
+      end: 65.4,
+      origin: 'sentence',
+    };
+    const mockWrite = () => {
+      const setMock = jest.fn().mockResolvedValue(undefined);
+      (db.ref as jest.Mock).mockReturnValue({ set: setMock });
+      return setMock;
+    };
+    const expect400 = () => {
+      expect(statusMock).toHaveBeenCalledWith(400);
+      expect(jsonMock).toHaveBeenCalledWith(
+        expect.objectContaining({ errors: expect.any(Array) }),
+      );
+    };
+
+    it('saves a clip nested in a sentence with its edges', async () => {
+      const setMock = mockWrite();
+      mockReq.body.snippetData = sentenceSnippet;
+
+      await saveSnippetRoute(mockReq as Request, mockRes as Response);
+
+      expect(setMock).toHaveBeenCalledWith(sentenceSnippet);
+      expect(statusMock).toHaveBeenCalledWith(200);
+    });
+
+    it('rejects a clip missing some of the sentence fields', async () => {
+      const setMock = mockWrite();
+      const { end, ...partial } = sentenceSnippet;
+      mockReq.body.snippetData = partial;
+
+      await saveSnippetRoute(mockReq as Request, mockRes as Response);
+
+      expect400();
+      expect(setMock).not.toHaveBeenCalled();
+    });
+
+    it('rejects a clip whose end is not after its start', async () => {
+      const setMock = mockWrite();
+      mockReq.body.snippetData = { ...sentenceSnippet, end: 64.5 };
+
+      await saveSnippetRoute(mockReq as Request, mockRes as Response);
+
+      expect400();
+      expect(setMock).not.toHaveBeenCalled();
+    });
+
+    it('rejects an unknown origin', async () => {
+      const setMock = mockWrite();
+      mockReq.body.snippetData = { ...sentenceSnippet, origin: 'other' };
+
+      await saveSnippetRoute(mockReq as Request, mockRes as Response);
+
+      expect400();
+      expect(setMock).not.toHaveBeenCalled();
+    });
+  });
+
   it('should return 500 if database write fails', async () => {
     const setMock = jest
       .fn()

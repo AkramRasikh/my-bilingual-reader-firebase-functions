@@ -56,4 +56,9 @@ export interface Snippet {
   isContracted?: boolean;
   isPreSnippet?: boolean;
   suggestedFocusText?: string;
+  // Sentence snippets: a custom-length clip nested inside one transcript sentence.
+  sentenceId?: string;
+  start?: number;
+  end?: number;
+  origin?: 'sentence';
 }
